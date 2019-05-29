@@ -6,4 +6,7 @@ public class World {
         return "World";
     }
 
+    public void run(){
+        new JavaFXApplication().run();
+    }
 }

@@ -14,7 +14,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        var worldMessage = new World().getWorldMessage();
-        System.out.println("Hello " + worldMessage);
+        new World().run();
     }
 }
