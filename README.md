@@ -1,6 +1,6 @@
 # RP9
 
-Build on Travis: [![Build Status](https://travis-ci.org/SoftwareSandbox/RP9.svg?branch=master)](https://travis-ci.org/SoftwareSandbox/RP9)
+[![Build Status](https://travis-ci.org/SoftwareSandbox/RP9.svg?branch=master)](https://travis-ci.org/SoftwareSandbox/RP9)
 
 ## Resources
 - Related to Gradle modules in combination with Java modules:
