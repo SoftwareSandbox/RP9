@@ -13,8 +13,8 @@ subprojects {
     group 'com.cegeka.rp9'
     version '1.0-SNAPSHOT'
 
-    sourceCompatibility = 1.12
-    targetCompatibility = 1.12
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
     
     afterEvaluate {
         repositories {
