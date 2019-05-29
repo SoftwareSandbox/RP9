@@ -1,2 +1,5 @@
 rootProject.name = 'rp9'
 
+include 'rp9-root-module'
+include 'rp9-secondary-module'
+

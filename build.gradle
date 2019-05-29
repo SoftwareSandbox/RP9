@@ -1,16 +1,28 @@
-plugins {
-    id 'java'
-}
+subprojects {
+    apply plugin: 'java'
 
-group 'com.cegeka.rp9'
-version '1.0-SNAPSHOT'
+    group 'com.cegeka.rp9'
+    version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+    sourceCompatibility = 1.11
+    targetCompatibility = 1.11
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    repositories {
+        mavenCentral()
+    }
+    afterEvaluate {
+        repositories {
+            mavenCentral()
+        }
+        // TODO: Is this the way to go in Gradle 5?
+        compileJava {
+            inputs.property("moduleName", moduleName)
+            doFirst {
+                options.compilerArgs = [
+                        '--module-path', classpath.asPath,
+                ]
+                classpath = files()
+            }
+        }
+    }
 }
