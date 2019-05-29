@@ -1,7 +1,0 @@
-apply plugin: 'java-library'
-
-ext.moduleName = 'rp9-root-module'
-
-dependencies {
-    implementation project(':rp9-secondary-module')
-}

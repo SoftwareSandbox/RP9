@@ -1,3 +1,3 @@
-module rp9.secondary.module {
+module secondary.module {
     exports com.cegeka.rp9.secondary.module;
 }

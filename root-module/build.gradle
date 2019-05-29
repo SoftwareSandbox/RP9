@@ -1,0 +1,7 @@
+apply plugin: 'java-library'
+
+ext.moduleName = 'root-module'
+
+dependencies {
+    implementation project(':secondary-module')
+}
