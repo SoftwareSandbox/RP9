@@ -11,6 +11,7 @@ public class JavaFXApplication extends Application {
     public void run(){
         launch();
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         String javaVersion = System.getProperty("java.version");
