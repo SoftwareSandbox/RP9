@@ -1,9 +1,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.5.RELEASE"
+        classpath "org.beryx:badass-jlink-plugin:2.10.4"
     }
 }
 
