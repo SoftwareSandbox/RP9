@@ -1,7 +1,12 @@
 apply plugin: 'java-library'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 ext.moduleName = 'root-module'
 
 dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
     implementation project(':secondary-module')
+
+    testImplementation "junit:junit:4.12"
 }
