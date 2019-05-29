@@ -5,4 +5,4 @@ jdk:
   - oraclejdk11
 
 script:
-  - ./gradlew clean build --scan -s
+  - ./gradlew clean build
