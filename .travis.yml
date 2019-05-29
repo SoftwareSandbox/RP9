@@ -1,0 +1,13 @@
+language: java
+install: true
+
+jdk:
+  - oraclejdk11
+
+script:
+  - ./gradlew clean build
+
+notifications:
+  email: false
+  slack:
+    secure: zmddRSE2XCz96X+IM+t3+s4RSfBe1zl/M7XhnZ+U4xLJUn2AnmAop/HnfzlHCR0prP3GuThK0Lxby4p3NOSpkjq2bm1O5MRNM7ocwZm5jTOwBFvoeCGsMAEDy5Yz0yKsHkOxK8DRt4v6OstNd8ku70eQK3G+C/IGmMYGtyUvRyw4y1ePAzF9Ir7p89tApm2V8l9rwAOCzaeSaKpXCfNuEtFN2qVD1lua/NZDmVBUFSxyHm35cb4qkwDj1hh/V9zsNRuZgSNto9sdxtmwNMdwlcxNQeDWLUjM5h9tKEf1Oh8CyQFvp1TH4QDY92ALFFxt6ycUw5sOk1iozsar9P4JQf/OWCJFHAqT6k689V29PV3xw4GblY75gG7ojuimGtLMYggP6kltZOUtYgbiK7oG7HIQyCuPvxIabWe9B6xVA5NGWUBfZWtJ/gWMl8dG3pBwkQS/kOmfbx98RVwJSCuXwDWiSJwP+yoNPoBX8NtdjNIG07Z2ag851kOXMlfOdIF4hTuQ7oKp/9iCFE1aWHTqQE9AhkCvaHzdLJFvjEASBGGQE6wpl51sLqEvEKlXLnxcSpWiDf5Pvoh/gB2nf2eyHzK7MOUkxMk5+adiajivSNczDKZMyBQNDNOvCaSxlv7OdvZikouU7wFKofraDKcJCavb837WUe61Zp1ModEkid8=
