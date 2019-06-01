@@ -1,4 +1,4 @@
-package com.cegeka.rp9.secondary.module;
+package com.swsb.rp9.secondary.module;
 
 public class World {
 

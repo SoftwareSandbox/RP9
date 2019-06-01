@@ -1,4 +1,4 @@
-package com.cegeka.rp9.secondary.module;
+package com.swsb.rp9.secondary.module;
 
 import javafx.application.Application;
 import javafx.scene.Group;

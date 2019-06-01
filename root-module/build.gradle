@@ -10,7 +10,7 @@ dependencies {
 }
 //running :root-module:assembleBootDist makes a runtime image containing only the executable jar, I guess that's what we want?
 //This is some black magic though, maybe we should try implementing it ourselves...
-mainClassName = "com.cegeka.rp9.root.module.Application"
+mainClassName = "com.swsb.rp9.root.module.Application"
 jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher{

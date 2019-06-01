@@ -12,7 +12,7 @@ plugins {
 }
 
 allprojects {
-    group 'com.cegeka.rp9'
+    group 'com.swsb.rp9'
     version '1.0-SNAPSHOT'
 }
 
