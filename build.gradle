@@ -1,41 +1,26 @@
 buildscript {
     repositories {
         mavenCentral()
-        gradlePluginPortal()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
-    dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.5.RELEASE"
-        classpath "org.beryx:badass-jlink-plugin:2.10.4"
-        classpath "org.javamodularity:moduleplugin:1.5.0"
-    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE' apply(false)
+    id 'org.beryx.jlink' version '2.10.4' apply(false)
+    id 'org.javamodularity.moduleplugin' version '1.5.0' apply(false)
+    id 'org.openjfx.javafxplugin' version '0.0.7' apply(false)
+}
+
+allprojects {
+    group 'com.cegeka.rp9'
+    version '1.0-SNAPSHOT'
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: "org.javamodularity.moduleplugin"
 
-    group 'com.cegeka.rp9'
-    version '1.0-SNAPSHOT'
-
-    sourceCompatibility = 1.11
-    targetCompatibility = 1.11
-    
-    afterEvaluate {
-        repositories {
-            mavenCentral()
-        }
-        // TODO: Is this the way to go in Gradle 5?
-        compileJava {
-            inputs.property("moduleName", moduleName)
-            doFirst {
-                options.compilerArgs = [
-                        '--module-path', classpath.asPath,
-                ]
-                classpath = files()
-            }
-        }
+    repositories {
+        mavenCentral()
     }
 }
