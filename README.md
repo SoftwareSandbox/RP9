@@ -12,4 +12,13 @@
 ## Resources
 - Related to Gradle modules in combination with Java modules:
     - [https://guides.gradle.org/building...](https://guides.gradle.org/building-java-9-modules/#add_a_code_module_info_java_code_describing_the_module)
-    
+  
+
+
+## Kudo's
+Shout-out to the artists who made the sprites we used:
+- https://chimericalbard.itch.io/pixel-champions
+- https://alexs-assets.itch.io/16x16-rpg-item-pack
+- https://tylerjwarren.itch.io/free-tyler-warren-rpg-battlers-favorites-30
+- https://kvsr.itch.io/
+- https://free-game-assets.itch.io/40-free-staves-2d-weapon
