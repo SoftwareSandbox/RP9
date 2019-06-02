@@ -2,23 +2,24 @@ package com.swsb.rp9.secondary.module;
 
 import com.swsb.rp9.secondary.module.frondend.Dimension;
 import com.swsb.rp9.secondary.module.frondend.Hero;
+import com.swsb.rp9.secondary.module.frondend.Position;
+import com.swsb.rp9.secondary.module.game.Coordinate;
+import com.swsb.rp9.secondary.module.game.OverworldFactory;
+import com.swsb.rp9.secondary.module.game.RandomOverworldFactory;
+import com.swsb.rp9.secondary.module.game.TileType;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
 
 import static com.swsb.rp9.secondary.module.frondend.Dimension.rectangle;
 import static com.swsb.rp9.secondary.module.frondend.Dimension.square;
 import static com.swsb.rp9.secondary.module.frondend.ImageBuilder.image;
 import static com.swsb.rp9.secondary.module.frondend.Position.position;
+import static com.swsb.rp9.secondary.module.frondend.RectangleBuilder.rectangle;
 import static com.swsb.rp9.secondary.module.frondend.SceneBuilder.scene;
+import static java.util.stream.Collectors.toList;
 import static javafx.scene.paint.Color.BEIGE;
 
 public class JavaFXApplication extends Application {
@@ -27,10 +28,10 @@ public class JavaFXApplication extends Application {
     private static final int SCENE_WIDTH = 640;
     private static final int SCENE_HEIGHT = 480;
     private static final Dimension STANDARD_SCENE_DIMENSION = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
-    private static final Random RANDOM = new Random();
-    private static final List<Paint> colors = new ArrayList<>();
     private static final int SIDEPANEL_WIDTH = 160;
     private Hero hero;
+
+    private OverworldFactory overworldFactory = new RandomOverworldFactory();
 
 
     void run() {
@@ -39,13 +40,6 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void init() {
-        colors.add(image().url("textures/desert_sand2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
-        colors.add(image().url("textures/grass_green_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
-        colors.add(image().url("textures/ground_cracks2y_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
-        colors.add(image().url("textures/ground_mud2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
-        colors.add(image().url("textures/jungle_mntn2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
-        colors.add(image().url("textures/mntn_brown_h.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
-        colors.add(image().url("textures/moss_plants_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern());
     }
 
     //Deze code is bweik lelijk, maar hopelijk kan je hier rap uit leren hoe iets werkt in javaFX
@@ -54,7 +48,7 @@ public class JavaFXApplication extends Application {
     public void start(Stage primaryStage) {
         hero = new Hero(image().url("fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
         primaryStage.setScene(scene()
-                .nodes(createSidepanel(), createGroupOfRectangles(), hero.getView())
+                .nodes(createSidepanel(), overworld(), hero.getView())
                 .dimension(STANDARD_SCENE_DIMENSION)
                 .color(BEIGE)
                 .onKeyPressed(hero.onKeyPressed())
@@ -67,27 +61,40 @@ public class JavaFXApplication extends Application {
         return image().url("fairy.png").dimension(rectangle(80, 360)).startingPosition(position(40, 0)).buildView();
     }
 
-    private Node createGroupOfRectangles() {
-        Collection<Node> rectangleList = new ArrayList<>();
-        for (int x = 0; x < (SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE; x++) {
-            for (int y = 0; y < SCENE_HEIGHT / RECTANGLE_SIZE; y++) {
-                rectangleList.add(createStandardRectangle((x * RECTANGLE_SIZE) + SIDEPANEL_WIDTH, y * RECTANGLE_SIZE, getRandomColor(RANDOM)));
-            }
+    private Node overworld() {
+        return new Group(overworldFactory.createOverworld((SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE).getTiles().entrySet().stream()
+                .map(entry -> rectangle()
+                                .color(toTexture(entry.getValue()))
+                                .dimension(square(RECTANGLE_SIZE))
+                                .position(toPosition(entry.getKey()))
+                                .build())
+                .collect(toList()));
+    }
+
+    private Paint toTexture(TileType tileType) {
+        switch (tileType) {
+            case DESERT:
+                return image().url("textures/desert_sand2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case GRASS:
+                return image().url("textures/grass_green_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case CRACKS:
+                return image().url("textures/ground_cracks2y_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case MUD:
+                return image().url("textures/ground_mud2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case JUNGLE:
+                return image().url("textures/jungle_mntn2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case MOUNTAIN:
+                return image().url("textures/mntn_brown_h.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case MOSS:
+                return image().url("textures/moss_plants_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case SNOW:
+                return image().url("textures/snow2ice_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
         }
-        return new Group(rectangleList);
+        throw new RuntimeException("Unknown tileType type" + tileType);
     }
 
-    private Node createStandardRectangle(int x, int y, Paint texture) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setHeight(RECTANGLE_SIZE);
-        rectangle.setWidth(RECTANGLE_SIZE);
-        rectangle.setX(x);
-        rectangle.setY(y);
-        rectangle.setFill(texture);
-        return rectangle;
+    private Position toPosition(Coordinate coordinate) {
+        return position((coordinate.getX() * RECTANGLE_SIZE) + SIDEPANEL_WIDTH, coordinate.getY() * RECTANGLE_SIZE);
     }
 
-    private Paint getRandomColor(Random random) {
-        return colors.get(random.nextInt(colors.size()));
-    }
 }
