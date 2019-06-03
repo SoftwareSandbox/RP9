@@ -9,10 +9,19 @@ import com.swsb.rp9.secondary.module.frondend.Hero;
 import com.swsb.rp9.secondary.module.frondend.Position;
 import com.swsb.rp9.secondary.module.overworld.WalledOverworldFactory;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
@@ -25,7 +34,7 @@ import static com.swsb.rp9.secondary.module.frondend.Position.position;
 import static com.swsb.rp9.secondary.module.frondend.RectangleBuilder.rectangle;
 import static com.swsb.rp9.secondary.module.frondend.SceneBuilder.scene;
 import static java.util.stream.Collectors.toList;
-import static javafx.scene.paint.Color.BEIGE;
+import static javafx.scene.paint.Color.*;
 
 public class JavaFXApplication extends Application {
 
@@ -53,16 +62,60 @@ public class JavaFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         hero = new Hero(image().url("com/swsb/rp9/secondary/module/sprite/fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
+
+        Scene overworldScene = createOverworldScene();
+        Scene startScreen = createStartScreenScene(newGameListener(primaryStage, overworldScene));
+
+        primaryStage.setScene(startScreen);
+        primaryStage.setTitle("RP9");
+        primaryStage.show();
+    }
+
+    private EventHandler<? super KeyEvent> newGameListener(Stage primaryStage, Scene overworldScene) {
+        return event -> {
+                if (event.getCode().equals(KeyCode.ENTER)) {
+                    primaryStage.setScene(overworldScene);
+                }
+            };
+    }
+
+    private Scene createStartScreenScene(EventHandler<? super KeyEvent> newGameEventHandler) {
+        VBox verticalMenu = createMenu(newGameEventHandler);
+
+        TilePane startScreen = new TilePane(verticalMenu);
+        startScreen.setBackground(new Background(new BackgroundFill(BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        startScreen.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(startScreen, STANDARD_SCENE_DIMENSION.getWidth(), STANDARD_SCENE_DIMENSION.getHeight());
+        scene.getStylesheets().add(this.getClass().getResource("styles/start-screen.css").toExternalForm());
+        return scene;
+    }
+
+    private VBox createMenu(EventHandler<? super KeyEvent> newGameEventHandler) {
+        ToggleGroup menuToggleGroup = new ToggleGroup();
+
+        RadioButton newGameButton = new RadioButton("New game");
+        newGameButton.setTextFill(WHITESMOKE);
+        newGameButton.setSelected(true);
+        newGameButton.setToggleGroup(menuToggleGroup);
+        newGameButton.setOnKeyPressed(newGameEventHandler);
+
+        RadioButton creditsButton = new RadioButton("Credits");
+        creditsButton.setTextFill(WHITESMOKE);
+        creditsButton.setToggleGroup(menuToggleGroup);
+
+        return new VBox(newGameButton, creditsButton);
+    }
+
+    private Scene createOverworldScene() {
         overworld.setHero(hero);
-        primaryStage.setScene(scene()
+        return scene()
                 .nodes(createSidePanel(), overworld(), hero.getView())
 //                .root(loadXmlFile("com/swsb/rp9/secondary/module/fxml/test.fxml"))
                 .dimension(STANDARD_SCENE_DIMENSION)
                 .color(BEIGE)
                 .onKeyPressed(overworld.onKeyPressed())
-                .build());
-        primaryStage.setTitle("RP9");
-        primaryStage.show();
+                .build();
     }
 
     private Parent loadXmlFile(String xml) {
