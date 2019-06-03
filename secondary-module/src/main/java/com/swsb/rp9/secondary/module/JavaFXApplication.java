@@ -46,9 +46,9 @@ public class JavaFXApplication extends Application {
     //Je mag alles weggooien als je dat wil. Daar heb ik absoluut niks tegen
     @Override
     public void start(Stage primaryStage) {
-        hero = new Hero(image().url("fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
+        hero = new Hero(image().url("com/swsb/rp9/secondary/module/sprite/fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
         primaryStage.setScene(scene()
-                .nodes(createSidepanel(), overworld(), hero.getView())
+                .nodes(createSidePanel(), overworld(), hero.getView())
                 .dimension(STANDARD_SCENE_DIMENSION)
                 .color(BEIGE)
                 .onKeyPressed(hero.onKeyPressed())
@@ -57,8 +57,8 @@ public class JavaFXApplication extends Application {
         primaryStage.show();
     }
 
-    private Node createSidepanel() {
-        return image().url("fairy.png").dimension(rectangle(80, 360)).startingPosition(position(40, 0)).buildView();
+    private Node createSidePanel() {
+        return image().url("com/swsb/rp9/secondary/module/sprite/fairy.png").dimension(rectangle(80, 360)).startingPosition(position(40, 0)).buildView();
     }
 
     private Node overworld() {
@@ -74,21 +74,21 @@ public class JavaFXApplication extends Application {
     private Paint toTexture(TileType tileType) {
         switch (tileType) {
             case DESERT:
-                return image().url("textures/desert_sand2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/desert_sand2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case GRASS:
-                return image().url("textures/grass_green_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/grass_green_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case CRACKS:
-                return image().url("textures/ground_cracks2y_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/ground_cracks2y_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case MUD:
-                return image().url("textures/ground_mud2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/ground_mud2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case JUNGLE:
-                return image().url("textures/jungle_mntn2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/jungle_mntn2_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case MOUNTAIN:
-                return image().url("textures/mntn_brown_h.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/mntn_brown_h.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case MOSS:
-                return image().url("textures/moss_plants_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/moss_plants_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case SNOW:
-                return image().url("textures/snow2ice_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+                return image().url("com/swsb/rp9/secondary/module/texture/snow2ice_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
         }
         throw new RuntimeException("Unknown tileType type" + tileType);
     }
