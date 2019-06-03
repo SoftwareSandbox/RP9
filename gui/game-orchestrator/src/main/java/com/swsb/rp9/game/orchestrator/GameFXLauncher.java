@@ -13,7 +13,7 @@ public class GameFXLauncher extends Application {
      * Use this method to launch the game.
      */
     public void launch() {
-        super.launch();
+        Application.launch();
     }
 
     @Override
