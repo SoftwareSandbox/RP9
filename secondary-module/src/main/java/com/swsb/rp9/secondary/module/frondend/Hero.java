@@ -1,10 +1,9 @@
 package com.swsb.rp9.secondary.module.frondend;
 
-import javafx.event.EventHandler;
+import com.swsb.rp9.secondary.module.api.Direction;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 
-import static javafx.scene.input.KeyCode.*;
+import static com.swsb.rp9.secondary.module.api.Direction.*;
 
 public class Hero {
     private ImageView view;
@@ -13,24 +12,22 @@ public class Hero {
         this.view = view;
     }
 
-    public EventHandler<KeyEvent> onKeyPressed(){
-        return event -> {
-            if (event.getCode().equals(DOWN)) {
-                view.setY(view.getY() + 40);
-            }
-            if (event.getCode().equals(RIGHT)) {
-                view.setX(view.getX() + 40);
-            }
-            if (event.getCode().equals(UP)) {
-                view.setY(view.getY() - 40);
-            }
-            if (event.getCode().equals(LEFT)) {
-                view.setX(view.getX() - 40);
-            }
-        };
-    }
-
     public ImageView getView() {
         return view;
+    }
+
+    public void move(Direction direction) {
+        if (direction.equals(DOWN)) {
+            view.setY(view.getY() + 40);
+        }
+        if (direction.equals(RIGHT)) {
+            view.setX(view.getX() + 40);
+        }
+        if (direction.equals(UP)) {
+            view.setY(view.getY() - 40);
+        }
+        if (direction.equals(LEFT)) {
+            view.setX(view.getX() - 40);
+        }
     }
 }

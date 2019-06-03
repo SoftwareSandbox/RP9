@@ -1,4 +1,4 @@
-package com.swsb.rp9.secondary.module.game;
+package com.swsb.rp9.secondary.module.api;
 
 public class Coordinate {
     private final int x;

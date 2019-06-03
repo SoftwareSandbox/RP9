@@ -2,7 +2,7 @@ apply plugin: 'org.openjfx.javafxplugin'
 
 javafx {
     version = "12.0.1"
-    modules = [ 'javafx.controls' ]
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 ext.moduleName = 'secondary-module'

@@ -1,17 +1,22 @@
 package com.swsb.rp9.secondary.module;
 
+import com.swsb.rp9.secondary.module.api.Coordinate;
+import com.swsb.rp9.secondary.module.api.Overworld;
+import com.swsb.rp9.secondary.module.api.OverworldFactory;
+import com.swsb.rp9.secondary.module.api.TileType;
 import com.swsb.rp9.secondary.module.frondend.Dimension;
 import com.swsb.rp9.secondary.module.frondend.Hero;
 import com.swsb.rp9.secondary.module.frondend.Position;
-import com.swsb.rp9.secondary.module.game.Coordinate;
-import com.swsb.rp9.secondary.module.game.OverworldFactory;
-import com.swsb.rp9.secondary.module.game.RandomOverworldFactory;
-import com.swsb.rp9.secondary.module.game.TileType;
+import com.swsb.rp9.secondary.module.overworld.WalledOverworldFactory;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 import static com.swsb.rp9.secondary.module.frondend.Dimension.rectangle;
 import static com.swsb.rp9.secondary.module.frondend.Dimension.square;
@@ -31,7 +36,8 @@ public class JavaFXApplication extends Application {
     private static final int SIDEPANEL_WIDTH = 160;
     private Hero hero;
 
-    private OverworldFactory overworldFactory = new RandomOverworldFactory();
+    private OverworldFactory overworldFactory = new WalledOverworldFactory();
+    private Overworld overworld = overworldFactory.createOverworld((SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE);;
 
 
     void run() {
@@ -47,14 +53,25 @@ public class JavaFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         hero = new Hero(image().url("com/swsb/rp9/secondary/module/sprite/fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
+        overworld.setHero(hero);
         primaryStage.setScene(scene()
                 .nodes(createSidePanel(), overworld(), hero.getView())
+//                .root(loadXmlFile("com/swsb/rp9/secondary/module/fxml/test.fxml"))
                 .dimension(STANDARD_SCENE_DIMENSION)
                 .color(BEIGE)
-                .onKeyPressed(hero.onKeyPressed())
+                .onKeyPressed(overworld.onKeyPressed())
                 .build());
         primaryStage.setTitle("RP9");
         primaryStage.show();
+    }
+
+    private Parent loadXmlFile(String xml) {
+        try {
+            final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+            return FXMLLoader.load(contextClassLoader.getResource(xml));
+        } catch (IOException e) {
+            throw new RuntimeException("cannot find file" + xml);
+        }
     }
 
     private Node createSidePanel() {
@@ -62,7 +79,7 @@ public class JavaFXApplication extends Application {
     }
 
     private Node overworld() {
-        return new Group(overworldFactory.createOverworld((SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE).getTiles().entrySet().stream()
+        return new Group(overworld.getTiles().entrySet().stream()
                 .map(entry -> rectangle()
                                 .color(toTexture(entry.getValue()))
                                 .dimension(square(RECTANGLE_SIZE))
@@ -89,6 +106,9 @@ public class JavaFXApplication extends Application {
                 return image().url("com/swsb/rp9/secondary/module/texture/moss_plants_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
             case SNOW:
                 return image().url("com/swsb/rp9/secondary/module/texture/snow2ice_d.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+            case WALL:
+                return image().url("com/swsb/rp9/secondary/module/texture/wall.jpg").dimension(square(RECTANGLE_SIZE)).buildPattern();
+
         }
         throw new RuntimeException("Unknown tileType type" + tileType);
     }

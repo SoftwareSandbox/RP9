@@ -1,4 +1,9 @@
-package com.swsb.rp9.secondary.module.game;
+package com.swsb.rp9.secondary.module.overworld;
+
+import com.swsb.rp9.secondary.module.api.Coordinate;
+import com.swsb.rp9.secondary.module.api.Overworld;
+import com.swsb.rp9.secondary.module.api.OverworldFactory;
+import com.swsb.rp9.secondary.module.api.TileType;
 
 import java.util.HashMap;
 import java.util.Map;
