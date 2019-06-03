@@ -2,4 +2,7 @@ rootProject.name = 'rp9'
 
 include 'root-module'
 include 'secondary-module'
+include 'gui:components:start-menu'
+include 'gui:components:core'
+include 'gui:game-orchestrator'
 

@@ -7,6 +7,7 @@ ext.moduleName = 'root-module'
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
     implementation project(':secondary-module')
+    implementation project(':gui:game-orchestrator')
 }
 //running :root-module:assembleBootDist makes a runtime image containing only the executable jar, I guess that's what we want?
 //This is some black magic though, maybe we should try implementing it ourselves...
