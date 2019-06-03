@@ -8,6 +8,7 @@ module secondary.module {
     // For some reason opens ... to javafx.graphics does not seem to work
     // See also https://github.com/javafxports/openjdk-jfx/issues/441
     opens com.swsb.rp9.secondary.module.sprite;
+    opens com.swsb.rp9.secondary.module.sprite.menu;
     opens com.swsb.rp9.secondary.module.texture;
     opens com.swsb.rp9.secondary.module.fxml;
 }
