@@ -22,6 +22,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
@@ -46,7 +48,7 @@ public class JavaFXApplication extends Application {
     private Hero hero;
 
     private OverworldFactory overworldFactory = new WalledOverworldFactory();
-    private Overworld overworld = overworldFactory.createOverworld((SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE);;
+    private Overworld overworld = overworldFactory.createOverworld((SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE);
 
 
     void run() {
@@ -62,26 +64,33 @@ public class JavaFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         hero = new Hero(image().url("com/swsb/rp9/secondary/module/sprite/fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
-
+        MediaPlayer mediaPlayer = createMediaPlayer();
         Scene overworldScene = createOverworldScene();
-        Scene startScreen = createStartScreenScene(newGameListener(primaryStage, overworldScene));
+        Scene startScreen = createStartScreenScene(newGameListener(primaryStage, overworldScene, mediaPlayer));
 
         primaryStage.setScene(startScreen);
         primaryStage.setTitle("RP9");
         primaryStage.show();
     }
 
-    private EventHandler<? super KeyEvent> newGameListener(Stage primaryStage, Scene overworldScene) {
+    private MediaPlayer createMediaPlayer() {
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("sound/mountain_trolls.mp3").toExternalForm()));
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
+        return mediaPlayer;
+    }
+
+    private EventHandler<? super KeyEvent> newGameListener(Stage primaryStage, Scene overworldScene, MediaPlayer mediaPlayer) {
         return event -> {
                 if (event.getCode().equals(KeyCode.ENTER)) {
                     primaryStage.setScene(overworldScene);
+                    mediaPlayer.stop();
                 }
             };
     }
 
     private Scene createStartScreenScene(EventHandler<? super KeyEvent> newGameEventHandler) {
         VBox verticalMenu = createMenu(newGameEventHandler);
-
         TilePane startScreen = new TilePane(verticalMenu);
         startScreen.setBackground(new Background(new BackgroundFill(BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         startScreen.setAlignment(Pos.CENTER);
