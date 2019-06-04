@@ -1,4 +1,4 @@
-package com.swsb.rp9.generic.scene;
+package com.swsb.rp9.core;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;

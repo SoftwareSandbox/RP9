@@ -1,4 +1,4 @@
-package com.swsb.rp9.generic.scene;
+package com.swsb.rp9.core;
 
 public class Dimension {
     private final double width;
