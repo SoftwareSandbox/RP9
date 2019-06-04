@@ -22,3 +22,4 @@ Shout-out to the artists who made the sprites we used:
 - https://tylerjwarren.itch.io/free-tyler-warren-rpg-battlers-favorites-30
 - https://kvsr.itch.io/
 - https://free-game-assets.itch.io/40-free-staves-2d-weapon
+- https://vnitti.itch.io/glacial-mountains-parallax-background
