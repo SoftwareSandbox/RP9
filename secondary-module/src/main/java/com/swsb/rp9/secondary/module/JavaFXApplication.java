@@ -11,7 +11,6 @@ import com.swsb.rp9.secondary.module.overworld.WalledOverworldFactory;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -19,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -36,7 +36,8 @@ import static com.swsb.rp9.secondary.module.frondend.Position.position;
 import static com.swsb.rp9.secondary.module.frondend.RectangleBuilder.rectangle;
 import static com.swsb.rp9.secondary.module.frondend.SceneBuilder.scene;
 import static java.util.stream.Collectors.toList;
-import static javafx.scene.paint.Color.*;
+import static javafx.scene.paint.Color.BEIGE;
+import static javafx.scene.paint.Color.WHITESMOKE;
 
 public class JavaFXApplication extends Application {
 
@@ -59,8 +60,6 @@ public class JavaFXApplication extends Application {
     public void init() {
     }
 
-    //Deze code is bweik lelijk, maar hopelijk kan je hier rap uit leren hoe iets werkt in javaFX
-    //Je mag alles weggooien als je dat wil. Daar heb ik absoluut niks tegen
     @Override
     public void start(Stage primaryStage) {
         hero = new Hero(image().url("com/swsb/rp9/secondary/module/sprite/fairy.png").dimension(square(RECTANGLE_SIZE)).startingPosition(position(280, 240)).buildView());
@@ -92,12 +91,18 @@ public class JavaFXApplication extends Application {
     private Scene createStartScreenScene(EventHandler<? super KeyEvent> newGameEventHandler) {
         VBox verticalMenu = createMenu(newGameEventHandler);
         TilePane startScreen = new TilePane(verticalMenu);
-        startScreen.setBackground(new Background(new BackgroundFill(BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        startScreen.setBackground(createStartScreenBackground());
         startScreen.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(startScreen, STANDARD_SCENE_DIMENSION.getWidth(), STANDARD_SCENE_DIMENSION.getHeight());
         scene.getStylesheets().add(this.getClass().getResource("styles/start-screen.css").toExternalForm());
         return scene;
+    }
+
+    private Background createStartScreenBackground() {
+        BackgroundImage backgroundImage = new BackgroundImage(new Image("com/swsb/rp9/secondary/module/background/glacial_mountains_preview_lightened.png"),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(0, 0, false, false, false, true));
+        return new Background(backgroundImage);
     }
 
     private VBox createMenu(EventHandler<? super KeyEvent> newGameEventHandler) {

@@ -11,4 +11,5 @@ module secondary.module {
     opens com.swsb.rp9.secondary.module.sprite.menu;
     opens com.swsb.rp9.secondary.module.texture;
     opens com.swsb.rp9.secondary.module.fxml;
+    opens com.swsb.rp9.secondary.module.background;
 }
