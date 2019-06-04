@@ -1,13 +1,11 @@
 package com.swsb.rp9.game.orchestrator;
 
-import com.swsb.rp9.generic.scene.Dimension;
-import com.swsb.rp9.start.menu.api.StartMenuScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class GameFXLauncher extends Application {
 
-    private static final double SCENE_WIDTH = 960;
+    private GameOrchestrator orchestrator;
 
     /**
      * Use this method to launch the game.
@@ -18,12 +16,13 @@ public class GameFXLauncher extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage
-                .setScene(StartMenuScene
-                .startMenuScene(Dimension.square(SCENE_WIDTH), event ->
-                        System.out.println(event.getCode().getName()))
-                .build());
-        primaryStage.setTitle("RP9");
-        primaryStage.show();
+        orchestrator = new GameOrchestrator(primaryStage);
+        orchestrator.startGameLoop();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        orchestrator.stopGameLoop();
     }
 }

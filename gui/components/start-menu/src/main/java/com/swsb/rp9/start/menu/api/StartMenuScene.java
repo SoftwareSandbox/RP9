@@ -1,38 +1,29 @@
 package com.swsb.rp9.start.menu.api;
 
-import com.swsb.rp9.generic.scene.Dimension;
-import com.swsb.rp9.generic.scene.SceneBuilder;
+import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.start.menu.StartMenuView;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
 
-public class StartMenuScene {
+public class StartMenuScene extends GameScene {
 
-    private final SceneBuilder sceneBuilder;
-    private final StartMenuView view;
+    // TODO: Temp fix (should not be static)
+    private static final StartMenuView view = new StartMenuView();
 
-    private StartMenuScene() {
-        sceneBuilder = new SceneBuilder();
-        view = new StartMenuView();
+    public StartMenuScene() {
+        super(view.getDimension(), view.getBackgroundColor(), view.getNodes());
     }
 
-    public static StartMenuScene startMenuScene(Dimension dimension, EventHandler<? super KeyEvent> onKeyPressed) {
-        var startMenuScene = new StartMenuScene();
-        startMenuScene.sceneBuilder
-                .dimension(dimension)
-                .onKeyPressed(onKeyPressed);
-        return startMenuScene;
+    @Override
+    protected void setOnSceneCompleteEventHandler() {
+        getScene().setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.N)) {
+                markAsComplete();
+            }
+        });
     }
 
-    public Scene build() {
-        return sceneBuilder
-                .color(Color.BEIGE)
-                .nodes(view.getNodes())
-                .build();
+    @Override
+    public String getTitle() {
+        return "StartMenu";
     }
-
-
-
 }
