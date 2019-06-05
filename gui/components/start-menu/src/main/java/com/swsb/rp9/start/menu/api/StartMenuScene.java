@@ -17,7 +17,9 @@ public class StartMenuScene extends GameScene {
     protected void setOnSceneCompleteEventHandler() {
         getScene().setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.N)) {
-                markAsComplete();
+                getSceneTransitionState()
+                        .markAsReadyForTransition()
+                        .transitionToChild(0);
             }
         });
     }

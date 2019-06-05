@@ -14,7 +14,11 @@ public class OverworldScene extends GameScene {
 
     @Override
     protected void setOnSceneCompleteEventHandler() {
-        getScene().setOnMouseClicked(event -> markAsComplete());
+        getScene()
+                .setOnMouseClicked(event ->
+                    getSceneTransitionState()
+                            .markAsReadyForTransition()
+                            .transitionToChild(0));
     }
 
     @Override
