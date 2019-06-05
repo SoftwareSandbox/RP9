@@ -33,7 +33,7 @@ public class StartMenuView {
     }
 
     private Node generateLabel() {
-        Label label = new Label("Press N to advance");
+        Label label = new Label("Press N to go to Overworld, Click the mouse to go to the credits");
         label.setTextFill(Color.WHITE);
         return label;
     }

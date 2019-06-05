@@ -10,5 +10,6 @@ ext.moduleName = 'game-orchestrator'
 dependencies {
     implementation project(':gui:components:core')
     implementation project(':gui:components:start-menu')
+    implementation project(':gui:components:credits')
     implementation project(':gui:components:overworld')
 }

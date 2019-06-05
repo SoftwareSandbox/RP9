@@ -4,6 +4,7 @@ module game.orchestrator {
 
     requires start.menu;
     requires overworld;
+    requires credits;
 
     requires javafx.controls;
     requires javafx.fxml;

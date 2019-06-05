@@ -28,7 +28,7 @@ public class OverworldView {
     }
 
     private Node generateButton() {
-        return new Button("Click (not on the button) to Advance to next scene!");
+        return new Button("Click somewhere (not on the button) to go back.");
     }
 
     private List<Node> generateNodes() {

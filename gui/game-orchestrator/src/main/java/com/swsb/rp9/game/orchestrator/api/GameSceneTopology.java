@@ -1,6 +1,7 @@
 package com.swsb.rp9.game.orchestrator.api;
 
 import com.swsb.rp9.core.GameScene;
+import com.swsb.rp9.credits.api.CreditsScene;
 import com.swsb.rp9.overworld.api.OverworldScene;
 import com.swsb.rp9.start.menu.api.StartMenuScene;
 
@@ -29,16 +30,22 @@ public class GameSceneTopology {
     public void createDefaultTopology() {
         var startMenuScene = new StartMenuScene();
         var overworldScene = new OverworldScene();
+        var creditsScene = new CreditsScene();
 
         gameTopology
                 .putAll(
                         Map.of(
                                 startMenuScene,
                                 TopologyNode.create(startMenuScene)
-                                        .addChildGameScene(overworldScene),
+                                        .addChildGameScene(overworldScene)
+                                        .addChildGameScene(creditsScene),
                                 overworldScene,
                                 TopologyNode.create(overworldScene)
-                                        .addChildGameScene(startMenuScene)));
+                                        .addChildGameScene(startMenuScene),
+                                creditsScene,
+                                TopologyNode.create(creditsScene)
+                                        .addChildGameScene(startMenuScene)
+                        ));
 
 
         currentGameScene = startMenuScene;

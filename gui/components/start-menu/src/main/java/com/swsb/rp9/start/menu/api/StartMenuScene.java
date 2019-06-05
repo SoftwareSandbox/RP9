@@ -22,6 +22,11 @@ public class StartMenuScene extends GameScene {
                         .transitionToChild(0);
             }
         });
+        getScene().setOnMouseClicked(event ->
+                getSceneTransitionState()
+                        .markAsReadyForTransition()
+                        .transitionToChild(1)
+        );
     }
 
     @Override
