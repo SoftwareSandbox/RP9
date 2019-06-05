@@ -42,6 +42,7 @@ public class CreditsView {
     private Node generateCredits() {
         Label label = new Label("CREDITS: Some Cegeka people! 6 in total");
         label.setTextFill(Color.YELLOW);
+        label.setTranslateY(50);
         return label;
     }
 
