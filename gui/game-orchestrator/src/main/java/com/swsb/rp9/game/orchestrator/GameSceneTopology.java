@@ -1,4 +1,4 @@
-package com.swsb.rp9.game.orchestrator.api;
+package com.swsb.rp9.game.orchestrator;
 
 import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.credits.api.CreditsScene;

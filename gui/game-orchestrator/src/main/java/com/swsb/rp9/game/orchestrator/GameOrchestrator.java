@@ -1,6 +1,5 @@
 package com.swsb.rp9.game.orchestrator;
 
-import com.swsb.rp9.game.orchestrator.api.GameSceneTopology;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
