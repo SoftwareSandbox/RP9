@@ -1,35 +1,25 @@
 package com.swsb.rp9.start.menu;
 
 import com.swsb.rp9.core.Dimension;
+import com.swsb.rp9.core.GameView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
-import java.util.Collections;
 import java.util.List;
 
-public class StartMenuView {
+public class StartMenuView extends GameView {
 
-    private final List<Node> nodes;
+    private static final Color BACKGROUND_COLOR = Color.DARKBLUE;
+    private static final Dimension DIMENSIONS = Dimension.square(750);
 
     public StartMenuView() {
-        nodes = generateNodes();
+        super(DIMENSIONS, BACKGROUND_COLOR);
     }
 
-    public Node[] getNodes() {
-        return nodes.toArray(new Node[0]);
-    }
-
-    public Dimension getDimension() {
-        return Dimension.square(750);
-    }
-
-    public Color getBackgroundColor() {
-        return Color.DARKBLUE;
-    }
-
-    private List<Node> generateNodes() {
-        return Collections.singletonList(generateLabel());
+    @Override
+    protected List<Node> createGuiElements() {
+        return List.of(generateLabel());
     }
 
     private Node generateLabel() {

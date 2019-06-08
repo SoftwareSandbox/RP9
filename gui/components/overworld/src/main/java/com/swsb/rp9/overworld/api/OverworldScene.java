@@ -1,15 +1,17 @@
 package com.swsb.rp9.overworld.api;
 
 import com.swsb.rp9.core.GameScene;
-import com.swsb.rp9.overworld.OverworldView;
+import com.swsb.rp9.core.GameView;
+import com.swsb.rp9.overworld.OverworldDefaultView;
 
 public class OverworldScene extends GameScene {
 
-    // TODO: Temp fix (should not be static)
-    private static final OverworldView view = new OverworldView();
-
     public OverworldScene() {
-        super(view.getDimension(), view.getBackgroundColor(), view.getNodes());
+        this(null);
+    }
+
+    public OverworldScene(GameView gameView) {
+        super(gameView);
     }
 
     @Override
@@ -19,6 +21,11 @@ public class OverworldScene extends GameScene {
                     getSceneTransitionState()
                             .markAsReadyForTransition()
                             .transitionToChild(0));
+    }
+
+    @Override
+    protected GameView createDefaultGameView() {
+        return new OverworldDefaultView();
     }
 
     @Override

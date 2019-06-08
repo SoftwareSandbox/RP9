@@ -1,16 +1,18 @@
 package com.swsb.rp9.start.menu.api;
 
 import com.swsb.rp9.core.GameScene;
+import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.start.menu.StartMenuView;
 import javafx.scene.input.KeyCode;
 
 public class StartMenuScene extends GameScene {
 
-    // TODO: Temp fix (should not be static)
-    private static final StartMenuView view = new StartMenuView();
-
     public StartMenuScene() {
-        super(view.getDimension(), view.getBackgroundColor(), view.getNodes());
+        this(null);
+    }
+
+    public StartMenuScene(GameView gameView) {
+        super(gameView);
     }
 
     @Override
@@ -27,6 +29,11 @@ public class StartMenuScene extends GameScene {
                         .markAsReadyForTransition()
                         .transitionToChild(1)
         );
+    }
+
+    @Override
+    protected GameView createDefaultGameView() {
+        return new StartMenuView();
     }
 
     @Override

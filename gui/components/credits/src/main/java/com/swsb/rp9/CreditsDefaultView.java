@@ -1,33 +1,24 @@
 package com.swsb.rp9;
 
 import com.swsb.rp9.core.Dimension;
+import com.swsb.rp9.core.GameView;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class CreditsView {
+public class CreditsDefaultView extends GameView {
 
-    private final List<Node> nodes;
+    private static final Dimension DIMENSIONS = Dimension.square(750);
+    private static final Color BACKGROUND_COLOR = Color.BLACK;
 
-    public CreditsView() {
-        nodes = generateNodes();
+    public CreditsDefaultView() {
+        super(DIMENSIONS, BACKGROUND_COLOR);
     }
 
-    public Node[] getNodes() {
-        return nodes.toArray(new Node[0]);
-    }
-
-    public Dimension getDimension() {
-        return Dimension.square(750);
-    }
-
-    public Color getBackgroundColor() {
-        return Color.BLACK;
-    }
-
-    private List<Node> generateNodes() {
+    @Override
+    protected List<Node> createGuiElements() {
         return List.of(
                 generateLabel(),
                 generateCredits());

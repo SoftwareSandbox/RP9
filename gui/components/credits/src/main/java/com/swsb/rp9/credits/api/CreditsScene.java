@@ -1,16 +1,18 @@
 package com.swsb.rp9.credits.api;
 
-import com.swsb.rp9.CreditsView;
+import com.swsb.rp9.CreditsDefaultView;
 import com.swsb.rp9.core.GameScene;
+import com.swsb.rp9.core.GameView;
 import javafx.scene.input.KeyCode;
 
 public class CreditsScene extends GameScene {
 
-    // TODO: Temp fix (should not be static)
-    private static final CreditsView view = new CreditsView();
-
     public CreditsScene() {
-        super(view.getDimension(), view.getBackgroundColor(), view.getNodes());
+        this(null);
+    }
+
+    public CreditsScene(GameView gameView) {
+        super(gameView);
     }
 
     @Override
@@ -22,6 +24,11 @@ public class CreditsScene extends GameScene {
                         .transitionToChild(0);
             }
         });
+    }
+
+    @Override
+    protected GameView createDefaultGameView() {
+        return new CreditsDefaultView();
     }
 
     @Override

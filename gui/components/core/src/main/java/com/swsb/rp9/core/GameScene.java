@@ -1,34 +1,30 @@
 package com.swsb.rp9.core;
 
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 
 import java.util.Objects;
-
-import static java.util.Arrays.asList;
 
 public abstract class GameScene {
 
     private final Scene scene;
-
+    private final GameView gameView;
     private final SceneTransitionState sceneTransitionState;
 
-    public GameScene(Dimension dimension, Color backgroundColor, Node... nodes) {
-        scene = new Scene(new Group(asList(nodes)), dimension.getWidth(), dimension.getHeight(), backgroundColor);
-        sceneTransitionState = new GameScene.SceneTransitionState();
+    public GameScene(GameView gameView) {
+        this.gameView = assignDefaultViewIfNull(gameView);
+        this.scene = createScene(this.gameView);
+        this.sceneTransitionState = new GameScene.SceneTransitionState();
         setOnSceneCompleteEventHandler();
     }
 
     public abstract String getTitle();
-
     protected abstract void setOnSceneCompleteEventHandler();
+    protected abstract GameView createDefaultGameView();
 
     protected SceneTransitionState getSceneTransitionState() {
         return sceneTransitionState;
     }
-
     public boolean isReadyForTransition() {
         return sceneTransitionState.isReadyForTransition();
     }
@@ -57,6 +53,17 @@ public abstract class GameScene {
     @Override
     public int hashCode() {
         return Objects.hash(scene, sceneTransitionState);
+    }
+
+    private Scene createScene(GameView gameView) {
+        return new Scene(new Group(gameView.getGuiElements()),
+                gameView.getDimension().getWidth(),
+                gameView.getDimension().getHeight(),
+                gameView.getBackgroundColor());
+    }
+
+    private GameView assignDefaultViewIfNull(GameView gameView) {
+        return gameView == null ? createDefaultGameView() : gameView;
     }
 
     protected static class SceneTransitionState {
