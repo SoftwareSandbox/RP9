@@ -3,33 +3,40 @@ package com.swsb.rp9.core;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
-import java.util.Objects;
+import java.util.UUID;
+
+import static com.swsb.rp9.core.SceneTransitionPosition.NO_POSITION;
 
 public abstract class GameScene {
 
+    private final UUID uid;
     private final Scene scene;
     private final GameView gameView;
-    private final SceneTransitionState sceneTransitionState;
+    private SceneTransitionState sceneTransitionState;
 
     public GameScene(GameView gameView) {
+        this.uid = UUID.randomUUID();
         this.gameView = assignDefaultViewIfNull(gameView);
         this.scene = createScene(this.gameView);
         this.sceneTransitionState = new GameScene.SceneTransitionState();
-        setOnSceneCompleteEventHandler();
     }
 
     public abstract String getTitle();
-    protected abstract void setOnSceneCompleteEventHandler();
     protected abstract GameView createDefaultGameView();
 
-    protected SceneTransitionState getSceneTransitionState() {
-        return sceneTransitionState;
+    public void performSceneTransition() {
+        if(!gameView.getRegisteredSceneTransitions().isEmpty()) {
+            this.sceneTransitionState =  new GameScene.SceneTransitionState()
+                    .transitionToChild(gameView.getRegisteredSceneTransitions().poll())
+                    .markAsReadyForTransition();
+        }
     }
+
     public boolean isReadyForTransition() {
         return sceneTransitionState.isReadyForTransition();
     }
 
-    public int getIndexOfChildToTransitionTo() {
+    public SceneTransitionPosition getIndexOfChildToTransitionTo() {
         return sceneTransitionState.getChildIndex();
     }
 
@@ -41,18 +48,12 @@ public abstract class GameScene {
         return scene;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GameScene gameScene = (GameScene) o;
-        return Objects.equals(scene, gameScene.scene) &&
-                Objects.equals(sceneTransitionState, gameScene.sceneTransitionState);
+    public GameView getGameView() {
+        return gameView;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(scene, sceneTransitionState);
+    public UUID getUUID() {
+        return uid;
     }
 
     private Scene createScene(GameView gameView) {
@@ -66,10 +67,15 @@ public abstract class GameScene {
         return gameView == null ? createDefaultGameView() : gameView;
     }
 
-    protected static class SceneTransitionState {
+    /**
+     * Represents the transition state of a GamingScene instance.
+     * Meaning, SceneTransitionState encapsulates the state required to decide whether or not the current GameScene
+     * needs to be replaced by another (child) GameScene (due to an event made by the played).
+     */
+    private static class SceneTransitionState {
 
         private boolean isReadyForTransition;
-        private int childIndex;
+        private SceneTransitionPosition childIndex;
 
         private SceneTransitionState() {
             markAsNotReadyForTransition();
@@ -80,21 +86,21 @@ public abstract class GameScene {
         }
 
 
-        private int getChildIndex() {
+        private SceneTransitionPosition getChildIndex() {
             return childIndex;
         }
 
         private void markAsNotReadyForTransition() {
             this.isReadyForTransition = false;
-            this.childIndex = -1;
+            this.childIndex = NO_POSITION;
         }
 
-        public SceneTransitionState markAsReadyForTransition() {
+        private SceneTransitionState markAsReadyForTransition() {
             isReadyForTransition = true;
             return this;
         }
 
-        public SceneTransitionState transitionToChild(int childIndex) {
+        private SceneTransitionState transitionToChild(SceneTransitionPosition childIndex) {
             this.childIndex = childIndex;
             return this;
         }

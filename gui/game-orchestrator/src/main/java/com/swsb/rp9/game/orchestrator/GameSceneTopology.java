@@ -1,19 +1,20 @@
 package com.swsb.rp9.game.orchestrator;
 
 import com.swsb.rp9.core.GameScene;
+import com.swsb.rp9.core.SceneTransitionPosition;
 import com.swsb.rp9.credits.api.CreditsScene;
 import com.swsb.rp9.overworld.api.OverworldScene;
 import com.swsb.rp9.start.menu.api.StartMenuScene;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
+import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_TWO;
 
 public class GameSceneTopology {
 
     private GameScene currentGameScene;
-    private Map<GameScene, TopologyNode> gameTopology;
+    private Map<UUID, TopologyNode> gameTopology;
 
     public GameSceneTopology() {
         this.gameTopology = new HashMap<>();
@@ -35,16 +36,16 @@ public class GameSceneTopology {
         gameTopology
                 .putAll(
                         Map.of(
-                                startMenuScene,
+                                startMenuScene.getUUID(),
                                 TopologyNode.create(startMenuScene)
-                                        .addChildGameScene(overworldScene)
-                                        .addChildGameScene(creditsScene),
-                                overworldScene,
+                                        .addChildGameScene(POSITION_ONE, overworldScene)
+                                        .addChildGameScene(POSITION_TWO, creditsScene),
+                                overworldScene.getUUID(),
                                 TopologyNode.create(overworldScene)
-                                        .addChildGameScene(startMenuScene),
-                                creditsScene,
+                                        .addChildGameScene(POSITION_ONE, startMenuScene),
+                                creditsScene.getUUID(),
                                 TopologyNode.create(creditsScene)
-                                        .addChildGameScene(startMenuScene)
+                                        .addChildGameScene(POSITION_ONE, startMenuScene)
                         ));
 
 
@@ -52,9 +53,10 @@ public class GameSceneTopology {
     }
 
     public GameScene transition() {
+        currentGameScene.performSceneTransition();
         if (currentGameScene.isReadyForTransition()) {
             var previousGameScene = currentGameScene;
-            currentGameScene = gameTopology.get(currentGameScene)
+            currentGameScene = gameTopology.get(currentGameScene.getUUID())
                     .getChildGameSceneToTransitionTo();
             previousGameScene.resetSceneTransitionState();
         }
@@ -78,14 +80,14 @@ public class GameSceneTopology {
             return new TopologyNode(gameScene);
         }
 
-        private TopologyNode addChildGameScene(GameScene succeedingGameScene) {
-            childGameScenes.add(succeedingGameScene);
+        private TopologyNode addChildGameScene(SceneTransitionPosition sceneTransitionPosition, GameScene succeedingGameScene) {
+            childGameScenes.add(sceneTransitionPosition.getIndexOfTransitionPosition(), succeedingGameScene);
             return this;
         }
 
         private GameScene getChildGameSceneToTransitionTo() {
             return childGameScenes
-                    .get(gameScene.getIndexOfChildToTransitionTo());
+                    .get(gameScene.getIndexOfChildToTransitionTo().getIndexOfTransitionPosition());
         }
     }
 

@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
+import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
+
 public class OverworldDefaultView extends GameView {
 
     private static final Color BACKGROUND_COLOR = Color.YELLOW;
@@ -19,11 +21,13 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     protected List<Node> createGuiElements() {
-        return List.of(generateButton());
+        return List.of(backButton());
     }
 
-    private Node generateButton() {
-        return new Button("Click somewhere (not on the button) to go back.");
+    private Node backButton() {
+        Button btn = new Button("GO BACK");
+        btn.setOnMouseClicked(event -> registerSceneTransition(POSITION_ONE));
+        return btn;
     }
 
 }

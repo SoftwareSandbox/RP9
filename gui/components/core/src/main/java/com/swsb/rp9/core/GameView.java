@@ -4,12 +4,15 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import static java.util.Collections.unmodifiableList;
 
 public abstract class GameView {
 
     private final List<Node> guiElements;
+    private final Queue<SceneTransitionPosition> sceneTransitions;
     private final Dimension dimensions;
     private final Color backgroundColor;
 
@@ -17,20 +20,28 @@ public abstract class GameView {
         this.dimensions = dimensions;
         this.backgroundColor = backgroundColor;
         guiElements = createGuiElements();
+        sceneTransitions = new ArrayBlockingQueue<>(SceneTransitionPosition.values().length);
+    }
+
+    public void registerSceneTransition(SceneTransitionPosition sceneTransitionPosition) {
+        sceneTransitions.add(sceneTransitionPosition);
     }
 
     protected abstract List<Node> createGuiElements();
 
+    Queue<SceneTransitionPosition> getRegisteredSceneTransitions() {
+        return sceneTransitions;
+    }
 
-    public List<Node> getGuiElements() {
+    List<Node> getGuiElements() {
         return unmodifiableList(guiElements);
     }
 
-    public Dimension getDimension() {
+    Dimension getDimension() {
         return dimensions;
     }
 
-    public Color getBackgroundColor() {
+    Color getBackgroundColor() {
         return backgroundColor;
     }
 

@@ -3,10 +3,13 @@ package com.swsb.rp9.start.menu;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
 import java.util.List;
+
+import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
+import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_TWO;
 
 public class StartMenuView extends GameView {
 
@@ -19,13 +22,23 @@ public class StartMenuView extends GameView {
 
     @Override
     protected List<Node> createGuiElements() {
-        return List.of(generateLabel());
+        return List.of(
+                newGameButton(),
+                creditsButton());
     }
 
-    private Node generateLabel() {
-        Label label = new Label("Press N to go to Overworld, Click the mouse to go to the credits");
-        label.setTextFill(Color.WHITE);
-        return label;
+    private Node newGameButton() {
+        Button btn = new Button("NEW GAME");
+        btn.setOnMouseClicked(event -> registerSceneTransition(POSITION_ONE));
+        btn.setLayoutY(50);
+        return btn;
+    }
+
+    private Node creditsButton() {
+        Button btn = new Button("CREDITS");
+        btn.setOnMouseClicked(event -> registerSceneTransition(POSITION_TWO));
+        btn.setLayoutY(100);
+        return btn;
     }
 
 }
