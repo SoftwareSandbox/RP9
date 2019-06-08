@@ -20,6 +20,11 @@ public class OverworldDefaultView extends GameView {
     }
 
     @Override
+    public GameView redraw() {
+        return this;
+    }
+
+    @Override
     protected List<Node> createGuiElements() {
         return List.of(backButton());
     }

@@ -13,28 +13,42 @@ public class CreditsDefaultView extends GameView {
     private static final Dimension DIMENSIONS = Dimension.square(750);
     private static final Color BACKGROUND_COLOR = Color.BLACK;
 
-    public CreditsDefaultView() {
-        super(DIMENSIONS, BACKGROUND_COLOR);
-    }
+    private Node backLbl, creditsLbl;
+
+    public CreditsDefaultView() {super(DIMENSIONS, BACKGROUND_COLOR); }
 
     @Override
     protected List<Node> createGuiElements() {
+        backLbl =  createBackLabel();
+        creditsLbl = createCreditsLabel();
+
         return List.of(
-                generateLabel(),
-                generateCredits());
+                backLbl,
+                creditsLbl);
     }
 
-    private Node generateLabel() {
-        Label label = new Label("Press B to go back!");
+    @Override
+    public GameView redraw() {
+        exampleOfMovingLabel();
+        return this;
+    }
+
+    private Node createBackLabel() {
+        var label = new Label("Press B to go back!");
         label.setTextFill(Color.WHITE);
         return label;
     }
 
-    private Node generateCredits() {
-        Label label = new Label("CREDITS: Some Cegeka people! 6 in total");
+    private Node createCreditsLabel() {
+        var label = new Label("CREDITS: Some Cegeka people! 6 in total");
         label.setTextFill(Color.YELLOW);
         label.setTranslateY(50);
         return label;
+    }
+
+    private void exampleOfMovingLabel() {
+        creditsLbl.setTranslateY((DIMENSIONS.getHeight() * Math.random()));
+        creditsLbl.setTranslateX((DIMENSIONS.getWidth() * Math.random()));
     }
 
 }

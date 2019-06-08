@@ -12,7 +12,7 @@ public abstract class GameScene {
 
     private final UUID uid;
     private final Scene scene;
-    private final GameView gameView;
+    private GameView gameView;
     private GameSceneTransitionState gameSceneTransitionState;
 
     public GameScene(GameView gameView) {
@@ -82,6 +82,10 @@ public abstract class GameScene {
     @Override
     public int hashCode() {
         return Objects.hash(uid);
+    }
+
+    public void redraw() {
+        gameView = gameView.redraw();
     }
 
     /**

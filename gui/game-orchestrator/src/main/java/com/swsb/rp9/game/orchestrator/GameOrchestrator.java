@@ -9,12 +9,12 @@ import java.util.TimerTask;
 
 /**
  * Orchestrates the entire game.
- * It contains the game loop running at an fps of {@value #FRAMES_PER_SECOND}.
+ * It contains the game loop running at an fps of {@code #FPS}.
  * It loads in the different scenes (such as the start menu and the overworld)
  */
 class GameOrchestrator {
 
-    private static final int FRAMES_PER_SECOND = 10000 / 60;
+    private static final int FPS = get60FPS();
 
     private final Stage stage;
     private final Timer timer;
@@ -30,12 +30,14 @@ class GameOrchestrator {
     }
 
     void startGameLoop() {
-        timer.schedule(new GameLoop(gameSceneToShowOnStartup), 0, FRAMES_PER_SECOND);
+        timer.schedule(new GameLoop(gameSceneToShowOnStartup), 0, FPS);
     }
 
     void stopGameLoop() {
         timer.cancel();
     }
+
+    private static int get60FPS() { return 1000 / 60; }
 
     /**
      * Represents the game loop.
@@ -57,10 +59,8 @@ class GameOrchestrator {
         }
 
         /**
-         * Flow (TODO):
-         * 1. Perform game logic (business rules)
-         * 2. Redraw all GUI elements (move character,...), scene,...
-         * <p>
+         * This method is the actual (infinite) game loop.
+         *
          * Platform.runLater is required since we're changing JavaFX classes
          * on a Thread of Timer, not on the Thread of FX Application.
          */
@@ -68,12 +68,13 @@ class GameOrchestrator {
         public void run() {
 
             Platform.runLater(() -> {
-                performSceneTransitionIfRequired();
+                loadInNewSceneIfRequired();
+                currentGameScene.redraw();
             });
 
         }
 
-        private void performSceneTransitionIfRequired() {
+        private void loadInNewSceneIfRequired() {
             var currentOrNewGameScene = gameSceneMapping.performSceneTransition(currentGameScene);
             if(!currentGameScene.equals(currentOrNewGameScene)) {
                 currentGameScene = currentOrNewGameScene;

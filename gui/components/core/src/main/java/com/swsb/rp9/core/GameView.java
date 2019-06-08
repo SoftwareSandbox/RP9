@@ -27,6 +27,8 @@ public abstract class GameView {
         registeredTransitionSlots.add(transitionSlot);
     }
 
+    public abstract GameView redraw();
+
     protected abstract List<Node> createGuiElements();
 
     boolean hasRegisteredSceneTransitionSlots() {
@@ -68,4 +70,5 @@ public abstract class GameView {
     Color getBackgroundColor() {
         return backgroundColor;
     }
+
 }
