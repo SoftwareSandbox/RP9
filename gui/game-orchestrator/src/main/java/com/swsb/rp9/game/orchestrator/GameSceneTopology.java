@@ -11,16 +11,16 @@ import java.util.*;
 import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
 import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_TWO;
 
-public class GameSceneTopology {
+class GameSceneTopology {
 
     private GameScene currentGameScene;
     private Map<UUID, TopologyNode> gameTopology;
 
-    public GameSceneTopology() {
+    GameSceneTopology() {
         this.gameTopology = new HashMap<>();
     }
 
-    public GameScene getCurrentGameScene() {
+    GameScene getCurrentGameScene() {
         return currentGameScene;
     }
 
@@ -28,7 +28,7 @@ public class GameSceneTopology {
      * A method to create a default scene topology.
      * Creates and connects the different scenes with each other.
      */
-    public void createDefaultTopology() {
+    void createDefaultTopology() {
         var startMenuScene = new StartMenuScene();
         var overworldScene = new OverworldScene();
         var creditsScene = new CreditsScene();
@@ -52,7 +52,7 @@ public class GameSceneTopology {
         currentGameScene = startMenuScene;
     }
 
-    public GameScene transition() {
+    GameScene transition() {
         currentGameScene.performSceneTransition();
         if (currentGameScene.isReadyForTransition()) {
             var previousGameScene = currentGameScene;
@@ -68,8 +68,8 @@ public class GameSceneTopology {
      */
     private static class TopologyNode {
 
-        private GameScene gameScene;
-        private List<GameScene> childGameScenes;
+        private final GameScene gameScene;
+        private final List<GameScene> childGameScenes;
 
         private TopologyNode(GameScene gameScene) {
             this.gameScene = gameScene;
