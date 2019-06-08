@@ -19,6 +19,7 @@ public abstract class GameScene {
         this.gameView = assignDefaultViewIfNull(gameView);
         this.scene = createScene(this.gameView);
         this.sceneTransitionState = new GameScene.SceneTransitionState();
+        registerSceneTransitionsForSceneEvents();
     }
 
     public abstract String getTitle();
@@ -55,6 +56,8 @@ public abstract class GameScene {
     public UUID getUUID() {
         return uid;
     }
+
+    protected void registerSceneTransitionsForSceneEvents() {}
 
     private Scene createScene(GameView gameView) {
         return new Scene(new Group(gameView.getGuiElements()),

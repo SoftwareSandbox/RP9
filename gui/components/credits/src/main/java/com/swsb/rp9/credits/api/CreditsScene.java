@@ -14,7 +14,6 @@ public class CreditsScene extends GameScene {
 
     public CreditsScene(GameView gameView) {
         super(gameView);
-        sceneEvents();
     }
 
     @Override
@@ -27,12 +26,13 @@ public class CreditsScene extends GameScene {
         return "Credits";
     }
 
-    private void sceneEvents() {
-        getScene()
-                .setOnKeyPressed(event -> {
-                    if (event.getCode().name().equals("B")) {
-                        getGameView().registerSceneTransition(POSITION_ONE);
-                    }
-                });
+    @Override
+    protected void registerSceneTransitionsForSceneEvents() {
+        getScene().setOnKeyPressed(event -> {
+            if (event.getCode().name().equals("B")) {
+                getGameView().registerSceneTransition(POSITION_ONE);
+            }
+        });
     }
+
 }
