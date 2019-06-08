@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
-import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_TWO;
+import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
+import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 
 public class StartMenuView extends GameView {
 
@@ -29,14 +29,14 @@ public class StartMenuView extends GameView {
 
     private Node newGameButton() {
         Button btn = new Button("NEW GAME");
-        btn.setOnMouseClicked(event -> registerSceneTransition(POSITION_ONE));
+        btn.setOnMouseClicked(event -> registerTransitionSlot(TRANSITION_SLOT_ONE));
         btn.setLayoutY(50);
         return btn;
     }
 
     private Node creditsButton() {
         Button btn = new Button("CREDITS");
-        btn.setOnMouseClicked(event -> registerSceneTransition(POSITION_TWO));
+        btn.setOnMouseClicked(event -> registerTransitionSlot(TRANSITION_SLOT_TWO));
         btn.setLayoutY(100);
         return btn;
     }

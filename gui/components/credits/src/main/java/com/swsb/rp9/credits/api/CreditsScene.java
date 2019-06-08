@@ -4,7 +4,8 @@ import com.swsb.rp9.CreditsDefaultView;
 import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.core.GameView;
 
-import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
+import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
+
 
 public class CreditsScene extends GameScene {
 
@@ -27,10 +28,10 @@ public class CreditsScene extends GameScene {
     }
 
     @Override
-    protected void registerSceneTransitionsForSceneEvents() {
+    protected void registerTransitionSlotsForSceneEvents() {
         getScene().setOnKeyPressed(event -> {
             if (event.getCode().name().equals("B")) {
-                getGameView().registerSceneTransition(POSITION_ONE);
+                getGameView().registerTransitionSlot(TRANSITION_SLOT_ONE);
             }
         });
     }

@@ -3,46 +3,47 @@ package com.swsb.rp9.core;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 
+import java.util.Objects;
 import java.util.UUID;
 
-import static com.swsb.rp9.core.SceneTransitionPosition.NO_POSITION;
+import static com.swsb.rp9.core.TransitionSlot.NO_TRANSITION_SLOT;
 
 public abstract class GameScene {
 
     private final UUID uid;
     private final Scene scene;
     private final GameView gameView;
-    private SceneTransitionState sceneTransitionState;
+    private GameSceneTransitionState gameSceneTransitionState;
 
     public GameScene(GameView gameView) {
         this.uid = UUID.randomUUID();
         this.gameView = assignDefaultViewIfNull(gameView);
         this.scene = createScene(this.gameView);
-        this.sceneTransitionState = new GameScene.SceneTransitionState();
-        registerSceneTransitionsForSceneEvents();
+        this.gameSceneTransitionState = new GameSceneTransitionState();
+        registerTransitionSlotsForSceneEvents();
     }
 
     public abstract String getTitle();
     protected abstract GameView createDefaultGameView();
 
-    public void performSceneTransition() {
-        if(!gameView.getRegisteredSceneTransitions().isEmpty()) {
-            this.sceneTransitionState =  new GameScene.SceneTransitionState()
-                    .transitionToChild(gameView.getRegisteredSceneTransitions().poll())
+    public void evaluateSceneTransition() {
+        if(gameView.hasRegisteredSceneTransitionSlots()) {
+            this.gameSceneTransitionState =  new GameSceneTransitionState()
+                    .usingTransitionSlot(gameView.getFirstRegisteredSceneTransitionSlot())
                     .markAsReadyForTransition();
         }
     }
 
-    public boolean isReadyForTransition() {
-        return sceneTransitionState.isReadyForTransition();
+    public boolean shouldTransitionToAnotherGameScene() {
+        return gameSceneTransitionState.isReadyForTransition();
     }
 
-    public SceneTransitionPosition getIndexOfChildToTransitionTo() {
-        return sceneTransitionState.getChildIndex();
+    public TransitionSlot getActiveTransitionSlot() {
+        return gameSceneTransitionState.getActiveTransitionSlot();
     }
 
     public void resetSceneTransitionState() {
-        sceneTransitionState.markAsNotReadyForTransition();
+        gameSceneTransitionState.reset();
     }
 
     public Scene getScene() {
@@ -57,7 +58,7 @@ public abstract class GameScene {
         return uid;
     }
 
-    protected void registerSceneTransitionsForSceneEvents() {}
+    protected void registerTransitionSlotsForSceneEvents() {}
 
     private Scene createScene(GameView gameView) {
         return new Scene(new Group(gameView.getGuiElements()),
@@ -70,41 +71,53 @@ public abstract class GameScene {
         return gameView == null ? createDefaultGameView() : gameView;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameScene gameScene = (GameScene) o;
+        return Objects.equals(uid, gameScene.uid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uid);
+    }
+
     /**
      * Represents the transition state of a GamingScene instance.
-     * Meaning, SceneTransitionState encapsulates the state required to decide whether or not the current GameScene
+     * Meaning, GameSceneTransitionState encapsulates the state required to decide whether or not the current GameScene
      * needs to be replaced by another (child) GameScene (due to an event made by the played).
      */
-    private static class SceneTransitionState {
+    private class GameSceneTransitionState {
 
         private boolean isReadyForTransition;
-        private SceneTransitionPosition childIndex;
+        private TransitionSlot activeTransitionSlot;
 
-        private SceneTransitionState() {
-            markAsNotReadyForTransition();
+        private GameSceneTransitionState() {
+            reset();
         }
 
         private boolean isReadyForTransition() {
             return isReadyForTransition;
         }
 
-
-        private SceneTransitionPosition getChildIndex() {
-            return childIndex;
+        private TransitionSlot getActiveTransitionSlot() {
+            return activeTransitionSlot;
         }
 
-        private void markAsNotReadyForTransition() {
+        private void reset() {
             this.isReadyForTransition = false;
-            this.childIndex = NO_POSITION;
+            this.activeTransitionSlot = NO_TRANSITION_SLOT;
         }
 
-        private SceneTransitionState markAsReadyForTransition() {
+        private GameSceneTransitionState markAsReadyForTransition() {
             isReadyForTransition = true;
             return this;
         }
 
-        private SceneTransitionState transitionToChild(SceneTransitionPosition childIndex) {
-            this.childIndex = childIndex;
+        private GameSceneTransitionState usingTransitionSlot(TransitionSlot activeTransitionSlot) {
+            this.activeTransitionSlot = activeTransitionSlot;
             return this;
         }
 

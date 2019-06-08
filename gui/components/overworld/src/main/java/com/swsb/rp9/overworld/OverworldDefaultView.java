@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-import static com.swsb.rp9.core.SceneTransitionPosition.POSITION_ONE;
+import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 
 public class OverworldDefaultView extends GameView {
 
@@ -26,7 +26,7 @@ public class OverworldDefaultView extends GameView {
 
     private Node backButton() {
         Button btn = new Button("GO BACK");
-        btn.setOnMouseClicked(event -> registerSceneTransition(POSITION_ONE));
+        btn.setOnMouseClicked(event -> registerTransitionSlot(TRANSITION_SLOT_ONE));
         return btn;
     }
 
