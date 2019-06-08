@@ -20,7 +20,7 @@ public abstract class GameView {
         this.dimensions = dimensions;
         this.backgroundColor = backgroundColor;
         guiElements = createGuiElements();
-        registeredTransitionSlots = new ArrayBlockingQueue<>(1);
+        registeredTransitionSlots = new ArrayBlockingQueue<>(TransitionSlot.values().length);
     }
 
     public void registerTransitionSlot(TransitionSlot transitionSlot) {

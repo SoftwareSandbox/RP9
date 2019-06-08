@@ -1,6 +1,8 @@
 package com.swsb.rp9.game.orchestrator;
 
 import com.swsb.rp9.core.GameScene;
+import com.swsb.rp9.game.orchestrator.gamemap.FullGameSceneMap;
+import com.swsb.rp9.game.orchestrator.gamemap.mappings.DefaultGameSceneMapping;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -20,13 +22,13 @@ class GameOrchestrator {
     private final Timer timer;
     private final GameScene gameSceneToShowOnStartup;
 
-    private final GameSceneMapping gameSceneMapping;
+    private final FullGameSceneMap fullGameSceneMap;
 
     GameOrchestrator(Stage stage) {
         this.stage = stage;
         this.timer = new Timer();
-        gameSceneMapping = new GameSceneMapping();
-        gameSceneToShowOnStartup = gameSceneMapping.createDefaultMapping();
+        fullGameSceneMap = new FullGameSceneMap(new DefaultGameSceneMapping());
+        gameSceneToShowOnStartup = fullGameSceneMap.getInitialGameScene();
     }
 
     void startGameLoop() {
@@ -75,11 +77,14 @@ class GameOrchestrator {
         }
 
         private void loadInNewSceneIfRequired() {
-            var currentOrNewGameScene = gameSceneMapping.performSceneTransition(currentGameScene);
-            if(!currentGameScene.equals(currentOrNewGameScene)) {
-                currentGameScene = currentOrNewGameScene;
-                stage.setScene(currentOrNewGameScene.getScene());
-                stage.setTitle(currentOrNewGameScene.getTitle());
+            currentGameScene.evaluateSceneTransition();
+
+            if (currentGameScene.shouldTransitionToAnotherGameScene()) {
+                var newGameScene = fullGameSceneMap
+                        .getLinkedGameSceneToTransitionTo(currentGameScene.getUUID());
+                stage.setScene(newGameScene.getScene());
+                stage.setTitle(newGameScene.getTitle());
+                currentGameScene = newGameScene;
             }
         }
     }
