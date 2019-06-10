@@ -1,13 +1,9 @@
 package com.swsb.rp9.core;
 
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
+import javafx.scene.Parent;
 
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
-
-import static java.util.Collections.unmodifiableList;
 
 /**
  * Represents the visual part of a 'screen', the view.
@@ -15,15 +11,13 @@ import static java.util.Collections.unmodifiableList;
  */
 public abstract class GameView {
 
-    private final List<Node> guiElements;
+    private final Parent guiRootNode;
     private final Queue<TransitionSlot> registeredTransitionSlots;
     private final Dimension dimensions;
-    private final Color backgroundColor;
 
-    public GameView(Dimension dimensions, Color backgroundColor) {
+    public GameView(Dimension dimensions) {
         this.dimensions = dimensions;
-        this.backgroundColor = backgroundColor;
-        guiElements = createGuiElements();
+        guiRootNode = createGuiRootNode();
         registeredTransitionSlots = new ArrayBlockingQueue<>(TransitionSlot.values().length);
     }
 
@@ -34,8 +28,9 @@ public abstract class GameView {
     public abstract GameView redraw();
 
     public abstract String getTitle();
+    public abstract String getStyleSheetLocation();
 
-    protected abstract List<Node> createGuiElements();
+    protected abstract Parent createGuiRootNode();
 
     boolean hasRegisteredSceneTransitionSlots() {
         return !registeredTransitionSlots.isEmpty();
@@ -50,16 +45,12 @@ public abstract class GameView {
         return registeredTransitionSlot;
     }
 
-    List<Node> getGuiElements() {
-        return unmodifiableList(guiElements);
+    Parent getGuiRootNode() {
+        return guiRootNode;
     }
 
     Dimension getDimension() {
         return dimensions;
-    }
-
-    Color getBackgroundColor() {
-        return backgroundColor;
     }
 
     /**

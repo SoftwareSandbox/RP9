@@ -1,6 +1,5 @@
 package com.swsb.rp9.core;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
 
 import java.util.Objects;
@@ -23,7 +22,8 @@ public abstract class GameScene {
     public GameScene(GameView gameView) {
         this.uid = UUID.randomUUID();
         this.gameView = assignDefaultViewIfNull(gameView);
-        this.scene = createScene(this.gameView);
+        this.scene = addStylesheetToScene(
+                createScene(this.gameView));
         this.gameSceneTransitionState = new GameSceneTransitionState();
         registerTransitionSlotsForSceneEvents();
     }
@@ -31,8 +31,8 @@ public abstract class GameScene {
     protected abstract GameView createDefaultGameView();
 
     public void evaluateSceneTransition() {
-        if(gameView.hasRegisteredSceneTransitionSlots()) {
-            this.gameSceneTransitionState =  new GameSceneTransitionState()
+        if (gameView.hasRegisteredSceneTransitionSlots()) {
+            this.gameSceneTransitionState = new GameSceneTransitionState()
                     .usingTransitionSlot(gameView.getFirstRegisteredSceneTransitionSlot())
                     .markAsReadyForTransition();
         }
@@ -62,13 +62,28 @@ public abstract class GameScene {
         return uid;
     }
 
-    protected void registerTransitionSlotsForSceneEvents() {}
+    public void redraw() {
+        gameView = gameView.redraw();
+    }
+
+    public String getTitleOfView() {
+        return gameView.getTitle();
+    }
+
+    protected void registerTransitionSlotsForSceneEvents() {
+    }
 
     private Scene createScene(GameView gameView) {
-        return new Scene(new Group(gameView.getGuiElements()),
+        return new Scene(gameView.getGuiRootNode(),
                 gameView.getDimension().getWidth(),
-                gameView.getDimension().getHeight(),
-                gameView.getBackgroundColor());
+                gameView.getDimension().getHeight());
+    }
+
+    private Scene addStylesheetToScene(Scene scene) {
+        if (gameView.getStyleSheetLocation() != null && !gameView.getStyleSheetLocation().isBlank()) {
+            scene.getStylesheets().add(gameView.getStyleSheetLocation());
+        }
+        return scene;
     }
 
     private GameView assignDefaultViewIfNull(GameView gameView) {
@@ -86,14 +101,6 @@ public abstract class GameScene {
     @Override
     public int hashCode() {
         return Objects.hash(uid);
-    }
-
-    public void redraw() {
-        gameView = gameView.redraw();
-    }
-
-    public String getTitleOfView() {
-        return gameView.getTitle();
     }
 
     /**
