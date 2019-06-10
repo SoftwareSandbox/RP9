@@ -25,7 +25,7 @@ public abstract class GameScene {
         this.scene = addStylesheetToScene(
                 createScene(this.gameView));
         this.gameSceneTransitionState = new GameSceneTransitionState();
-        registerTransitionSlotsForSceneEvents();
+        setEventHandlers();
     }
 
     protected abstract GameView createDefaultGameView();
@@ -36,6 +36,13 @@ public abstract class GameScene {
                     .usingTransitionSlot(gameView.getFirstRegisteredSceneTransitionSlot())
                     .markAsReadyForTransition();
         }
+    }
+
+    private void setEventHandlers() {
+        getScene()
+                .setOnKeyPressed(event -> getGameView().setOnKeyPressedForScene(event));
+        getScene()
+                .setOnMouseClicked(event -> getGameView().setOnMouseClickedForScene(event));
     }
 
     public boolean shouldTransitionToAnotherGameScene() {
@@ -68,9 +75,6 @@ public abstract class GameScene {
 
     public String getTitleOfView() {
         return gameView.getTitle();
-    }
-
-    protected void registerTransitionSlotsForSceneEvents() {
     }
 
     private Scene createScene(GameView gameView) {

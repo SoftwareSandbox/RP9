@@ -1,6 +1,8 @@
 package com.swsb.rp9.core;
 
 import javafx.scene.Parent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -21,16 +23,17 @@ public abstract class GameView {
         registeredTransitionSlots = new ArrayBlockingQueue<>(TransitionSlot.values().length);
     }
 
-    public void registerTransitionSlot(TransitionSlot transitionSlot) {
-        registeredTransitionSlots.add(transitionSlot);
-    }
-
     public abstract GameView redraw();
-
     public abstract String getTitle();
+    protected abstract Parent createGuiRootNode();
     public abstract String getStyleSheetLocation();
 
-    protected abstract Parent createGuiRootNode();
+    protected void setOnKeyPressedForScene(KeyEvent event) {}
+    protected void setOnMouseClickedForScene(MouseEvent event) {}
+
+    protected void registerTransitionSlot(TransitionSlot transitionSlot) {
+        registeredTransitionSlots.add(transitionSlot);
+    }
 
     boolean hasRegisteredSceneTransitionSlots() {
         return !registeredTransitionSlots.isEmpty();

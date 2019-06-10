@@ -6,10 +6,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
+import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 
 public class CreditsDefaultView extends GameView {
 
@@ -35,6 +37,13 @@ public class CreditsDefaultView extends GameView {
     public GameView redraw() {
         exampleOfMovingLabel();
         return this;
+    }
+
+    @Override
+    protected void setOnKeyPressedForScene(KeyEvent event) {
+        if (event.getCode().name().equals("B")) {
+            registerTransitionSlot(TRANSITION_SLOT_ONE);
+        }
     }
 
     @Override
