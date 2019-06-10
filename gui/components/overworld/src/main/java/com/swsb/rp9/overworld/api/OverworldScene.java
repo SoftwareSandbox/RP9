@@ -19,10 +19,4 @@ public class OverworldScene extends GameScene {
         return new OverworldDefaultView();
     }
 
-    @Override
-    public String getTitle() {
-        return "Overworld";
-    }
-
-
 }

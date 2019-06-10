@@ -57,7 +57,7 @@ class GameOrchestrator {
 
         private void setInitialScene(GameScene gameSceneToShowOnStartup) {
             stage.setScene(gameSceneToShowOnStartup.getScene());
-            stage.setTitle(gameSceneToShowOnStartup.getTitle());
+            stage.setTitle(gameSceneToShowOnStartup.getTitleOfView());
         }
 
         /**
@@ -83,7 +83,7 @@ class GameOrchestrator {
                 var newGameScene = fullGameSceneMap
                         .getGameSceneToTransitionTo(currentGameScene.getUUID());
                 stage.setScene(newGameScene.getScene());
-                stage.setTitle(newGameScene.getTitle());
+                stage.setTitle(newGameScene.getTitleOfView());
                 currentGameScene = newGameScene;
             }
         }

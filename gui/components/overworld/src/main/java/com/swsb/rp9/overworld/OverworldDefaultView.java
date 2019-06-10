@@ -20,6 +20,11 @@ public class OverworldDefaultView extends GameView {
     }
 
     @Override
+    public String getTitle() {
+        return "Overworld";
+    }
+
+    @Override
     public GameView redraw() {
         return this;
     }

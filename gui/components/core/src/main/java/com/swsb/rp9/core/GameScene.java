@@ -28,7 +28,6 @@ public abstract class GameScene {
         registerTransitionSlotsForSceneEvents();
     }
 
-    public abstract String getTitle();
     protected abstract GameView createDefaultGameView();
 
     public void evaluateSceneTransition() {
@@ -91,6 +90,10 @@ public abstract class GameScene {
 
     public void redraw() {
         gameView = gameView.redraw();
+    }
+
+    public String getTitleOfView() {
+        return gameView.getTitle();
     }
 
     /**

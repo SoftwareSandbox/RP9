@@ -2,7 +2,7 @@ package com.swsb.rp9.start.menu.api;
 
 import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.core.GameView;
-import com.swsb.rp9.start.menu.StartMenuView;
+import com.swsb.rp9.start.menu.StartMenuDefaultView;
 
 public class StartMenuScene extends GameScene {
 
@@ -16,11 +16,7 @@ public class StartMenuScene extends GameScene {
 
     @Override
     protected GameView createDefaultGameView() {
-        return new StartMenuView();
+        return new StartMenuDefaultView();
     }
 
-    @Override
-    public String getTitle() {
-        return "StartMenu";
-    }
 }

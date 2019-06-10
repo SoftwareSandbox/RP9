@@ -11,13 +11,18 @@ import java.util.List;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 
-public class StartMenuView extends GameView {
+public class StartMenuDefaultView extends GameView {
 
     private static final Color BACKGROUND_COLOR = Color.DARKBLUE;
     private static final Dimension DIMENSIONS = Dimension.square(750);
 
-    public StartMenuView() {
+    public StartMenuDefaultView() {
         super(DIMENSIONS, BACKGROUND_COLOR);
+    }
+
+    @Override
+    public String getTitle() {
+        return "StartMenu (The default one)";
     }
 
     @Override

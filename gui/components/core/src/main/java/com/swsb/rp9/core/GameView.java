@@ -33,6 +33,8 @@ public abstract class GameView {
 
     public abstract GameView redraw();
 
+    public abstract String getTitle();
+
     protected abstract List<Node> createGuiElements();
 
     boolean hasRegisteredSceneTransitionSlots() {

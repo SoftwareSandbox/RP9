@@ -18,6 +18,11 @@ public class CreditsDefaultView extends GameView {
     public CreditsDefaultView() {super(DIMENSIONS, BACKGROUND_COLOR); }
 
     @Override
+    public String getTitle() {
+        return "Credits";
+    }
+
+    @Override
     protected List<Node> createGuiElements() {
         backLbl =  createBackLabel();
         creditsLbl = createCreditsLabel();

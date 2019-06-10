@@ -23,11 +23,6 @@ public class CreditsScene extends GameScene {
     }
 
     @Override
-    public String getTitle() {
-        return "Credits";
-    }
-
-    @Override
     protected void registerTransitionSlotsForSceneEvents() {
         getScene().setOnKeyPressed(event -> {
             if (event.getCode().name().equals("B")) {
