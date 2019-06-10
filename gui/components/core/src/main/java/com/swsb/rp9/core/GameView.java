@@ -35,13 +35,25 @@ public abstract class GameView {
         return !registeredTransitionSlots.isEmpty();
     }
 
-    TransitionSlot getFirstRegisteredSceneTransitionSlot() {
+    TransitionSlot getFirstRegisteredSceneTransitionSlot() throws IllegalStateException {
         if(!hasRegisteredSceneTransitionSlots()) {
             throw new IllegalStateException("There are no TransitionSlot objects registered.");
         }
         var registeredTransitionSlot = registeredTransitionSlots.poll();
         removeOtherRegisteredTransitionSlots();
         return registeredTransitionSlot;
+    }
+
+    List<Node> getGuiElements() {
+        return unmodifiableList(guiElements);
+    }
+
+    Dimension getDimension() {
+        return dimensions;
+    }
+
+    Color getBackgroundColor() {
+        return backgroundColor;
     }
 
     /**
@@ -57,18 +69,6 @@ public abstract class GameView {
         if(hasRegisteredSceneTransitionSlots()) {
             registeredTransitionSlots.clear();
         }
-    }
-
-    List<Node> getGuiElements() {
-        return unmodifiableList(guiElements);
-    }
-
-    Dimension getDimension() {
-        return dimensions;
-    }
-
-    Color getBackgroundColor() {
-        return backgroundColor;
     }
 
 }
