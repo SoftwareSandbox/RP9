@@ -51,6 +51,7 @@ public class OverworldDefaultView extends GameView {
     @Override
     protected void setOnKeyPressedForScene(KeyEvent event) {
         overworld.onKeyPressed(event);
+
         if (event.getCode().name().equals("B")) {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
         }
@@ -58,6 +59,7 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     public GameView redraw() {
+        hero.heroStance();
         return this;
     }
 

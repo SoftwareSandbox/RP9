@@ -16,6 +16,23 @@ public class Hero {
         return view;
     }
 
+    private boolean isGrowing;
+    public void heroStance() {
+        if(isGrowing) {
+            if(view.getScaleY() <= 1.05) {
+                view.setScaleY(view.getScaleY() + 0.01);
+            } else {
+                isGrowing = !isGrowing;
+            }
+        } else {
+            if(view.getScaleY() >= 0.95) {
+                view.setScaleY(view.getScaleY() - 0.01);
+            } else {
+                isGrowing = !isGrowing;
+            }
+        }
+    }
+
     public void move(Direction direction) {
         if (direction.equals(DOWN)) {
             view.setY(view.getY() + 40);
