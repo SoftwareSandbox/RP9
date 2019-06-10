@@ -8,6 +8,11 @@ import java.util.UUID;
 
 import static com.swsb.rp9.core.TransitionSlot.NO_TRANSITION_SLOT;
 
+/**
+ * Represents an entire game scene or 'screen'.
+ * It owns a GameView and a (JavaFX) Scene.
+ * It can be seen as the C(ontroller) in a MVC application.
+ */
 public abstract class GameScene {
 
     private final UUID uid;

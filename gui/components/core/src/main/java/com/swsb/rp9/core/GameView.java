@@ -9,6 +9,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import static java.util.Collections.unmodifiableList;
 
+/**
+ * Represents the visual part of a 'screen', the view.
+ * It can be seen as the V(iew) in a MVC application.
+ */
 public abstract class GameView {
 
     private final List<Node> guiElements;
