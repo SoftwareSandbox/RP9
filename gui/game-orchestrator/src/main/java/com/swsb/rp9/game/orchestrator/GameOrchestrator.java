@@ -81,7 +81,7 @@ class GameOrchestrator {
 
             if (currentGameScene.shouldTransitionToAnotherGameScene()) {
                 var newGameScene = fullGameSceneMap
-                        .getLinkedGameSceneToTransitionTo(currentGameScene.getUUID());
+                        .getGameSceneToTransitionTo(currentGameScene.getUUID());
                 stage.setScene(newGameScene.getScene());
                 stage.setTitle(newGameScene.getTitle());
                 currentGameScene = newGameScene;

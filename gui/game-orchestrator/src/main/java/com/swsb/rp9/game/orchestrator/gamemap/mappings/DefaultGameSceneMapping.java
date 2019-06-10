@@ -49,14 +49,14 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
                         Map.of(
                                 startMenuScene.getUUID(),
                                 gameScene(startMenuScene)
-                                        .isLinkedTo(overworldScene, TRANSITION_SLOT_ONE)
-                                        .isLinkedTo(creditsScene, TRANSITION_SLOT_TWO),
+                                        .canTransitionTo(overworldScene, TRANSITION_SLOT_ONE)
+                                        .canTransitionTo(creditsScene, TRANSITION_SLOT_TWO),
                                 overworldScene.getUUID(),
                                 gameScene(overworldScene)
-                                        .isLinkedTo(startMenuScene, TRANSITION_SLOT_ONE),
+                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE),
                                 creditsScene.getUUID(),
                                 gameScene(creditsScene)
-                                        .isLinkedTo(startMenuScene, TRANSITION_SLOT_ONE)
+                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE)
                         ));
 
         initialGameScene = startMenuScene;

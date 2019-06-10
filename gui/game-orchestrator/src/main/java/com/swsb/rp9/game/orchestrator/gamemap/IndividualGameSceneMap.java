@@ -7,30 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents to what other GameScene objects a single GameScene is connected (linked),
- * and thus will be able to transition to (a GameScene object can only transition to linked GameScene objects).
+ * Represents to what other GameScene objects a single GameScene can transition to.
  */
 public class IndividualGameSceneMap {
 
     private final GameScene gameScene;
-    private final List<GameScene> linkedGameScenes;
+    private final List<GameScene> gameScenesToTransitionTo;
 
     private IndividualGameSceneMap(GameScene gameScene) {
         this.gameScene = gameScene;
-        linkedGameScenes = new ArrayList<>();
+        gameScenesToTransitionTo = new ArrayList<>();
     }
 
     public static IndividualGameSceneMap gameScene(GameScene gameScene) {
         return new IndividualGameSceneMap(gameScene);
     }
 
-    public IndividualGameSceneMap isLinkedTo(GameScene succeedingGameScene, TransitionSlot transitionSlot) {
-        linkedGameScenes.add(transitionSlot.asIndex(), succeedingGameScene);
+    public IndividualGameSceneMap canTransitionTo(GameScene succeedingGameScene, TransitionSlot transitionSlot) {
+        gameScenesToTransitionTo.add(transitionSlot.asIndex(), succeedingGameScene);
         return this;
     }
 
-    GameScene getLinkedGameSceneToTransitionTo() {
-        GameScene gameSceneToTransitionTo = linkedGameScenes
+    GameScene getGameSceneToTransitionTo() {
+        GameScene gameSceneToTransitionTo = gameScenesToTransitionTo
                 .get(gameScene.getActiveTransitionSlot().asIndex());
         gameScene.resetSceneTransitionState();
         return gameSceneToTransitionTo;

@@ -21,10 +21,10 @@ public class FullGameSceneMap {
      * @param uuidOfGameSceneToTransitionFrom The UUID of the GameScene FROM which we are going to transition
      * @return the GameScene TO which we are going to transition
      */
-    public GameScene getLinkedGameSceneToTransitionTo(UUID uuidOfGameSceneToTransitionFrom) {
+    public GameScene getGameSceneToTransitionTo(UUID uuidOfGameSceneToTransitionFrom) {
         return gameSceneMapping.getMapping()
                 .get(uuidOfGameSceneToTransitionFrom)
-                .getLinkedGameSceneToTransitionTo();
+                .getGameSceneToTransitionTo();
     }
 
     public GameScene getInitialGameScene() {
