@@ -1,5 +1,4 @@
 module root.module {
-    requires secondary.module;
     requires game.orchestrator;
 
     requires spring.boot.autoconfigure;

@@ -14,8 +14,6 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        new World().run();
-        // or... (new way)
         GameLauncher.launch();
     }
 }
