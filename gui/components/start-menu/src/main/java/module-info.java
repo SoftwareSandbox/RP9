@@ -6,5 +6,6 @@ module start.menu {
 
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 }

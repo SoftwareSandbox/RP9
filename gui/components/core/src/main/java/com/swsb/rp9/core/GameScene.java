@@ -25,7 +25,7 @@ public abstract class GameScene {
         this.scene = addStylesheetToScene(
                 createScene(this.gameView));
         this.gameSceneTransitionState = new GameSceneTransitionState();
-        setEventHandlers();
+        setEventHandlersForScene();
     }
 
     protected abstract GameView createDefaultGameView();
@@ -35,10 +35,17 @@ public abstract class GameScene {
             this.gameSceneTransitionState = new GameSceneTransitionState()
                     .usingTransitionSlot(gameView.getFirstRegisteredSceneTransitionSlot())
                     .markAsReadyForTransition();
+            this.onTransitionToOtherScene();
         }
     }
 
-    private void setEventHandlers() {
+    /**
+     * Called when the current GameScene is going to be transitioned to another GameScene.
+     * Can be overridden by the subclasses.
+     */
+    protected void onTransitionToOtherScene() {}
+
+    private void setEventHandlersForScene() {
         getScene()
                 .setOnKeyPressed(event -> getGameView().setOnKeyPressedForScene(event));
         getScene()

@@ -28,7 +28,18 @@ public abstract class GameView {
     protected abstract Parent createGuiRootNode();
     public abstract String getStyleSheetLocation();
 
+    /**
+     * Allows to react to KeyPressedEvents that occurred on the (JavaFX) Scene itself (not on individual elements
+     * such as buttons)
+     * Can be overridden by the subclasses.
+     */
     protected void setOnKeyPressedForScene(KeyEvent event) {}
+
+    /**
+     * Allows to react to MouseClickedEvents that occurred on the (JavaFX) Scene itself (not on individual elements
+     * such as buttons)
+     * Can be overridden by the subclasses.
+     */
     protected void setOnMouseClickedForScene(MouseEvent event) {}
 
     protected void registerTransitionSlot(TransitionSlot transitionSlot) {
