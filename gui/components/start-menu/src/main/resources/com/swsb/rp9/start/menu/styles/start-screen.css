@@ -4,7 +4,7 @@
 
 .radio-button:selected {
     -fx-label-padding: 0px 0px 0px 0px;
-    -fx-graphic: 'com/swsb/rp9/secondary/module/sprite/menu/cursor.png';
+    -fx-graphic: 'com/swsb/rp9/start/menu/sprite/cursor.png';
 }
 
 .radio-button {
