@@ -5,9 +5,8 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-ext.moduleName = 'credits'
+ext.moduleName = 'credits-view-api'
 
 dependencies {
     implementation project(':gui:components:core')
-    implementation project(':gui:components:credits-view-api')
 }

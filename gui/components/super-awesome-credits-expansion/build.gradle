@@ -5,7 +5,7 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-ext.moduleName = 'credits'
+ext.moduleName = 'super-awesome-credits-expansion'
 
 dependencies {
     implementation project(':gui:components:core')

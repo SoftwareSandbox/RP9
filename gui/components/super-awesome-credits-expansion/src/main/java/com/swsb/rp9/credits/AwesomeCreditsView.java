@@ -1,4 +1,4 @@
-package com.swsb.rp9;
+package com.swsb.rp9.credits;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
@@ -11,32 +11,34 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.util.Random;
+
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 
-public class CreditsDefaultView extends GameView implements CreditsView {
+public class AwesomeCreditsView extends GameView implements CreditsView {
 
     private static final Dimension DIMENSIONS = rectangle(640, 480);
 
-    private Node backLbl, creditsLbl;
+    private Label backLbl, creditsLbl;
 
-    public CreditsDefaultView() {
+    public AwesomeCreditsView() {
         super(DIMENSIONS);
     }
 
     @Override
     public String getTitle() {
-        return "Credits";
+        return "Awesome Credits";
     }
 
     @Override
     public String getStyleSheetLocation() {
-        return getClass().getResource("/com/swsb/rp9/credits/styles/credits.css").toExternalForm();
+        return getClass().getResource("/com/swsb/rp9/superawesomecredits/styles/credits.css").toExternalForm();
     }
 
     @Override
     public void redraw() {
-        exampleOfMovingLabel();
+        creditsLbl.setRotate(creditsLbl.getRotate()+1);
     }
 
     @Override
@@ -61,33 +63,32 @@ public class CreditsDefaultView extends GameView implements CreditsView {
 
     @Override
     public int awesomeness() {
-        return 9;
+        return 9001;
     }
 
     private Background createBackground() {
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image(getClass().getResource("/com/swsb/rp9/credits/background/credits-background.png").toExternalForm()),
+                new Image(getClass().getResource("/com/swsb/rp9/superawesomecredits/background/awesomeness-background.png").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                new BackgroundSize(0, 0, false, false, false, true));
+                BackgroundSize.DEFAULT);
         return new Background(backgroundImage);
     }
 
     private Label createBackLabel() {
-        var label = new Label("Press B to go back!");
+        var label = new Label("Press B to go back! Onwards, to less awesomeness :-(");
         label.setTextFill(Color.WHITE);
         return label;
     }
 
     private Label createCreditsLabel() {
-        var label = new Label("CREDITS: Some Cegeka people! 6 in total");
-        label.setTextFill(Color.GHOSTWHITE);
-        label.setTranslateY(50);
+        var label = new Label("CREDITS: Some Cegeka people! 1 of them made this awesome expansion though");
+        label.setTextFill(Color.DARKSLATEBLUE);
+        label.setTranslateY(30);
+        label.setTranslateX(30);
         return label;
     }
 
-    private void exampleOfMovingLabel() {
-        creditsLbl.setTranslateY((DIMENSIONS.getHeight() / 2 - 25 + 5 * Math.random()));
-        creditsLbl.setTranslateX((DIMENSIONS.getWidth() / 2 - 100 + 5 * Math.random()));
+    public static AwesomeCreditsView provider() {
+        return new AwesomeCreditsView();
     }
-
 }
