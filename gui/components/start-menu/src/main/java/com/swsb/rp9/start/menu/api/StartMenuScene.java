@@ -25,7 +25,7 @@ public class StartMenuScene extends GameScene {
     }
 
     private MediaPlayer createMediaPlayer() {
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("sound/mountain_trolls.mp3").toExternalForm()));
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("sound/Peter_Batemon-Fantastic_Space.wav").toExternalForm()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
         return mediaPlayer;

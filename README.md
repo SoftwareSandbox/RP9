@@ -21,3 +21,5 @@ Shout-out to the artists who made the sprites we used:
 - https://kvsr.itch.io/
 - https://free-game-assets.itch.io/40-free-staves-2d-weapon
 - https://vnitti.itch.io/glacial-mountains-parallax-background
+- https://themuweecollective.itch.io/rpg-title-screen-music-pack
+    - Peter Batemon - Fantastic Space (title screen music)
