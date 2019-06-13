@@ -82,6 +82,7 @@ public class OverworldDefaultView extends GameView {
 
         if (event.getCode().name().equals("B")) {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
+            keyDown = null;
         }
     }
 
