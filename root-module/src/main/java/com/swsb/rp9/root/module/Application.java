@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application implements CommandLineRunner {
 
     public static void main(String[] args) {
+        whoopsie
         SpringApplication.run(Application.class, args);
     }
 
