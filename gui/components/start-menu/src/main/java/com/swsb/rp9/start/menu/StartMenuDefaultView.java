@@ -29,8 +29,8 @@ public class StartMenuDefaultView extends GameView {
     }
 
     @Override
-    public GameView redraw() {
-        return this;
+    public void redraw() {
+        // for now, nothing to redraw
     }
 
     @Override

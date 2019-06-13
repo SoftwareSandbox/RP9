@@ -58,9 +58,8 @@ public class OverworldDefaultView extends GameView {
     }
 
     @Override
-    public GameView redraw() {
+    public void redraw() {
         hero.heroStance();
-        return this;
     }
 
     @Override

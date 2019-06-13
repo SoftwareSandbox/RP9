@@ -23,7 +23,7 @@ public abstract class GameView {
         registeredTransitionSlots = new ArrayBlockingQueue<>(TransitionSlot.values().length);
     }
 
-    public abstract GameView redraw();
+    public abstract void redraw();
     public abstract String getTitle();
     protected abstract Parent createGuiRootNode();
     public abstract String getStyleSheetLocation();

@@ -77,7 +77,7 @@ public abstract class GameScene {
     }
 
     public void redraw() {
-        gameView = gameView.redraw();
+        gameView.redraw();
     }
 
     public String getTitleOfView() {

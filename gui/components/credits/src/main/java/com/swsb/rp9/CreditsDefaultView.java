@@ -34,9 +34,8 @@ public class CreditsDefaultView extends GameView {
     }
 
     @Override
-    public GameView redraw() {
+    public void redraw() {
         exampleOfMovingLabel();
-        return this;
     }
 
     @Override
