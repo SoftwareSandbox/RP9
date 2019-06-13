@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -19,6 +20,8 @@ import static com.swsb.rp9.core.Dimension.rectangle;
 public class CharacterSelectionView extends GameView {
 
     private static final Dimension DIMENSIONS = rectangle(640, 480);
+
+    private TextField characterNameTextField;
 
     public CharacterSelectionView() {
         super(DIMENSIONS);
@@ -45,10 +48,18 @@ public class CharacterSelectionView extends GameView {
     }
 
     private Parent createCharacterSelectionScreen() {
-        TilePane characterScreen = new TilePane(createStartGameButton());
+        TilePane characterScreen = new TilePane(
+                createCharacterNameInputField(),
+                createStartGameButton()
+        );
         characterScreen.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
         characterScreen.setAlignment(Pos.CENTER);
         return characterScreen;
+    }
+
+    private TextField createCharacterNameInputField() {
+        characterNameTextField = new TextField("Your name...");
+        return characterNameTextField;
     }
 
     private Button createStartGameButton() {
