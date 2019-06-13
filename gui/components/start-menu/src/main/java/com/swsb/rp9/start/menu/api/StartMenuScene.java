@@ -25,7 +25,7 @@ public class StartMenuScene extends GameScene {
     }
 
     private MediaPlayer createMediaPlayer() {
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("sound/Peter_Batemon-Fantastic_Space.mp3").toExternalForm()));
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("/com/swsb/rp9/start/menu/sound/Peter_Batemon-Fantastic_Space.mp3").toExternalForm()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
         return mediaPlayer;
