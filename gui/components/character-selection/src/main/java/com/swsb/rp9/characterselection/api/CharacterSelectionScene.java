@@ -6,8 +6,8 @@ import com.swsb.rp9.core.GameView;
 
 public class CharacterSelectionScene extends GameScene {
 
-    public CharacterSelectionScene(GameView gameView) {
-        super(gameView);
+    public CharacterSelectionScene() {
+        super(null);
     }
 
     @Override

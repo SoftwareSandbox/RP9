@@ -1,5 +1,6 @@
 package com.swsb.rp9.game.orchestrator.gamemap.mappings;
 
+import com.swsb.rp9.characterselection.api.CharacterSelectionScene;
 import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.credits.api.CreditsScene;
 import com.swsb.rp9.game.orchestrator.gamemap.IndividualGameSceneMap;
@@ -43,20 +44,24 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
         var startMenuScene = new StartMenuScene();
         var overworldScene = new OverworldScene();
         var creditsScene = new CreditsScene();
+        var characterSelectionScene = new CharacterSelectionScene();
 
         gameMap
                 .putAll(
                         Map.of(
                                 startMenuScene.getUUID(),
                                 gameScene(startMenuScene)
-                                        .canTransitionTo(overworldScene, TRANSITION_SLOT_ONE)
+                                        .canTransitionTo(characterSelectionScene, TRANSITION_SLOT_ONE)
                                         .canTransitionTo(creditsScene, TRANSITION_SLOT_TWO),
                                 overworldScene.getUUID(),
                                 gameScene(overworldScene)
                                         .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE),
                                 creditsScene.getUUID(),
                                 gameScene(creditsScene)
-                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE)
+                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE),
+                                characterSelectionScene.getUUID(),
+                                gameScene(characterSelectionScene)
+                                        .canTransitionTo(overworldScene, TRANSITION_SLOT_ONE)
                         ));
 
         initialGameScene = startMenuScene;

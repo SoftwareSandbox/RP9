@@ -12,4 +12,5 @@ dependencies {
     implementation project(':gui:components:start-menu')
     implementation project(':gui:components:credits')
     implementation project(':gui:components:overworld')
+    implementation project(':gui:components:character-selection')
 }
