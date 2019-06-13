@@ -31,6 +31,8 @@ public class Coordinate {
                 return coordinate(x + 1, y);
             case LEFT:
                 return coordinate(x - 1, y);
+            case STAND_STILL:
+                return coordinate(x, y);
             default:
                 throw new RuntimeException(String.format("Don't know neighbour in %s direction", direction));
         }
