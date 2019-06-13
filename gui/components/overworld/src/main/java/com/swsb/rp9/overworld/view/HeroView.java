@@ -17,7 +17,7 @@ public class HeroView {
     public HeroView(Hero hero) {
         this.hero = hero;
         this.imageView = image()
-                .url("com/swsb/rp9/overworld/sprites/hero/hero.png")
+                .url(getClass().getResource("/com/swsb/rp9/overworld/sprites/hero/hero.png").toExternalForm())
                 .dimension(square(RECTANGLE_SIZE))
                 .buildView();
     }

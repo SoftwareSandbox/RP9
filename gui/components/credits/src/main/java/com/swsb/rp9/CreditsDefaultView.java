@@ -30,7 +30,7 @@ public class CreditsDefaultView extends GameView {
 
     @Override
     public String getStyleSheetLocation() {
-        return "com/swsb/rp9/credits/styles/credits.css";
+        return getClass().getResource("/com/swsb/rp9/credits/styles/credits.css").toExternalForm();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CreditsDefaultView extends GameView {
 
     private Background createBackground() {
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image("com/swsb/rp9/credits/background/credits-background.png"),
+                new Image(getClass().getResource("/com/swsb/rp9/credits/background/credits-background.png").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(0, 0, false, false, false, true));
         return new Background(backgroundImage);

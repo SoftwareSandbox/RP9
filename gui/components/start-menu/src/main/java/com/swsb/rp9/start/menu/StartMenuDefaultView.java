@@ -40,7 +40,7 @@ public class StartMenuDefaultView extends GameView {
 
     @Override
     public String getStyleSheetLocation() {
-        return "com/swsb/rp9/start/menu/styles/start-screen.css";
+        return getClass().getResource("/com/swsb/rp9/start/menu/styles/start-screen.css").toExternalForm();
     }
 
     private Parent createStartScreenPane() {
@@ -53,7 +53,7 @@ public class StartMenuDefaultView extends GameView {
 
     private Background createStartScreenBackground() {
         BackgroundImage backgroundImage = new BackgroundImage(
-                new Image("com/swsb/rp9/start/menu/background/glacial_mountains_preview_lightened.png"),
+                new Image(getClass().getResource("/com/swsb/rp9/start/menu/background/glacial_mountains_preview_lightened.png").toExternalForm()),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                 new BackgroundSize(0, 0, false, false, false, true));
         return new Background(backgroundImage);

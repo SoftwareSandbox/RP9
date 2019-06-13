@@ -9,4 +9,6 @@ module game.orchestrator {
     requires javafx.controls;
     requires javafx.fxml;
 
+    opens com.swsb.rp9.game.orchestrator to javafx.graphics;
+
 }

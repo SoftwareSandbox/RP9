@@ -49,7 +49,7 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     public String getStyleSheetLocation() {
-        return "com/swsb/rp9/overworld/styles/overworld.css";
+        return getClass().getResource("/com/swsb/rp9/overworld/styles/overworld.css").toExternalForm();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class OverworldDefaultView extends GameView {
 
     private Node createSidePanel() {
         return image()
-                .url("com/swsb/rp9/overworld/sprites/hero/hero.png")
+                .url(getClass().getResource("/com/swsb/rp9/overworld/sprites/hero/hero.png").toExternalForm())
                 .dimension(rectangle(80, 360))
                 .startingPosition(position(40, 0))
                 .buildView();
