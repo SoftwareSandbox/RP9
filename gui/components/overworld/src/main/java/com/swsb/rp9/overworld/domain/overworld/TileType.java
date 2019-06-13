@@ -27,4 +27,8 @@ public enum TileType {
     public Paint toTexture(double size) {
         return image().url(pathToTextureImg).dimension(square(size)).buildPattern();
     }
+
+    public boolean canMoveThrough() {
+        return this != WALL;
+    }
 }
