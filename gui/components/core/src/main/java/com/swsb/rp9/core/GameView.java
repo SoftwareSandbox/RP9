@@ -34,6 +34,7 @@ public abstract class GameView {
      * Can be overridden by the subclasses.
      */
     protected void setOnKeyPressedForScene(KeyEvent event) {}
+    protected void setOnKeyRelease(KeyEvent event) {};
 
     /**
      * Allows to react to MouseClickedEvents that occurred on the (JavaFX) Scene itself (not on individual elements
@@ -81,5 +82,4 @@ public abstract class GameView {
             registeredTransitionSlots.clear();
         }
     }
-
 }

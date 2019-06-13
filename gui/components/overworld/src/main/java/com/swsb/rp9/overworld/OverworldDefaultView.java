@@ -24,6 +24,7 @@ import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.overworld.domain.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.domain.ImageBuilder.image;
 import static com.swsb.rp9.overworld.domain.Position.position;
+import static com.swsb.rp9.overworld.view.HeroView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
 
@@ -37,6 +38,9 @@ public class OverworldDefaultView extends GameView {
 
     private Overworld overworld;
     private HeroView heroView;
+    private int numberOfFramesProcessing = 0;
+    private boolean processingEvent;
+    private KeyEvent keyDown = null;
 
     public OverworldDefaultView() {
         super(DIMENSIONS);
@@ -54,15 +58,41 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     protected void setOnKeyPressedForScene(KeyEvent event) {
-        overworld.handleDirectionPressed(toDirection(event));
+        this.keyDown = event;
+    }
+
+    @Override
+    protected void setOnKeyRelease(KeyEvent event) {
+        this.keyDown = null;
+    }
+
+    private void handleKeyDown(KeyEvent event) {
+        if(event == null){
+            return;
+        }
+        if(numberOfFramesProcessing > NUMBER_OF_FRAMES_NEEDED_FOR_MOVE) {
+            processingEvent = false;
+        }
+
+        if(!processingEvent) {
+            processingEvent = true;
+            numberOfFramesProcessing = 0;
+            overworld.handleDirectionPressed(toDirection(event));
+        }
 
         if (event.getCode().name().equals("B")) {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
         }
     }
 
+
     @Override
     public void redraw() {
+        handleKeyDown(keyDown);
+        if(processingEvent) {
+            numberOfFramesProcessing++;
+        }
+
         heroView.redraw();
     }
 
