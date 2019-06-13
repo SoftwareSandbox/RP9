@@ -49,6 +49,8 @@ public abstract class GameScene {
         getScene()
                 .setOnKeyPressed(event -> getGameView().setOnKeyPressedForScene(event));
         getScene()
+                .setOnKeyReleased(event -> getGameView().setOnKeyRelease(event));
+        getScene()
                 .setOnMouseClicked(event -> getGameView().setOnMouseClickedForScene(event));
     }
 
