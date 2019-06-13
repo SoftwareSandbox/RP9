@@ -6,14 +6,15 @@ import com.swsb.rp9.overworld.domain.Coordinate;
 import com.swsb.rp9.overworld.domain.Direction;
 import com.swsb.rp9.overworld.domain.Position;
 import com.swsb.rp9.overworld.domain.RectangleBuilder;
+import com.swsb.rp9.overworld.domain.hero.Hero;
 import com.swsb.rp9.overworld.domain.overworld.Overworld;
 import com.swsb.rp9.overworld.domain.overworld.factory.OverworldFactory;
 import com.swsb.rp9.overworld.domain.overworld.factory.WalledOverworldFactory;
+import com.swsb.rp9.overworld.view.HeroView;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
@@ -28,15 +29,14 @@ import static javafx.scene.input.KeyCode.*;
 
 public class OverworldDefaultView extends GameView {
 
-    private static final int RECTANGLE_SIZE = 40;
+    public static final int RECTANGLE_SIZE = 40;
     private static final int SCENE_WIDTH = 640;
     private static final int SCENE_HEIGHT = 480;
     private static final int SIDEPANEL_WIDTH = 160;
     private static final Dimension DIMENSIONS = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
 
     private Overworld overworld;
-    private ImageView heroView;
-    private boolean isHeroGrowing;
+    private HeroView heroView;
 
     public OverworldDefaultView() {
         super(DIMENSIONS);
@@ -63,41 +63,18 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     public void redraw() {
-        drawHero();
-        weirHeroThingy();
-    }
-
-    private void weirHeroThingy() {
-        if(isHeroGrowing) {
-            if(heroView.getScaleY() <= 1.05) {
-                heroView.setScaleY(heroView.getScaleY() + 0.01);
-            } else {
-                isHeroGrowing = !isHeroGrowing;
-            }
-        } else {
-            if(heroView.getScaleY() >= 0.95) {
-                heroView.setScaleY(heroView.getScaleY() - 0.01);
-            } else {
-                isHeroGrowing = !isHeroGrowing;
-            }
-        }
-    }
-
-    private void drawHero() {
-        Position position = toPosition(overworld.getHeroCoordinate());
-        heroView.setX(position.getX());
-        heroView.setY(position.getY());
+        heroView.redraw();
     }
 
     @Override
     protected Parent createGuiRootNode() {
         overworld = createOverworld();
-        heroView = createHeroView();
+        heroView = createHeroView(overworld.getHero());
 
         return new Group(
                 createSidePanel(),
                 createOverworldGroup(),
-                heroView,
+                heroView.getView(),
                 createBackLabel()
         );
     }
@@ -108,11 +85,8 @@ public class OverworldDefaultView extends GameView {
         return label;
     }
 
-    private ImageView createHeroView() {
-        return image()
-                .url("com/swsb/rp9/overworld/sprites/hero/hero.png")
-                .dimension(square(RECTANGLE_SIZE))
-                .buildView();
+    private HeroView createHeroView(Hero hero) {
+        return new HeroView(hero);
     }
 
     private Overworld createOverworld() {
@@ -139,7 +113,7 @@ public class OverworldDefaultView extends GameView {
                 .collect(toList()));
     }
 
-    private Position toPosition(Coordinate coordinate) {
+    public static Position toPosition(Coordinate coordinate) {
         return position((coordinate.getX() * RECTANGLE_SIZE) + SIDEPANEL_WIDTH, coordinate.getY() * RECTANGLE_SIZE);
     }
 

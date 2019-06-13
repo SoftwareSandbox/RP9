@@ -27,7 +27,7 @@ public class Overworld {
         hero.move(direction);
     }
 
-    public Coordinate getHeroCoordinate() {
-        return hero.getCoordinate();
+    public Hero getHero() {
+        return hero;
     }
 }
