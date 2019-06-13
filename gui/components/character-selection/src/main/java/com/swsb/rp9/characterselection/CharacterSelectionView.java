@@ -33,7 +33,7 @@ public class CharacterSelectionView extends GameView {
 
     @Override
     public String getStyleSheetLocation() {
-        return "com/swsb/rp9/characterselection/styles/character-selection.css";
+        return getClass().getResource("com/swsb/rp9/characterselection/styles/character-selection.css").toExternalForm();
     }
 
     @Override
