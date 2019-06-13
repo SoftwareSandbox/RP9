@@ -24,6 +24,6 @@ public class WalledOverworldFactory implements OverworldFactory {
                 }
             }
         }
-        return new Overworld(tiles);
+        return new Overworld(tiles, coordinate(5,5));
     }
 }

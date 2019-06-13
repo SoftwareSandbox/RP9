@@ -3,9 +3,9 @@ package com.swsb.rp9.overworld;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.overworld.domain.Coordinate;
+import com.swsb.rp9.overworld.domain.Direction;
 import com.swsb.rp9.overworld.domain.Position;
 import com.swsb.rp9.overworld.domain.RectangleBuilder;
-import com.swsb.rp9.overworld.domain.hero.Hero;
 import com.swsb.rp9.overworld.domain.overworld.Overworld;
 import com.swsb.rp9.overworld.domain.overworld.factory.OverworldFactory;
 import com.swsb.rp9.overworld.domain.overworld.factory.WalledOverworldFactory;
@@ -13,15 +13,18 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
+import static com.swsb.rp9.overworld.domain.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.domain.ImageBuilder.image;
 import static com.swsb.rp9.overworld.domain.Position.position;
 import static java.util.stream.Collectors.toList;
+import static javafx.scene.input.KeyCode.*;
 
 public class OverworldDefaultView extends GameView {
 
@@ -31,8 +34,9 @@ public class OverworldDefaultView extends GameView {
     private static final int SIDEPANEL_WIDTH = 160;
     private static final Dimension DIMENSIONS = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
 
-    private Hero hero;
     private Overworld overworld;
+    private ImageView heroView;
+    private boolean isHeroGrowing;
 
     public OverworldDefaultView() {
         super(DIMENSIONS);
@@ -50,7 +54,7 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     protected void setOnKeyPressedForScene(KeyEvent event) {
-        overworld.onKeyPressed(event);
+        overworld.handleDirectionPressed(toDirection(event));
 
         if (event.getCode().name().equals("B")) {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
@@ -59,18 +63,41 @@ public class OverworldDefaultView extends GameView {
 
     @Override
     public void redraw() {
-        hero.heroStance();
+        drawHero();
+        weirHeroThingy();
+    }
+
+    private void weirHeroThingy() {
+        if(isHeroGrowing) {
+            if(heroView.getScaleY() <= 1.05) {
+                heroView.setScaleY(heroView.getScaleY() + 0.01);
+            } else {
+                isHeroGrowing = !isHeroGrowing;
+            }
+        } else {
+            if(heroView.getScaleY() >= 0.95) {
+                heroView.setScaleY(heroView.getScaleY() - 0.01);
+            } else {
+                isHeroGrowing = !isHeroGrowing;
+            }
+        }
+    }
+
+    private void drawHero() {
+        Position position = toPosition(overworld.getHeroCoordinate());
+        heroView.setX(position.getX());
+        heroView.setY(position.getY());
     }
 
     @Override
     protected Parent createGuiRootNode() {
-        hero = createHero();
-        overworld = createOverworld(hero);
+        overworld = createOverworld();
+        heroView = createHeroView();
 
         return new Group(
                 createSidePanel(),
                 createOverworldGroup(),
-                hero.getView(),
+                heroView,
                 createBackLabel()
         );
     }
@@ -81,20 +108,17 @@ public class OverworldDefaultView extends GameView {
         return label;
     }
 
-    private Hero createHero() {
-        return new Hero(image()
+    private ImageView createHeroView() {
+        return image()
                 .url("com/swsb/rp9/overworld/sprites/hero/hero.png")
                 .dimension(square(RECTANGLE_SIZE))
-                .startingPosition(position(280, 240))
-                .buildView());
+                .buildView();
     }
 
-    private Overworld createOverworld(Hero hero) {
+    private Overworld createOverworld() {
         OverworldFactory overworldFactory = new WalledOverworldFactory();
-        var overworld = overworldFactory
+        return overworldFactory
                 .createOverworld((SCENE_WIDTH - SIDEPANEL_WIDTH) / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE);
-        overworld.setHero(hero);
-        return overworld;
     }
 
     private Node createSidePanel() {
@@ -119,4 +143,19 @@ public class OverworldDefaultView extends GameView {
         return position((coordinate.getX() * RECTANGLE_SIZE) + SIDEPANEL_WIDTH, coordinate.getY() * RECTANGLE_SIZE);
     }
 
+    private Direction toDirection(KeyEvent event) {
+        if (event.getCode().equals(DOWN)) {
+            return Direction.DOWN;
+        }
+        if (event.getCode().equals(RIGHT)) {
+            return Direction.RIGHT;
+        }
+        if (event.getCode().equals(UP)) {
+            return Direction.UP;
+        }
+        if (event.getCode().equals(LEFT)) {
+            return Direction.LEFT;
+        }
+        return STAND_STILL;
+    }
 }

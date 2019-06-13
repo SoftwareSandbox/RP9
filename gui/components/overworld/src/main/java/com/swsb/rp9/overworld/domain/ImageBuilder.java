@@ -23,8 +23,10 @@ public class ImageBuilder {
 
     public ImageView buildView() {
         ImageView imageView = new ImageView(build());
-        imageView.setX(startingPosition.getX());
-        imageView.setY(startingPosition.getY());
+        if(startingPosition != null){
+            imageView.setX(startingPosition.getX());
+            imageView.setY(startingPosition.getY());
+        }
         return imageView;
     }
 

@@ -21,4 +21,18 @@ public class Coordinate {
         return y;
     }
 
+    public Coordinate neighbourInDirection(Direction direction) {
+        switch (direction) {
+            case UP:
+                return coordinate(x, y - 1);
+            case DOWN:
+                return coordinate(x, y + 1);
+            case RIGHT:
+                return coordinate(x + 1, y);
+            case LEFT:
+                return coordinate(x - 1, y);
+            default:
+                throw new RuntimeException(String.format("Don't know neighbour in %s direction", direction));
+        }
+    }
 }

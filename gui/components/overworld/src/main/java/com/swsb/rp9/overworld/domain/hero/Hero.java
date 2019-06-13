@@ -1,50 +1,20 @@
 package com.swsb.rp9.overworld.domain.hero;
 
+import com.swsb.rp9.overworld.domain.Coordinate;
 import com.swsb.rp9.overworld.domain.Direction;
-import javafx.scene.image.ImageView;
-
-import static com.swsb.rp9.overworld.domain.Direction.*;
 
 public class Hero {
-    private ImageView view;
+    private Coordinate coordinate;
 
-    public Hero(ImageView view) {
-        this.view = view;
-    }
-
-    public ImageView getView() {
-        return view;
-    }
-
-    private boolean isGrowing;
-    public void heroStance() {
-        if(isGrowing) {
-            if(view.getScaleY() <= 1.05) {
-                view.setScaleY(view.getScaleY() + 0.01);
-            } else {
-                isGrowing = !isGrowing;
-            }
-        } else {
-            if(view.getScaleY() >= 0.95) {
-                view.setScaleY(view.getScaleY() - 0.01);
-            } else {
-                isGrowing = !isGrowing;
-            }
-        }
+    public Hero(Coordinate startingCoordinate) {
+        this.coordinate = startingCoordinate;
     }
 
     public void move(Direction direction) {
-        if (direction.equals(DOWN)) {
-            view.setY(view.getY() + 40);
-        }
-        if (direction.equals(RIGHT)) {
-            view.setX(view.getX() + 40);
-        }
-        if (direction.equals(UP)) {
-            view.setY(view.getY() - 40);
-        }
-        if (direction.equals(LEFT)) {
-            view.setX(view.getX() - 40);
-        }
+        this.coordinate = coordinate.neighbourInDirection(direction);
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 }
