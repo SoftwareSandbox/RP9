@@ -6,4 +6,5 @@ include 'gui:components:overworld'
 include 'gui:components:credits'
 include 'gui:components:core'
 include 'gui:game-orchestrator'
+include 'gui:components:character-selection'
 
