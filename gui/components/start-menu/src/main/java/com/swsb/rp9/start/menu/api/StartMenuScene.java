@@ -14,7 +14,7 @@ public class StartMenuScene extends GameScene {
 
     private final MediaPlayer mediaPlayer;
 
-    public StartMenuScene(GameView gameView) {
+    private StartMenuScene(GameView gameView) {
         super(gameView);
         mediaPlayer = createMediaPlayer();
     }
@@ -25,7 +25,7 @@ public class StartMenuScene extends GameScene {
     }
 
     private MediaPlayer createMediaPlayer() {
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("sound/Peter_Batemon-Fantastic_Space.wav").toExternalForm()));
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource("sound/Peter_Batemon-Fantastic_Space.mp3").toExternalForm()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
         return mediaPlayer;
