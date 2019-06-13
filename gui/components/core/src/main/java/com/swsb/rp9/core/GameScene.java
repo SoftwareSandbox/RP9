@@ -3,7 +3,11 @@ package com.swsb.rp9.core;
 import javafx.scene.Scene;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import static com.swsb.rp9.core.TransitionSlot.NO_TRANSITION_SLOT;
 
@@ -18,6 +22,7 @@ public abstract class GameScene {
     private final Scene scene;
     private GameView gameView;
     private GameSceneTransitionState gameSceneTransitionState;
+    private MediaPlayer backgroundMusicPlayer;
 
     public GameScene(GameView gameView) {
         this.uid = UUID.randomUUID();
@@ -26,9 +31,16 @@ public abstract class GameScene {
                 createScene(this.gameView));
         this.gameSceneTransitionState = new GameSceneTransitionState();
         setEventHandlersForScene();
+        getBackgroundMusicResourceUrl().ifPresent(this::createBackGroundPlayer);
     }
 
     protected abstract GameView createDefaultGameView();
+
+    private void createBackGroundPlayer(String url) {
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(url).toExternalForm()));
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        this.backgroundMusicPlayer = mediaPlayer;
+    }
 
     public void evaluateSceneTransition() {
         if (gameView.hasRegisteredSceneTransitionSlots()) {
@@ -39,11 +51,17 @@ public abstract class GameScene {
         }
     }
 
-    /**
-     * Called when the current GameScene is going to be transitioned to another GameScene.
-     * Can be overridden by the subclasses.
-     */
-    protected void onTransitionToOtherScene() {}
+    protected Optional<String> getBackgroundMusicResourceUrl() {
+        return Optional.empty();
+    }
+
+    public void onTransitionToThisScene() {
+        getBackgroundMusicResourceUrl().ifPresent(s -> backgroundMusicPlayer.play());
+    }
+
+    public void onTransitionToOtherScene() {
+        getBackgroundMusicResourceUrl().ifPresent(s -> backgroundMusicPlayer.stop());
+    }
 
     private void setEventHandlersForScene() {
         getScene()

@@ -53,6 +53,7 @@ class GameOrchestrator {
             this.currentGameScene = gameSceneToShowOnStartup;
             setInitialScene(gameSceneToShowOnStartup);
             stage.show();
+            currentGameScene.onTransitionToThisScene();
         }
 
         private void setInitialScene(GameScene gameSceneToShowOnStartup) {
@@ -80,11 +81,13 @@ class GameOrchestrator {
             currentGameScene.evaluateSceneTransition();
 
             if (currentGameScene.shouldTransitionToAnotherGameScene()) {
+                currentGameScene.onTransitionToOtherScene();
                 var newGameScene = fullGameSceneMap
                         .getGameSceneToTransitionTo(currentGameScene.getUUID());
                 stage.setScene(newGameScene.getScene());
                 stage.setTitle(newGameScene.getTitleOfView());
                 currentGameScene = newGameScene;
+                currentGameScene.onTransitionToThisScene();
             }
         }
     }

@@ -6,6 +6,6 @@ module start.menu {
 
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.media;
 
+    opens com.swsb.rp9.start.menu.sound;
 }

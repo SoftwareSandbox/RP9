@@ -7,4 +7,6 @@ module overworld {
 
     exports com.swsb.rp9.overworld.api;
 
+    opens com.swsb.rp9.overworld.sound;
+
 }
