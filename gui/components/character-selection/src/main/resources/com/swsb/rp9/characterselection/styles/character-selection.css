@@ -1,0 +1,13 @@
+.button {
+    -fx-background-color: #333333;
+    -fx-font: bold 12pt "Courier New";
+    -fx-text-fill: #fff;
+    -fx-border-color: #d0dcff;
+    -fx-border-width: 3px;
+}
+
+.text-field {
+    -fx-background-color: #333333;
+    -fx-font: bold 24pt "Courier New";
+    -fx-text-fill: #fff;
+}

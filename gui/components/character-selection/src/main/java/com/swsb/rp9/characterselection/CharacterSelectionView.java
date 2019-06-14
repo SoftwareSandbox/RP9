@@ -4,17 +4,13 @@ import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.TransitionSlot;
 import com.swsb.rp9.domain.api.CharacterSelectionState;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 
@@ -53,13 +49,15 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
                 createCharacterNameInputField(),
                 createStartGameButton()
         );
-        characterScreen.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
+        characterScreen.setBackground(createStartScreenBackground());
         characterScreen.setAlignment(Pos.CENTER);
         return characterScreen;
     }
 
     private TextField createCharacterNameInputField() {
         characterNameTextField = new TextField("Your name...");
+        characterNameTextField.setPrefWidth(DIMENSIONS.getWidth() - 20);
+        characterNameTextField.setAlignment(Pos.CENTER);
         return characterNameTextField;
     }
 
@@ -73,6 +71,20 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
                     }
                 }
         );
+        startGameButton.setOnMouseClicked(
+                event -> {
+                    getRestrictedState().setCharacterName(characterNameTextField.getText());
+                    registerTransitionSlot(TransitionSlot.TRANSITION_SLOT_ONE);
+                }
+        );
         return startGameButton;
+    }
+
+    private Background createStartScreenBackground() {
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image(getClass().getResource("/com/swsb/rp9/characterselection/background/glacial_mountains_preview_lightened.png").toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                new BackgroundSize(0, 0, false, false, false, true));
+        return new Background(backgroundImage);
     }
 }
