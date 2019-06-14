@@ -1,5 +1,6 @@
 package com.swsb.rp9.fight;
 
+import com.swsb.rp9.core.CharacterType;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.domain.api.FightState;
@@ -32,6 +33,7 @@ public class FightView extends GameView<FightState> {
     private Label enemyHitPointsLabel;
     private ProgressBar heroProgressBar;
     private ProgressBar enemyProgressBar;
+    private ImageView heroView;
 
     public FightView() {
         super(DIMENSIONS, new FightState());
@@ -44,9 +46,9 @@ public class FightView extends GameView<FightState> {
 
     @Override
     protected Parent createGuiRootNode() {
-        ImageView hero = createHeroView();
+        heroView = createHeroView();
         ImageView enemy = createEnemyView();
-        Group characterGroup = new Group(hero, enemy);
+        Group characterGroup = new Group(heroView, enemy);
 
 
         VBox actionMenu = createActionMenu();
@@ -103,6 +105,11 @@ public class FightView extends GameView<FightState> {
         heroProgressBar.getStyleClass().add(determineColor(getHeroHealthPercentage()));
         enemyProgressBar.setProgress(getEnemyHealthPercentage());
         enemyProgressBar.getStyleClass().add(determineColor(getEnemyHealthPercentage()));
+        heroView.setImage(image()
+                .url(this.getClass().getResource(CharacterType.valueOf(getRestrictedState().getCharacterType().name()).getFightScreenUrl()).toExternalForm())
+                .startingPosition(position(DIMENSIONS.getWidth() / 4 * 3, DIMENSIONS.getHeight() / 3))
+                .viewPort(position(70, 70), Dimension.square(70))
+                .build());
     }
 
     private double getEnemyHealthPercentage() {
@@ -115,8 +122,9 @@ public class FightView extends GameView<FightState> {
 
     private ImageView createHeroView() {
         return image()
-                .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/hero/mercinary_fight_tmp.png").toExternalForm())
+                .url(this.getClass().getResource(CharacterType.valueOf(getRestrictedState().getCharacterType().name()).getFightScreenUrl()).toExternalForm())
                 .startingPosition(position(DIMENSIONS.getWidth() / 4 * 3, DIMENSIONS.getHeight() / 3))
+                .viewPort(position(70, 70), Dimension.square(70))
                 .buildView();
     }
 

@@ -51,4 +51,12 @@ public class FightState extends RestrictedState {
     public void resetEnemy() {
         enemy = spawnEnemy();
     }
+
+    public CharacterType getCharacterType() {
+        return getGameState().getCharacterType();
+    }
+
+    public boolean hasCharacterTypeChanged() {
+        return getGameState().isCharacterTypeChanged();
+    }
 }

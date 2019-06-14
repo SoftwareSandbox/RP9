@@ -1,5 +1,6 @@
 package com.swsb.rp9.core;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ public class ImageBuilder {
     private boolean smooth = true;
     private Position startingPosition;
     private double rotate;
+    private Rectangle2D viewPort;
 
     public static ImageBuilder image() {
         return new ImageBuilder();
@@ -33,6 +35,9 @@ public class ImageBuilder {
         }
         if (rotate != 0) {
             imageView.setRotate(rotate);
+        }
+        if (viewPort != null) {
+            imageView.setViewport(viewPort);
         }
         return imageView;
     }
@@ -71,6 +76,11 @@ public class ImageBuilder {
 
     public ImageBuilder rotate(double rotate) {
         this.rotate = rotate;
+        return this;
+    }
+
+    public ImageBuilder viewPort(Position position, Dimension dimension) {
+        viewPort = new Rectangle2D(position.getX(), position.getY(), dimension.getWidth(), dimension.getHeight());
         return this;
     }
 }
