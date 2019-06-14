@@ -12,3 +12,16 @@
     -fx-label-padding: 0px 0px 0px 28px;
 }
 
+.green-bar {
+    -fx-accent: green;
+}
+.yellow-bar {
+    -fx-accent: yellow;
+}
+.orange-bar {
+    -fx-accent: orange;
+}
+.red-bar {
+    -fx-accent: red;
+}
+

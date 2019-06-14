@@ -71,11 +71,28 @@ public class FightView extends GameView<FightState> {
     }
 
     private ProgressBar createEnemyProgressBar() {
-        return new ProgressBar(getEnemyHealthPercentage());
+        ProgressBar progressBar = new ProgressBar(getEnemyHealthPercentage());
+        progressBar.getStyleClass().add(determineColor(getEnemyHealthPercentage()));
+        return progressBar;
+    }
+
+    private String determineColor(double healthPercentage) {
+        if(healthPercentage > 0.5) {
+            return "green-bar";
+        }
+        if(healthPercentage > 0.3) {
+            return "yellow-bar";
+        }
+        if(healthPercentage > 0.15) {
+            return "orange-bar";
+        }
+        return "red-bar";
     }
 
     private ProgressBar createHeroProgressBar() {
         ProgressBar progressBar = new ProgressBar(getHeroHealthPercentage());
+        progressBar.getStyleClass().add(determineColor(getHeroHealthPercentage()));
+
         return progressBar;
     }
 
@@ -83,7 +100,9 @@ public class FightView extends GameView<FightState> {
         enemyHitPointsLabel.setText("HP: " + getRestrictedState().getEnemyHitpoints());
         heroHitPointsLabel.setText("HP: " + getRestrictedState().getHeroHitpoints());
         heroProgressBar.setProgress(getHeroHealthPercentage());
+        heroProgressBar.getStyleClass().add(determineColor(getHeroHealthPercentage()));
         enemyProgressBar.setProgress(getEnemyHealthPercentage());
+        enemyProgressBar.getStyleClass().add(determineColor(getEnemyHealthPercentage()));
     }
 
     private double getEnemyHealthPercentage() {
