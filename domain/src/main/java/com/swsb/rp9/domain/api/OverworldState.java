@@ -35,4 +35,8 @@ public class OverworldState extends RestrictedState {
     public Map<Coordinate, ItemType> getItems() {
         return getGameState().getItems();
     }
+
+    public boolean hasItemsChanged() {
+        return getGameState().hasItemsChanged();
+    }
 }

@@ -10,14 +10,15 @@ import java.util.Map;
 
 public class Overworld {
     private final Map<Coordinate, TileType> tiles;
-    private final Map<Coordinate, ItemType> items;
+    private final ItemCollection items;
+
 
     private Character character;
     private boolean enemyCollision;
 
     public Overworld(Map<Coordinate, TileType> tiles, Map<Coordinate, ItemType> items, Coordinate heroStartingCoordinate, Character character) {
         this.tiles = tiles;
-        this.items = items;
+        this.items = new ItemCollection(items);
         this.character = character;
         this.character.setCoordinate(heroStartingCoordinate);
     }
@@ -31,12 +32,17 @@ public class Overworld {
     }
 
     private void moveCharacter(Direction direction) {
-        TileType destinationTile = tiles.get(character.getCoordinate().neighbourInDirection(direction));
+        Coordinate moveToCoordinate = character.getCoordinate().neighbourInDirection(direction);
+        TileType destinationTile = tiles.get(moveToCoordinate);
         if (destinationTile.canMoveThrough()) {
             character.move(direction);
         }
         if (destinationTile.containsEnemy()) {
             this.enemyCollision = true;
+        }
+        ItemType itemType = items.get(moveToCoordinate);
+        if(itemType != null){
+            items.remove(moveToCoordinate);
         }
     }
 
@@ -53,6 +59,10 @@ public class Overworld {
     }
 
     public Map<Coordinate, ItemType> getItems() {
-        return items;
+        return items.getItems();
+    }
+
+    public boolean hasItemsChanged() {
+        return items.isChanged();
     }
 }

@@ -69,4 +69,8 @@ public final class GameState {
     public Map<Coordinate, ItemType> getItems() {
         return overworld.getItems();
     }
+
+    public boolean hasItemsChanged() {
+        return overworld.hasItemsChanged();
+    }
 }

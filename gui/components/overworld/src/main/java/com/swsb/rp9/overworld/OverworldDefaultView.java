@@ -3,26 +3,23 @@ package com.swsb.rp9.overworld;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.Position;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
-import com.swsb.rp9.domain.api.*;
+import com.swsb.rp9.domain.api.Coordinate;
+import com.swsb.rp9.domain.api.Direction;
+import com.swsb.rp9.domain.api.OverworldState;
 import com.swsb.rp9.overworld.view.CharacterView;
+import com.swsb.rp9.overworld.view.ItemsView;
 import com.swsb.rp9.overworld.view.MenuView;
+import com.swsb.rp9.overworld.view.TilesView;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Paint;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
-import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 import static com.swsb.rp9.domain.api.Direction.STAND_STILL;
-import static com.swsb.rp9.overworld.RectangleBuilder.rectangle;
 import static com.swsb.rp9.overworld.view.CharacterView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
-import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
 
 public class OverworldDefaultView extends GameView<OverworldState> {
@@ -31,12 +28,16 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     private static final int SCENE_WIDTH = 640;
     private static final int SCENE_HEIGHT = 480;
     private static final Dimension DIMENSIONS = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
+    private static final int ITEM_OFFSET = 0;
 
-    private CharacterView characterView;
     private int numberOfFramesProcessing = 0;
     private boolean processingEvent;
     private KeyEvent keyDown = null;
+
+    private CharacterView characterView;
     private MenuView menuView;
+    private ItemsView itemsView;
+    private TilesView tilesView;
 
     public OverworldDefaultView() {
         super(DIMENSIONS, new OverworldState());
@@ -54,11 +55,14 @@ public class OverworldDefaultView extends GameView<OverworldState> {
 
     @Override
     protected Parent createGuiRootNode() {
-        characterView = createCharacterView(getRestrictedState());
+        characterView = new CharacterView(getRestrictedState());
         menuView = new MenuView(getRestrictedState());
+        itemsView = new ItemsView(getRestrictedState());
+        tilesView = new TilesView(getRestrictedState());
 
         return new Group(
-                createOverworldGroup(),
+                tilesView.getView(),
+                itemsView.getView(),
                 characterView.getView(),
                 menuView.getView()
         );
@@ -74,10 +78,22 @@ public class OverworldDefaultView extends GameView<OverworldState> {
         this.keyDown = null;
     }
 
+    @Override
+    public void redraw() {
+        handleKeyDown(keyDown);
+        if (processingEvent) {
+            numberOfFramesProcessing++;
+        }
+        itemsView.redraw();
+        characterView.redraw();
+        menuView.redraw();
+    }
+
     private void handleKeyDown(KeyEvent event) {
         if (event == null) {
             return;
         }
+
         if (numberOfFramesProcessing > NUMBER_OF_FRAMES_NEEDED_FOR_MOVE) {
             processingEvent = false;
         }
@@ -100,47 +116,6 @@ public class OverworldDefaultView extends GameView<OverworldState> {
             menuView.onKeyPressed();
             keyDown = null;
         }
-    }
-
-    @Override
-    public void redraw() {
-        handleKeyDown(keyDown);
-        if (processingEvent) {
-            numberOfFramesProcessing++;
-        }
-        characterView.redraw();
-        menuView.redraw();
-    }
-
-    private CharacterView createCharacterView(OverworldState restrictedState) {
-        return new CharacterView(restrictedState);
-    }
-
-    private Node createOverworldGroup() {
-        return new Group(new Group(
-                getRestrictedState().getTiles().entrySet().stream()
-                        .map(entry -> rectangle()
-                                .color(toTexture(entry.getValue(), RECTANGLE_SIZE))
-                                .dimension(square(RECTANGLE_SIZE))
-                                .position(toPosition(entry.getKey()))
-                                .build())
-                        .collect(toList())),
-                new Group(getRestrictedState().getItems().entrySet().stream()
-                        .map(entry -> rectangle()
-                                .color(toTexture(entry.getValue(), RECTANGLE_SIZE))
-                                .dimension(square(RECTANGLE_SIZE))
-                                .position(toPosition(entry.getKey()).move(position(-10, -10)))
-                                .build())
-                        .collect(toList())
-                ));
-    }
-
-    private Paint toTexture(TileType tileType, int rectangleSize) {
-        return com.swsb.rp9.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize);
-    }
-
-    private Paint toTexture(ItemType itemType, int rectangleSize) {
-        return com.swsb.rp9.overworld.ItemType.valueOf(itemType.name()).toTexture(rectangleSize);
     }
 
     public static Position toPosition(Coordinate coordinate) {

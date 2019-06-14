@@ -27,3 +27,4 @@ Shout-out to the artists who made the sprites we used:
     - Philip Aldous — A World Of Snow (overworld screen music)
 - https://notphoenix.itch.io/snowyfrosty-tileset
 - https://youfulca.itch.io/legendary-jrpg-battle-music-pack
+- http://lpc.opengameart.org/static/lpc-style-guide/assets.html

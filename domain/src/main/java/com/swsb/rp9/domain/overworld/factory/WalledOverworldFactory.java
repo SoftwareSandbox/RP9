@@ -47,10 +47,8 @@ public class WalledOverworldFactory implements OverworldFactory {
             }
         }
         HashMap<Coordinate, ItemType> items = new HashMap<>();
-        IntStream.range(4, 12).forEach(i -> items.put(coordinate(i, 4), CANDLE));
-        IntStream.range(4, 12).forEach(i -> items.put(coordinate(i, 6), CANDLE));
-        IntStream.range(2, 10).forEach(i -> items.put(coordinate(7, i), CANDLE));
-        IntStream.range(2, 10).forEach(i -> items.put(coordinate(9, i), CANDLE));
+        IntStream.range(1, 15).forEach(i -> items.put(coordinate(i, 4), CANDLE));
+        IntStream.range(1, 15).forEach(i -> items.put(coordinate(i, 6), CANDLE));
         return new Overworld(tiles, items, coordinate(5, 5), character);
     }
 }
