@@ -39,7 +39,10 @@ public class ImageBuilder {
     }
 
     private Image build() {
-        return new Image(url, dimension.getWidth(), dimension.getHeight(), preserveRatio, smooth);
+        if(dimension != null){
+            return new Image(url, dimension.getWidth(), dimension.getHeight(), preserveRatio, smooth);
+        }
+        return new Image(url);
     }
 
     public ImageBuilder dimension(Dimension dimension) {
