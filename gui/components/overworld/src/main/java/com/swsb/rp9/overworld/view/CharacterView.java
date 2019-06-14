@@ -10,7 +10,7 @@ import static com.swsb.rp9.overworld.OverworldDefaultView.RECTANGLE_SIZE;
 import static com.swsb.rp9.overworld.OverworldDefaultView.toPosition;
 
 public class CharacterView {
-    private static final int HERO_OFFSET = -15;
+    private static final int HERO_OFFSET = -20;
     public static final int NUMBER_OF_FRAMES_NEEDED_FOR_MOVE = 20; //NEEDS TO BE A DIVIDER OF 40 OR THINGS WILL BREAK, I THINK, MAYBE NOT NOW I THINK ABOUT IT
     private final OverworldState overworldState;
     private Position position;
