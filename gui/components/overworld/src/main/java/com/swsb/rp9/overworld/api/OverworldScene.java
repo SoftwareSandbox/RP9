@@ -25,4 +25,9 @@ public class OverworldScene extends GameScene {
     protected Optional<String> getBackgroundMusicResourceUrl() {
         return Optional.of("/com/swsb/rp9/overworld/sound/Philip_Aldous-A_World_Of_Snow.wav");
     }
+
+    @Override
+    public void onTransitionToOtherScene() {
+        super.onTransitionToOtherScene();
+    }
 }

@@ -24,6 +24,7 @@ import javafx.scene.shape.Rectangle;
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
+import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 import static com.swsb.rp9.overworld.domain.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.domain.Position.position;
 import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
@@ -96,6 +97,10 @@ public class OverworldDefaultView extends GameView<OverworldState> {
             processingEvent = true;
             numberOfFramesProcessing = 0;
             overworld.handleDirectionPressed(toDirection(event));
+            if (overworld.collidedWithEnemy()) {
+                registerTransitionSlot(TRANSITION_SLOT_TWO);
+                overworld.collisionHandled();
+            }
         }
 
         if (ESCAPE.equals(event.getCode())) {

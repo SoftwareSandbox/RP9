@@ -5,6 +5,7 @@ import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.credits.api.CreditsScene;
 import com.swsb.rp9.credits.api.CreditsView;
+import com.swsb.rp9.fight.api.FightScene;
 import com.swsb.rp9.game.orchestrator.gamemap.IndividualGameSceneMap;
 import com.swsb.rp9.overworld.api.OverworldScene;
 import com.swsb.rp9.start.menu.api.StartMenuScene;
@@ -41,10 +42,11 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
         gameMap = new HashMap<>();
 
         var startMenuScene = new StartMenuScene();
+        var characterSelectionScene = new CharacterSelectionScene();
         var overworldScene = new OverworldScene();
+        var fightScene = new FightScene();
         var creditsView = determineCreditsView();
         var creditsScene = new CreditsScene(creditsView);
-        var characterSelectionScene = new CharacterSelectionScene();
 
         gameMap
                 .putAll(
@@ -55,7 +57,8 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
                                         .canTransitionTo(creditsScene, TRANSITION_SLOT_TWO),
                                 overworldScene.getUUID(),
                                 gameScene(overworldScene)
-                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE),
+                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE)
+                                        .canTransitionTo(fightScene, TRANSITION_SLOT_TWO),
                                 creditsScene.getUUID(),
                                 gameScene(creditsScene)
                                         .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE),

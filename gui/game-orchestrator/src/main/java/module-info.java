@@ -5,9 +5,10 @@ module game.orchestrator {
     exports com.swsb.rp9.game.orchestrator.api;
 
     requires start.menu;
+    requires character.selection;
+    requires fight;
     requires overworld;
     requires credits;
-    requires character.selection;
 
     requires javafx.controls;
     requires javafx.fxml;
