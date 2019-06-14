@@ -1,14 +1,15 @@
 package com.swsb.rp9.domain;
 
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.Direction;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
+import com.swsb.rp9.basicoverworld.api.OverworldFactory;
 import com.swsb.rp9.domain.overworld.Overworld;
-import com.swsb.rp9.domain.overworld.factory.OverworldFactory;
-import com.swsb.rp9.domain.overworld.factory.WalledOverworldFactory;
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.Direction;
+import com.swsb.rp9.shared.ItemType;
+import com.swsb.rp9.shared.TileType;
 
+import java.util.Comparator;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Random;
 
 import static java.util.Objects.requireNonNullElseGet;
@@ -30,9 +31,19 @@ public final class GameState {
     }
 
     private Overworld createOverworld(Character character) {
-        OverworldFactory overworldFactory = new WalledOverworldFactory();
-        return overworldFactory
-                .createOverworld(16, 12, character);
+        OverworldFactory overworldFactory = determineOverworldFactory();
+        return new Overworld(
+                overworldFactory
+                        .createOverworld(20, 16),
+                character);
+    }
+
+    private OverworldFactory determineOverworldFactory() {
+        return ServiceLoader.load(OverworldFactory.class)
+                .stream()
+                .map(ServiceLoader.Provider::get)
+                .max(Comparator.comparingInt(OverworldFactory::getLoadOrder))
+                .orElseThrow(() -> new RuntimeException("No overworld factories were provided!"));
     }
 
     public String getCharacterName() {
@@ -73,6 +84,10 @@ public final class GameState {
 
     public boolean hasItemsChanged() {
         return overworld.hasItemsChanged();
+    }
+
+    public int getExperiencePoints() {
+        return overworld.getCharacter().getExperiencePoints();
     }
 
     public int getHeroDamage() {

@@ -1,31 +1,30 @@
-package com.swsb.rp9.domain.overworld.factory;
+package com.swsb.rp9.basicoverworld;
 
-
-import com.swsb.rp9.domain.Character;
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
-import com.swsb.rp9.domain.overworld.Overworld;
+import com.swsb.rp9.basicoverworld.api.OverworldFactory;
+import com.swsb.rp9.shared.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static com.swsb.rp9.domain.api.Coordinate.coordinate;
-import static com.swsb.rp9.domain.api.ItemType.CANDLE;
-import static com.swsb.rp9.domain.api.TileType.*;
-
+import static com.swsb.rp9.shared.Coordinate.coordinate;
+import static com.swsb.rp9.shared.ItemType.CANDLE;
+import static com.swsb.rp9.shared.ItemType.WISP;
+import static com.swsb.rp9.shared.TileType.*;
 
 public class WalledOverworldFactory implements OverworldFactory {
 
     @Override
-    public Overworld createOverworld(int width, int height, Character character) {
+    public int getLoadOrder() {
+        return 1;
+    }
+
+    @Override
+    public OverworldFactoryResult createOverworld(int width, int height) {
         Map<Coordinate, TileType> tiles = new HashMap<>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (x == width / 2 && y == 0) {
-                    tiles.put(coordinate(x, y), WISP_ON_ICE_BORDER);
-                } else if (x == 0 && y == 0) {
+                if (x == 0 && y == 0) {
                     tiles.put(coordinate(x, y), ICE_CORNER_TOP_LEFT);
                 } else if (y == 0 && x == width - 1) {
                     tiles.put(coordinate(x, y), ICE_CORNER_TOP_RIGHT);
@@ -47,8 +46,15 @@ public class WalledOverworldFactory implements OverworldFactory {
             }
         }
         HashMap<Coordinate, ItemType> items = new HashMap<>();
-        IntStream.range(1, 15).forEach(i -> items.put(coordinate(i, 4), CANDLE));
-        IntStream.range(1, 15).forEach(i -> items.put(coordinate(i, 6), CANDLE));
-        return new Overworld(tiles, items, coordinate(5, 5), character);
+        IntStream.range(1, width - 1).forEach(i -> items.put(coordinate(i, 4), CANDLE));
+        IntStream.range(1, width - 1).forEach(i -> items.put(coordinate(i, 6), CANDLE));
+
+        items.put(coordinate(10,10), WISP);
+        return new OverworldFactoryResult(tiles, new ItemCollection(items), coordinate(1, 1));
     }
+
+    public static OverworldFactory provides() {
+        return new WalledOverworldFactory();
+    }
+
 }

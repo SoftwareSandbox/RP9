@@ -10,4 +10,5 @@ ext.moduleName = 'overworld'
 dependencies {
     implementation project(':gui:components:core')
     implementation project(':domain')
+    implementation project(':shared')
 }

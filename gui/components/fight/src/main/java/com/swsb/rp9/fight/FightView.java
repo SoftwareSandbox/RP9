@@ -24,7 +24,7 @@ import static javafx.scene.paint.Color.BLACK;
 
 public class FightView extends GameView<FightState> {
 
-    private static final Dimension DIMENSIONS = rectangle(640, 480);
+    private static final Dimension DIMENSIONS = rectangle(800, 640);
 
     public FightView() {
         super(DIMENSIONS, new FightState());

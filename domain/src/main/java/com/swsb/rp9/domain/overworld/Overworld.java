@@ -1,12 +1,12 @@
 package com.swsb.rp9.domain.overworld;
 
 import com.swsb.rp9.domain.Character;
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.Direction;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
+import com.swsb.rp9.shared.*;
 
 import java.util.Map;
+
+import static com.swsb.rp9.shared.ItemType.CANDLE;
+import static com.swsb.rp9.shared.ItemType.WISP;
 
 public class Overworld {
     private final Map<Coordinate, TileType> tiles;
@@ -16,11 +16,11 @@ public class Overworld {
     private Character character;
     private boolean enemyCollision;
 
-    public Overworld(Map<Coordinate, TileType> tiles, Map<Coordinate, ItemType> items, Coordinate heroStartingCoordinate, Character character) {
-        this.tiles = tiles;
-        this.items = new ItemCollection(items);
+    public Overworld(OverworldFactoryResult overworldFactoryResult, Character character) {
+        this.tiles = overworldFactoryResult.getTiles();
+        this.items = overworldFactoryResult.getItems();
         this.character = character;
-        this.character.setCoordinate(heroStartingCoordinate);
+        this.character.setCoordinate(overworldFactoryResult.getCharacterStartingCoordinate());
     }
 
     public Map<Coordinate, TileType> getTiles() {
@@ -37,12 +37,15 @@ public class Overworld {
         if (destinationTile.canMoveThrough()) {
             character.move(direction);
         }
-        if (destinationTile.containsEnemy()) {
-            this.enemyCollision = true;
-        }
+
         ItemType itemType = items.get(moveToCoordinate);
-        if(itemType != null){
+        if (itemType == CANDLE) {
+            character.addCandlePoint();
             items.remove(moveToCoordinate);
+        }
+
+        if (itemType == WISP) {
+            this.enemyCollision = true;
         }
     }
 

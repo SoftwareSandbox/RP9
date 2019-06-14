@@ -1,0 +1,5 @@
+ext.moduleName = 'basic-overworld'
+
+dependencies {
+    implementation project(':shared')
+}

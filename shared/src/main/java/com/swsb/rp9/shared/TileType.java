@@ -1,4 +1,4 @@
-package com.swsb.rp9.domain.api;
+package com.swsb.rp9.shared;
 
 import java.util.ArrayList;
 import java.util.List;

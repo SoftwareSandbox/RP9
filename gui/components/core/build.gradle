@@ -9,4 +9,5 @@ ext.moduleName = 'core'
 
 dependencies {
     implementation project(':domain')
+    implementation project(':shared')
 }

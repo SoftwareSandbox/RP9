@@ -1,12 +1,13 @@
 package com.swsb.rp9.domain;
 
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.Direction;
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.Direction;
 
 import java.util.Random;
 
 public class Character {
     private static final int DEFAULT_HP = 100;
+    private int experiencePoints;
     private static final int DEFAULT_BASEDAMAGE = 15;
 
     private String name;
@@ -18,6 +19,7 @@ public class Character {
         hitPoints = DEFAULT_HP;
         baseDamage = DEFAULT_BASEDAMAGE;
         this.coordinate = new Coordinate(1,1);
+        this.experiencePoints = 0;
     }
 
     public void move(Direction direction) {
@@ -54,5 +56,13 @@ public class Character {
 
     boolean isDefeated() {
         return hitPoints <= 0;
+    }
+
+    public void addCandlePoint() {
+        experiencePoints++;
+    }
+
+    public int getExperiencePoints() {
+        return experiencePoints;
     }
 }

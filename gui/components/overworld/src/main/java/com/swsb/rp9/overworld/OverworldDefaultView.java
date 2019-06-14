@@ -3,13 +3,13 @@ package com.swsb.rp9.overworld;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.Position;
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.Direction;
 import com.swsb.rp9.domain.api.OverworldState;
 import com.swsb.rp9.overworld.view.CharacterView;
 import com.swsb.rp9.overworld.view.ItemsView;
 import com.swsb.rp9.overworld.view.MenuView;
 import com.swsb.rp9.overworld.view.TilesView;
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.Direction;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
@@ -18,15 +18,15 @@ import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
-import static com.swsb.rp9.domain.api.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.view.CharacterView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
+import static com.swsb.rp9.shared.Direction.STAND_STILL;
 import static javafx.scene.input.KeyCode.*;
 
 public class OverworldDefaultView extends GameView<OverworldState> {
 
     public static final int RECTANGLE_SIZE = 40;
-    private static final int SCENE_WIDTH = 640;
-    private static final int SCENE_HEIGHT = 480;
+    private static final int SCENE_WIDTH = 800;
+    private static final int SCENE_HEIGHT = 640;
     private static final Dimension DIMENSIONS = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
     private static final int ITEM_OFFSET = 0;
 

@@ -1,5 +1,10 @@
 package com.swsb.rp9.domain.api;
 
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.Direction;
+import com.swsb.rp9.shared.ItemType;
+import com.swsb.rp9.shared.TileType;
+
 import java.util.Map;
 
 public class OverworldState extends RestrictedState {
@@ -38,5 +43,9 @@ public class OverworldState extends RestrictedState {
 
     public boolean hasItemsChanged() {
         return getGameState().hasItemsChanged();
+    }
+
+    public int getExperiencePoints() {
+        return getGameState().getExperiencePoints();
     }
 }

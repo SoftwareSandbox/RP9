@@ -7,5 +7,6 @@ module core {
     requires javafx.media;
 
     requires domain;
+    requires shared;
 
 }

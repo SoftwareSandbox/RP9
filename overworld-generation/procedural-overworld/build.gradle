@@ -1,0 +1,6 @@
+ext.moduleName = 'procedural-overworld'
+
+dependencies {
+    implementation project(':shared')
+    implementation project(':overworld-generation:basic-overworld')
+}
