@@ -2,6 +2,7 @@ package com.swsb.rp9.characterselection;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
+import com.swsb.rp9.core.SpriteAnimation;
 import com.swsb.rp9.core.TransitionSlot;
 import com.swsb.rp9.domain.api.CharacterSelectionState;
 import javafx.geometry.HPos;
@@ -15,7 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
+import java.util.HashMap;
+
 import static com.swsb.rp9.core.Dimension.rectangle;
+import static com.swsb.rp9.core.SpriteAnimation.Builder.spriteAnimation;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 import static javafx.scene.paint.Color.BLACK;
@@ -23,9 +27,14 @@ import static javafx.scene.paint.Color.BLACK;
 public class CharacterSelectionView extends GameView<CharacterSelectionState> {
 
     private static final Dimension DIMENSIONS = rectangle(800, 640);
+    public static final String DEFAULT_CHAR_NAME = "Your name...";
+    public static final String ORATIO = "Oratio";
+    public static final String OUZO = "Ouzo";
+    public static final String PRIME = "Prime";
 
     private TextField characterNameTextField;
     private String selectedSprite;
+    private TextField characterNameInputField;
 
     public CharacterSelectionView() {
         super(DIMENSIONS, new CharacterSelectionState());
@@ -54,8 +63,6 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
     private Parent createCharacterSelectionScreen() {
         GridPane characterScreen = createGridPane();
 
-        characterScreen.setGridLinesVisible(true);
-
         addSpriteSelectionToGridPane(characterScreen);
         addCharacterNameAndStartButton(characterScreen);
         characterScreen.setBackground(createStartScreenBackground());
@@ -64,7 +71,7 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
 
     private GridPane createGridPane() {
         GridPane characterScreen = new GridPane();
-        characterScreen.setVgap(10);
+        characterScreen.setVgap(20);
         characterScreen.setAlignment(Pos.CENTER);
 
         ColumnConstraints col1 = new ColumnConstraints();
@@ -79,26 +86,18 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
 
     private void addSpriteSelectionToGridPane(GridPane characterScreen) {
         ToggleGroup menuToggleGroup = new ToggleGroup();
+        HashMap<Toggle, SpriteAnimation> animationsMap= new HashMap<>();
 
-        RadioButton character1 = new RadioButton("Character 1");
-        RadioButton character2 = new RadioButton("Character 2");
-        RadioButton character3 = new RadioButton("Character 3");
-        ImageView oratio = new ImageView(new Image(getClass().getResource("/com/swsb/rp9/characterselection/characters/Oratio-the-Mercenary.png").toExternalForm()));
-        oratio.setViewport(new Rectangle2D(0,0, 70, 70));
-        ImageView ouzo = new ImageView(new Image(getClass().getResource("/com/swsb/rp9/characterselection/characters/Ouzo-the-Wolf-Bard.png").toExternalForm()));
-        ouzo.setViewport(new Rectangle2D(0,0, 70, 70));
-        ImageView prime = new ImageView(new Image(getClass().getResource("/com/swsb/rp9/characterselection/characters/Prime-the-Great-Sage.png").toExternalForm()));
-        prime.setViewport(new Rectangle2D(0,0, 70, 70));
-        character1.setGraphic(oratio);
-        character2.setGraphic(ouzo);
-        character3.setGraphic(prime);
-        character1.setToggleGroup(menuToggleGroup);
-        character2.setToggleGroup(menuToggleGroup);
-        character3.setToggleGroup(menuToggleGroup);
+        String char1Sprite = "/com/swsb/rp9/characterselection/characters/Oratio-the-Mercenary.png";
+        RadioButton character1 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, ORATIO, char1Sprite);
+        RadioButton character2 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, OUZO, "/com/swsb/rp9/characterselection/characters/Ouzo-the-Wolf-Bard.png");
+        RadioButton character3 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, PRIME, "/com/swsb/rp9/characterselection/characters/Prime-the-Great-Sage.png");
         menuToggleGroup.selectToggle(character2);
+        animationsMap.get(character2).play();
+        menuToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            selectedCharacterAnimation(animationsMap, oldValue, newValue);
+        });
 
-        GridPane.setValignment(character1, VPos.CENTER);
-        GridPane.setHalignment(character1, HPos.CENTER);
         GridPane.setValignment(character2, VPos.CENTER);
         GridPane.setHalignment(character2, HPos.CENTER);
         GridPane.setValignment(character3, VPos.CENTER);
@@ -106,8 +105,37 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
         characterScreen.addRow(0, character1, character2, character3);
     }
 
+    private RadioButton createCharacterSelectionRadioButton(ToggleGroup menuToggleGroup, HashMap<Toggle, SpriteAnimation> animationsMap, String charName, String charSprite) {
+        RadioButton character1 = new RadioButton(charName);
+        ImageView oratio = new ImageView(new Image(getClass().getResource(charSprite).toExternalForm()));
+        oratio.setViewport(new Rectangle2D(0,140, 70, 70));
+        animationsMap.put(character1, spriteAnimation().imageView(oratio).startingRow(2).columns(3).build());
+        character1.setGraphic(oratio);
+        character1.setToggleGroup(menuToggleGroup);
+        GridPane.setValignment(character1, VPos.CENTER);
+        GridPane.setHalignment(character1, HPos.CENTER);
+        return character1;
+    }
+
+    private void selectedCharacterAnimation(HashMap<Toggle, SpriteAnimation> animationsMap, Toggle oldValue, Toggle newValue) {
+        if(oldValue != null && animationsMap.get(oldValue) != null) {
+            animationsMap.get(oldValue).stop();
+        }
+        animationsMap.get(newValue).play();
+        if(characterHasDefaultName()) {
+            characterNameInputField.setText(((RadioButton) newValue).getText());
+        }
+    }
+
+    private boolean characterHasDefaultName() {
+        return characterNameInputField.getText().equals(DEFAULT_CHAR_NAME)
+                || characterNameInputField.getText().equals(OUZO)
+                || characterNameInputField.getText().equals(PRIME)
+                || characterNameInputField.getText().equals(ORATIO);
+    }
+
     private void addCharacterNameAndStartButton(GridPane characterScreen) {
-        TextField characterNameInputField = createCharacterNameInputField();
+        characterNameInputField = createCharacterNameInputField();
         Button startGameButton = createStartGameButton();
         GridPane.setValignment(characterNameInputField, VPos.CENTER);
         GridPane.setHalignment(characterNameInputField, HPos.CENTER);
@@ -118,7 +146,7 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
     }
 
     private TextField createCharacterNameInputField() {
-        characterNameTextField = new TextField("Your name...");
+        characterNameTextField = new TextField(DEFAULT_CHAR_NAME);
         characterNameTextField.setPrefWidth(DIMENSIONS.getWidth() - 20);
         characterNameTextField.setAlignment(Pos.CENTER);
         return characterNameTextField;
