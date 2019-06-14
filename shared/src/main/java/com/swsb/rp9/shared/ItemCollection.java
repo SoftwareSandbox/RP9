@@ -18,7 +18,6 @@ public class ItemCollection {
     }
 
     public ItemType get(Coordinate coordinate) {
-        changed = false;
         return items.get(coordinate);
     }
 
@@ -27,6 +26,7 @@ public class ItemCollection {
     }
 
     public Map<Coordinate, ItemType> getItems() {
+        changed = false;
         return items;
     }
 }
