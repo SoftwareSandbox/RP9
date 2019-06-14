@@ -6,12 +6,14 @@ import com.swsb.rp9.domain.api.FightState;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
@@ -25,14 +27,11 @@ import static javafx.scene.paint.Color.BLACK;
 public class FightView extends GameView<FightState> {
 
     private static final Dimension DIMENSIONS = rectangle(800, 640);
+    private Label heroHitPointsLabel;
+    private Label enemyHitPointsLabel;
 
     public FightView() {
         super(DIMENSIONS, new FightState());
-    }
-
-    @Override
-    public void redraw() {
-
     }
 
     @Override
@@ -54,6 +53,9 @@ public class FightView extends GameView<FightState> {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(characterGroup);
         borderPane.setBottom(actionMenu);
+        heroHitPointsLabel = createHeroHitPointsLabel();
+        enemyHitPointsLabel = createEnemyHitPointsLabel();
+        borderPane.setTop(new HBox(enemyHitPointsLabel, heroHitPointsLabel));
         return borderPane;
     }
 
@@ -70,6 +72,33 @@ public class FightView extends GameView<FightState> {
                     .startingPosition(position(DIMENSIONS.getWidth() / 5, DIMENSIONS.getHeight() / 4))
                     .dimension(square(120))
                     .buildView();
+    }
+
+    private Label createEnemyHitPointsLabel() {
+        Label label = new Label("HP: " + getRestrictedState().getEnemyHitpoints());
+        label.setTextFill(BLACK);
+        label.setScaleX(2);
+        label.setScaleY(2);
+        label.setLayoutY(40);
+        label.setTranslateX(30);
+        label.setTranslateY(30);
+        return label;
+    }
+
+    private Label createHeroHitPointsLabel() {
+        Label label = new Label("HP: " + getRestrictedState().getHeroHitpoints());
+        label.setTextFill(BLACK);
+        label.setScaleX(2);
+        label.setScaleY(2);
+        label.setLayoutY(40);
+        label.setTranslateX(DIMENSIONS.getWidth() - 130);
+        label.setTranslateY(30);
+        return label;
+    }
+
+    public void redraw() {
+        enemyHitPointsLabel.setText("HP: " + getRestrictedState().getEnemyHitpoints());
+        heroHitPointsLabel.setText("HP: " + getRestrictedState().getHeroHitpoints());
     }
 
     private VBox createActionMenu() {
