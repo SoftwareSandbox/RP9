@@ -1,5 +1,7 @@
 package com.swsb.rp9.overworld.domain;
 
+import com.swsb.rp9.core.Direction;
+
 import java.util.Objects;
 
 public class Coordinate {

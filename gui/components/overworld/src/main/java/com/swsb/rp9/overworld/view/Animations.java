@@ -1,6 +1,6 @@
 package com.swsb.rp9.overworld.view;
 
-import com.swsb.rp9.overworld.domain.Direction;
+import com.swsb.rp9.core.Direction;
 import javafx.scene.image.ImageView;
 
 import static com.swsb.rp9.overworld.view.SpriteAnimation.Builder.spriteAnimation;

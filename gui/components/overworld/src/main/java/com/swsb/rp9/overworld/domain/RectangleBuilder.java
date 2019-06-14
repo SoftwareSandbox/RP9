@@ -1,6 +1,7 @@
 package com.swsb.rp9.overworld.domain;
 
 import com.swsb.rp9.core.Dimension;
+import com.swsb.rp9.core.Position;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 

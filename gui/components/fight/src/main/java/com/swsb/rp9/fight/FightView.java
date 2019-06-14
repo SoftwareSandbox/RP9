@@ -2,17 +2,14 @@ package com.swsb.rp9.fight;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
+import javafx.scene.image.ImageView;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
+import static com.swsb.rp9.core.Dimension.square;
+import static com.swsb.rp9.core.ImageBuilder.image;
+import static com.swsb.rp9.core.Position.position;
 
 public class FightView extends GameView {
 
@@ -34,10 +31,24 @@ public class FightView extends GameView {
 
     @Override
     protected Parent createGuiRootNode() {
-        TilePane characterScreen = new TilePane();
-        characterScreen.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        characterScreen.setAlignment(Pos.CENTER);
-        return characterScreen;
+        ImageView hero = createHeroView();
+        ImageView enemy = createEnemyView();
+        return new Group(hero, enemy);
+    }
+
+    private ImageView createHeroView() {
+        return image()
+                    .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/hero/mercinary_fight_tmp.png").toExternalForm())
+                    .startingPosition(position(DIMENSIONS.getWidth() / 4 * 3, DIMENSIONS.getHeight() / 3))
+                    .buildView();
+    }
+
+    private ImageView createEnemyView() {
+        return image()
+                    .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/enemy/wisp.png").toExternalForm())
+                    .startingPosition(position(DIMENSIONS.getWidth() / 5, DIMENSIONS.getHeight() / 4))
+                    .dimension(square(120))
+                    .buildView();
     }
 
     @Override

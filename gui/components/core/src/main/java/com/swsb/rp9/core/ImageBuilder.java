@@ -1,6 +1,5 @@
-package com.swsb.rp9.overworld.domain;
+package com.swsb.rp9.core;
 
-import com.swsb.rp9.core.Dimension;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

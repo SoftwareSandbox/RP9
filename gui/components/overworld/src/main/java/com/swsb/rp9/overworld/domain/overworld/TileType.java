@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.swsb.rp9.core.Dimension.square;
-import static com.swsb.rp9.overworld.domain.ImageBuilder.image;
+import static com.swsb.rp9.core.ImageBuilder.image;
 import static java.util.Arrays.asList;
 
 public enum TileType {

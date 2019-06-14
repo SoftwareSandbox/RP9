@@ -1,7 +1,7 @@
 package com.swsb.rp9.overworld.domain.hero;
 
 import com.swsb.rp9.overworld.domain.Coordinate;
-import com.swsb.rp9.overworld.domain.Direction;
+import com.swsb.rp9.core.Direction;
 
 public class Hero {
     private Coordinate coordinate;

@@ -1,19 +1,13 @@
 package com.swsb.rp9.overworld.view;
 
-import com.swsb.rp9.overworld.domain.Direction;
-import com.swsb.rp9.overworld.domain.Position;
+import com.swsb.rp9.core.Position;
 import com.swsb.rp9.overworld.domain.hero.Hero;
-import javafx.animation.Animation;
 import javafx.scene.image.ImageView;
-import javafx.util.Duration;
 
-import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.overworld.OverworldDefaultView.RECTANGLE_SIZE;
 import static com.swsb.rp9.overworld.OverworldDefaultView.toPosition;
-import static com.swsb.rp9.overworld.domain.Direction.*;
-import static com.swsb.rp9.overworld.domain.ImageBuilder.image;
-import static com.swsb.rp9.overworld.view.SpriteAnimation.Builder.spriteAnimation;
-import static javafx.animation.Animation.INDEFINITE;
+import static com.swsb.rp9.core.Direction.*;
+import static com.swsb.rp9.core.ImageBuilder.image;
 
 public class HeroView {
     private static final int HERO_OFFSET = -15;

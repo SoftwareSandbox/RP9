@@ -1,12 +1,11 @@
 package com.swsb.rp9.overworld;
 
 import com.swsb.rp9.core.Dimension;
+import com.swsb.rp9.core.Direction;
 import com.swsb.rp9.core.GameView;
+import com.swsb.rp9.core.Position;
 import com.swsb.rp9.domain.api.OverworldState;
 import com.swsb.rp9.overworld.domain.Coordinate;
-import com.swsb.rp9.overworld.domain.Direction;
-import com.swsb.rp9.overworld.domain.Position;
-import com.swsb.rp9.overworld.domain.RectangleBuilder;
 import com.swsb.rp9.overworld.domain.hero.Hero;
 import com.swsb.rp9.overworld.domain.overworld.Overworld;
 import com.swsb.rp9.overworld.domain.overworld.factory.OverworldFactory;
@@ -16,23 +15,18 @@ import com.swsb.rp9.overworld.view.MenuView;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Dimension.square;
+import static com.swsb.rp9.core.Direction.STAND_STILL;
+import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
-import static com.swsb.rp9.overworld.domain.Direction.STAND_STILL;
-import static com.swsb.rp9.overworld.domain.Position.position;
 import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
 import static com.swsb.rp9.overworld.view.HeroView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
-import static javafx.scene.paint.Color.BLACK;
-import static javafx.scene.paint.Color.rgb;
 
 public class OverworldDefaultView extends GameView<OverworldState> {
 

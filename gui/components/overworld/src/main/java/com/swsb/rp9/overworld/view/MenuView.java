@@ -2,12 +2,11 @@ package com.swsb.rp9.overworld.view;
 
 import com.swsb.rp9.domain.api.OverworldState;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
-import static com.swsb.rp9.overworld.domain.Position.position;
+import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
 import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.rgb;

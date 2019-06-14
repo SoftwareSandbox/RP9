@@ -1,4 +1,4 @@
-package com.swsb.rp9.overworld.domain;
+package com.swsb.rp9.core;
 
 import java.util.Objects;
 
