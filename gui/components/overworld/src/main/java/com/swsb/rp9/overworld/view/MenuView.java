@@ -26,7 +26,7 @@ public class MenuView {
         this.experiencePointsLabel = createExperiencePointsLabel();
 
         this.view = new Group(rectangle()
-                .dimension(rectangle(580, 420))
+                .dimension(rectangle(740, 580))
                 .color(rgb(192, 192, 192, 0.5))
                 .strokeColor(BLACK)
                 .position(position(30, 30))
@@ -43,8 +43,8 @@ public class MenuView {
     private Label createMenuLabel() {
         Label label = new Label("~~~~MENU~~~~~");
         label.setTextFill(Color.WHITE);
-        label.setTranslateX(260);
-        label.setTranslateY(410);
+        label.setTranslateX(300);
+        label.setTranslateY(540);
         return label;
     }
 

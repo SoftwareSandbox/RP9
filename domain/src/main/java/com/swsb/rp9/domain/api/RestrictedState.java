@@ -1,5 +1,6 @@
 package com.swsb.rp9.domain.api;
 
+import com.swsb.rp9.domain.Enemy;
 import com.swsb.rp9.domain.GameState;
 
 import static com.swsb.rp9.domain.GameState.getGameStateInstance;
@@ -14,5 +15,9 @@ public abstract class RestrictedState {
 
     GameState getGameState() {
         return gameState;
+    }
+
+    public void resetGame() {
+        gameState.resetGame();
     }
 }

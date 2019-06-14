@@ -17,6 +17,7 @@ import java.util.TimerTask;
 class GameOrchestrator {
 
     private static final int FPS = get60FPS();
+//    private static final int FPS = get40FPS();
 
     private final Stage stage;
     private final Timer timer;
@@ -40,6 +41,7 @@ class GameOrchestrator {
     }
 
     private static int get60FPS() { return 1000 / 60; }
+    private static int get40FPS() { return 1000 / 40; }
 
     /**
      * Represents the game loop.

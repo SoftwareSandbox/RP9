@@ -112,7 +112,8 @@ public class OverworldDefaultView extends GameView<OverworldState> {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
             keyDown = null;
         }
-        if (event.getCode().name().equals("M")) {
+
+        if (event.getCode().name().equals("TAB")) {
             menuView.onKeyPressed();
             keyDown = null;
         }
