@@ -3,13 +3,16 @@ package com.swsb.rp9.domain.overworld.factory;
 
 import com.swsb.rp9.domain.Character;
 import com.swsb.rp9.domain.api.Coordinate;
+import com.swsb.rp9.domain.api.ItemType;
 import com.swsb.rp9.domain.api.TileType;
 import com.swsb.rp9.domain.overworld.Overworld;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static com.swsb.rp9.domain.api.Coordinate.coordinate;
+import static com.swsb.rp9.domain.api.ItemType.CANDLE;
 import static com.swsb.rp9.domain.api.TileType.*;
 
 
@@ -43,6 +46,11 @@ public class WalledOverworldFactory implements OverworldFactory {
                 }
             }
         }
-        return new Overworld(tiles, coordinate(5, 5), character);
+        HashMap<Coordinate, ItemType> items = new HashMap<>();
+        IntStream.range(4, 12).forEach(i -> items.put(coordinate(i, 4), CANDLE));
+        IntStream.range(4, 12).forEach(i -> items.put(coordinate(i, 6), CANDLE));
+        IntStream.range(2, 10).forEach(i -> items.put(coordinate(7, i), CANDLE));
+        IntStream.range(2, 10).forEach(i -> items.put(coordinate(9, i), CANDLE));
+        return new Overworld(tiles, items, coordinate(5, 5), character);
     }
 }

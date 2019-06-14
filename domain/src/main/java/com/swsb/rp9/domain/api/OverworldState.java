@@ -31,4 +31,8 @@ public class OverworldState extends RestrictedState {
     public Coordinate getHeroCoordinate() {
         return getGameState().getCharacterCoordinate();
     }
+
+    public Map<Coordinate, ItemType> getItems() {
+        return getGameState().getItems();
+    }
 }
