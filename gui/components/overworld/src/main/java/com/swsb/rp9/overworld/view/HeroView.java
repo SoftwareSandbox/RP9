@@ -16,7 +16,7 @@ import static com.swsb.rp9.overworld.view.SpriteAnimation.Builder.spriteAnimatio
 import static javafx.animation.Animation.INDEFINITE;
 
 public class HeroView {
-    private static final int HERO_OFFSET = 0;
+    private static final int HERO_OFFSET = -15;
     public static final int NUMBER_OF_FRAMES_NEEDED_FOR_MOVE = 20; //NEEDS TO BE A DIVIDER OF 40 OR THINGS WILL BREAK, I THINK, MAYBE NOT NOW I THINK ABOUT IT
     private Position position;
     private ImageView imageView;
@@ -34,7 +34,6 @@ public class HeroView {
         this.animations = new Animations(imageView);
         animations.startAnimation(RIGHT);
     }
-
 
     public ImageView getView() {
         return imageView;
@@ -71,6 +70,6 @@ public class HeroView {
             animations.stopAnimation();
         }
         imageView.setX(position.getX() + HERO_OFFSET);
-        imageView.setY(position.getY());
+        imageView.setY(position.getY() + HERO_OFFSET);
     }
 }
