@@ -42,7 +42,7 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
 
         var startMenuScene = new StartMenuScene();
         var overworldScene = new OverworldScene();
-        GameView creditsView = determineCreditsView();
+        var creditsView = determineCreditsView();
         var creditsScene = new CreditsScene(creditsView);
         var characterSelectionScene = new CharacterSelectionScene();
 
