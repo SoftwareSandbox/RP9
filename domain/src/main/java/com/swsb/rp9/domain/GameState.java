@@ -2,6 +2,7 @@ package com.swsb.rp9.domain;
 
 import com.swsb.rp9.domain.api.Coordinate;
 import com.swsb.rp9.domain.api.Direction;
+import com.swsb.rp9.domain.api.ItemType;
 import com.swsb.rp9.domain.api.TileType;
 import com.swsb.rp9.domain.overworld.Overworld;
 import com.swsb.rp9.domain.overworld.factory.OverworldFactory;
@@ -63,5 +64,9 @@ public final class GameState {
 
     public Coordinate getCharacterCoordinate() {
         return overworld.getCharacter().getCoordinate();
+    }
+
+    public Map<Coordinate, ItemType> getItems() {
+        return overworld.getItems();
     }
 }

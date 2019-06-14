@@ -22,7 +22,7 @@ public class RandomOverworldFactory implements OverworldFactory {
                 tiles.put(coordinate(x, y), getRandomTileType());
             }
         }
-        return new Overworld(tiles, coordinate(5, 5), character);
+        return new Overworld(tiles, new HashMap<>(), coordinate(5, 5), character);
     }
 
     private TileType getRandomTileType() {
