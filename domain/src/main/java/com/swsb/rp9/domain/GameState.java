@@ -1,6 +1,7 @@
 package com.swsb.rp9.domain;
 
 import com.swsb.rp9.basicoverworld.api.OverworldFactory;
+import com.swsb.rp9.domain.api.CharacterType;
 import com.swsb.rp9.domain.overworld.Overworld;
 import com.swsb.rp9.shared.Coordinate;
 import com.swsb.rp9.shared.Direction;
@@ -109,5 +110,17 @@ public final class GameState {
     public void resetGame() {
         character = new Character();
         overworld = createOverworld(character);
+    }
+
+    public void setCharacterType(CharacterType characterType) {
+        overworld.getCharacter().setType(characterType);
+    }
+
+    public CharacterType getCharacterType() {
+        return overworld.getCharacter().getCharacterType();
+    }
+
+    public boolean isCharacterTypeChanged() {
+        return overworld.getCharacter().isTypeChanged();
     }
 }

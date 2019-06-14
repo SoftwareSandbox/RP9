@@ -1,5 +1,6 @@
 package com.swsb.rp9.domain.api;
 
+import com.swsb.rp9.domain.Character;
 import com.swsb.rp9.shared.Coordinate;
 import com.swsb.rp9.shared.Direction;
 import com.swsb.rp9.shared.ItemType;
@@ -47,5 +48,13 @@ public class OverworldState extends RestrictedState {
 
     public int getExperiencePoints() {
         return getGameState().getExperiencePoints();
+    }
+
+    public CharacterType getCharacterType() {
+        return getGameState().getCharacterType();
+    }
+
+    public boolean isCharacterTypeChanged() {
+        return getGameState().isCharacterTypeChanged();
     }
 }

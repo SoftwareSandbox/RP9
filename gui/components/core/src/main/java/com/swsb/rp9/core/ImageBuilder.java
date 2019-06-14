@@ -37,7 +37,7 @@ public class ImageBuilder {
         return imageView;
     }
 
-    private Image build() {
+    public Image build() {
         if(dimension != null){
             return new Image(url, dimension.getWidth(), dimension.getHeight(), preserveRatio, smooth);
         }

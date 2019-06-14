@@ -1,5 +1,6 @@
 package com.swsb.rp9.overworld.view;
 
+import com.swsb.rp9.core.CharacterType;
 import com.swsb.rp9.core.Position;
 import com.swsb.rp9.domain.api.OverworldState;
 import javafx.scene.image.ImageView;
@@ -23,7 +24,7 @@ public class CharacterView {
         this.overworldState = overworldState;
         this.position = toPosition(overworldState.getHeroCoordinate());
         this.imageView = image()
-                .url(getClass().getResource("/com/swsb/rp9/overworld/sprites/hero/Ouzo-the-Wolf-Bard.png").toExternalForm())
+                .url(getClass().getResource(CharacterType.valueOf(overworldState.getCharacterType().name()).getUrlToTextureImage()).toExternalForm())
                 .buildView();
         this.animations = new Animations(imageView);
         animations.startAnimation(RIGHT);
@@ -36,6 +37,15 @@ public class CharacterView {
     public void redraw() {
 //        growHero();
         positionHero();
+        changeImageHero();
+    }
+
+    private void changeImageHero() {
+        if(overworldState.isCharacterTypeChanged()){
+            imageView.setImage(image()
+                    .url(getClass().getResource(CharacterType.valueOf(overworldState.getCharacterType().name()).getUrlToTextureImage()).toExternalForm())
+                    .build());
+        }
     }
 
     private void growHero() {

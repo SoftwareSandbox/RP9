@@ -5,6 +5,7 @@ import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.SpriteAnimation;
 import com.swsb.rp9.core.TransitionSlot;
 import com.swsb.rp9.domain.api.CharacterSelectionState;
+import com.swsb.rp9.domain.api.CharacterType;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -20,9 +21,7 @@ import java.util.HashMap;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.SpriteAnimation.Builder.spriteAnimation;
-import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
-import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
-import static javafx.scene.paint.Color.BLACK;
+import static com.swsb.rp9.domain.api.CharacterType.*;
 
 public class CharacterSelectionView extends GameView<CharacterSelectionState> {
 
@@ -34,6 +33,10 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
 
     private TextField characterNameTextField;
     private String selectedSprite;
+    private ToggleGroup menuToggleGroup;
+    private RadioButton character1;
+    private RadioButton character2;
+    private RadioButton character3;
     private TextField characterNameInputField;
 
     public CharacterSelectionView() {
@@ -85,13 +88,13 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
     }
 
     private void addSpriteSelectionToGridPane(GridPane characterScreen) {
-        ToggleGroup menuToggleGroup = new ToggleGroup();
+        menuToggleGroup = new ToggleGroup();
         HashMap<Toggle, SpriteAnimation> animationsMap= new HashMap<>();
 
         String char1Sprite = "/com/swsb/rp9/characterselection/characters/Oratio-the-Mercenary.png";
-        RadioButton character1 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, ORATIO, char1Sprite);
-        RadioButton character2 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, OUZO, "/com/swsb/rp9/characterselection/characters/Ouzo-the-Wolf-Bard.png");
-        RadioButton character3 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, PRIME, "/com/swsb/rp9/characterselection/characters/Prime-the-Great-Sage.png");
+        character1 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, ORATIO, char1Sprite);
+        character2 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, OUZO, "/com/swsb/rp9/characterselection/characters/Ouzo-the-Wolf-Bard.png");
+        character3 = createCharacterSelectionRadioButton(menuToggleGroup, animationsMap, PRIME, "/com/swsb/rp9/characterselection/characters/Prime-the-Great-Sage.png");
         menuToggleGroup.selectToggle(character2);
         animationsMap.get(character2).play();
         menuToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
@@ -157,18 +160,35 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
         startGameButton.setOnKeyPressed(
                 event -> {
                     if (KeyCode.ENTER.equals(event.getCode())) {
-                        getRestrictedState().setCharacterName(characterNameTextField.getText());
-                        registerTransitionSlot(TransitionSlot.TRANSITION_SLOT_ONE);
+                        startNewGame();
                     }
                 }
         );
         startGameButton.setOnMouseClicked(
                 event -> {
-                    getRestrictedState().setCharacterName(characterNameTextField.getText());
-                    registerTransitionSlot(TransitionSlot.TRANSITION_SLOT_ONE);
+                    startNewGame();
                 }
         );
         return startGameButton;
+    }
+
+    private void startNewGame() {
+        getRestrictedState().setCharacterName(characterNameTextField.getText());
+        registerTransitionSlot(TransitionSlot.TRANSITION_SLOT_ONE);
+        getRestrictedState().setCharacterType(getCharacterType());
+    }
+
+    private CharacterType getCharacterType() {
+        if(menuToggleGroup.getSelectedToggle().equals(character1)){
+            return MERCENARY;
+        }
+        if(menuToggleGroup.getSelectedToggle().equals(character2)){
+            return BARD;
+        }
+        if(menuToggleGroup.getSelectedToggle().equals(character3)){
+            return SAGE;
+        }
+        return null;
     }
 
     private Background createStartScreenBackground() {

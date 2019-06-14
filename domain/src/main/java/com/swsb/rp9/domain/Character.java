@@ -1,9 +1,12 @@
 package com.swsb.rp9.domain;
 
+import com.swsb.rp9.domain.api.CharacterType;
 import com.swsb.rp9.shared.Coordinate;
 import com.swsb.rp9.shared.Direction;
 
 import java.util.Random;
+
+import static com.swsb.rp9.domain.api.CharacterType.MERCENARY;
 
 public class Character {
     private static final int DEFAULT_HP = 100;
@@ -15,6 +18,8 @@ public class Character {
     private int maxHitPoints;
     private int baseDamage;
     private Coordinate coordinate;
+    private CharacterType characterType;
+    private boolean typeChanged;
 
     public Character() {
         hitPoints = DEFAULT_HP;
@@ -22,6 +27,8 @@ public class Character {
         baseDamage = DEFAULT_BASEDAMAGE;
         this.coordinate = new Coordinate(1,1);
         this.experiencePoints = 0;
+        this.characterType = MERCENARY;
+        this.typeChanged = true;
     }
 
     public void move(Direction direction) {
@@ -70,5 +77,19 @@ public class Character {
 
     public int getExperiencePoints() {
         return experiencePoints;
+    }
+
+    public void setType(CharacterType characterType) {
+        this.characterType = characterType;
+        typeChanged = true;
+    }
+
+    public CharacterType getCharacterType() {
+        typeChanged = false;
+        return characterType;
+    }
+
+    public boolean isTypeChanged() {
+        return typeChanged;
     }
 }
