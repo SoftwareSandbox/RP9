@@ -31,7 +31,7 @@ public final class GameState {
     private Overworld createOverworld(Character character) {
         OverworldFactory overworldFactory = new WalledOverworldFactory();
         return overworldFactory
-                .createOverworld(16, 12, character);
+                .createOverworld(20, 16, character);
     }
 
     public String getCharacterName() {

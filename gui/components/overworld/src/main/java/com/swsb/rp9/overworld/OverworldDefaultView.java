@@ -25,8 +25,8 @@ import static javafx.scene.input.KeyCode.*;
 public class OverworldDefaultView extends GameView<OverworldState> {
 
     public static final int RECTANGLE_SIZE = 40;
-    private static final int SCENE_WIDTH = 640;
-    private static final int SCENE_HEIGHT = 480;
+    private static final int SCENE_WIDTH = 800;
+    private static final int SCENE_HEIGHT = 640;
     private static final Dimension DIMENSIONS = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
     private static final int ITEM_OFFSET = 0;
 

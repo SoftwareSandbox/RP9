@@ -11,3 +11,23 @@
     -fx-font: bold 24pt "Courier New";
     -fx-text-fill: #fff;
 }
+
+.radio-button .radio {
+    visibility: hidden;
+}
+
+.radio-button:selected {
+    -fx-border-width: 2;
+    -fx-border-color: rgb(206, 228, 243);
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10
+}
+
+.radio-button {
+    -fx-font: bold 12pt "Courier New";
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    margin: 0px 0px 0px 0px;
+    -fx-translate-x: -17;
+    -fx-padding: 0 0 0 0;
+}

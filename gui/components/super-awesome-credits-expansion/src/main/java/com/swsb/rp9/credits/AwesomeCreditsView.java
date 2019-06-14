@@ -16,7 +16,7 @@ import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 
 public class AwesomeCreditsView extends GameView<PlaceholderState> implements CreditsView {
 
-    private static final Dimension DIMENSIONS = rectangle(640, 480);
+    private static final Dimension DIMENSIONS = rectangle(800, 640);
 
     private Label backLbl, creditsLbl;
 
