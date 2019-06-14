@@ -118,6 +118,8 @@ public class FightView extends GameView<FightState> {
                     getRestrictedState().enemyDamagesHero();
                     if (getRestrictedState().isHeroDefeated()) {
                         getRestrictedState().resetGame();
+                        // TODO: move this to a better location, use onTransitionToThisScene hook on scene?
+                        getRestrictedState().resetEnemy();
                         registerTransitionSlot(TRANSITION_SLOT_TWO);
                     }
                 }
