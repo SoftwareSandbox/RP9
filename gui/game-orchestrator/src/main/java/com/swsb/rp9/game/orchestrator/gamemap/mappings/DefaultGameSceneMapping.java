@@ -4,7 +4,7 @@ import com.swsb.rp9.characterselection.api.CharacterSelectionScene;
 import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.credits.api.CreditsScene;
-import com.swsb.rp9.credits.view.api.CreditsView;
+import com.swsb.rp9.credits.api.CreditsView;
 import com.swsb.rp9.game.orchestrator.gamemap.IndividualGameSceneMap;
 import com.swsb.rp9.overworld.api.OverworldScene;
 import com.swsb.rp9.start.menu.api.StartMenuScene;
@@ -42,12 +42,8 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
 
         var startMenuScene = new StartMenuScene();
         var overworldScene = new OverworldScene();
-        CreditsView creditsView = ServiceLoader.load(CreditsView.class)
-                                        .stream()
-                                        .map(ServiceLoader.Provider::get)
-                                        .max(Comparator.comparingInt(CreditsView::awesomeness))
-                                        .orElseThrow(() -> new RuntimeException("blab"));
-        var creditsScene = new CreditsScene((GameView) creditsView);
+        var creditsView = determineCreditsView();
+        var creditsScene = new CreditsScene(creditsView);
         var characterSelectionScene = new CharacterSelectionScene();
 
         gameMap
@@ -71,5 +67,13 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
         initialGameScene = startMenuScene;
         return gameMap;
 
+    }
+
+    private GameView determineCreditsView() {
+        return (GameView) ServiceLoader.load(CreditsView.class)
+                                       .stream()
+                                       .map(ServiceLoader.Provider::get)
+                                       .max(Comparator.comparingInt(CreditsView::awesomeness))
+                                       .orElseThrow(() -> new RuntimeException("blab"));
     }
 }

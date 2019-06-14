@@ -9,6 +9,6 @@ ext.moduleName = 'super-awesome-credits-expansion'
 
 dependencies {
     implementation project(':gui:components:core')
-    implementation project(':gui:components:credits-view-api')
+    implementation project(':gui:components:credits')
     implementation project(':domain')
 }

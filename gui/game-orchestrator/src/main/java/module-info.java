@@ -1,3 +1,5 @@
+import com.swsb.rp9.credits.api.CreditsView;
+
 module game.orchestrator {
 
     exports com.swsb.rp9.game.orchestrator.api;
@@ -5,7 +7,6 @@ module game.orchestrator {
     requires start.menu;
     requires overworld;
     requires credits;
-    requires credits.view.api;
     requires character.selection;
 
     requires javafx.controls;
@@ -13,6 +14,6 @@ module game.orchestrator {
 
     opens com.swsb.rp9.game.orchestrator to javafx.graphics;
 
-    uses com.swsb.rp9.credits.view.api.CreditsView;
+    uses CreditsView;
 
 }
