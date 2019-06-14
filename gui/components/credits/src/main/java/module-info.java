@@ -3,7 +3,6 @@ import com.swsb.rp9.CreditsDefaultView;
 module credits {
 
     requires core;
-    requires credits.view.api;
     requires domain;
 
     requires javafx.controls;
@@ -11,6 +10,6 @@ module credits {
 
     exports com.swsb.rp9.credits.api;
 
-    provides com.swsb.rp9.credits.view.api.CreditsView
+    provides com.swsb.rp9.credits.api.CreditsView
             with CreditsDefaultView;
 }
