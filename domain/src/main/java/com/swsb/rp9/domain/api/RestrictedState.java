@@ -6,11 +6,11 @@ public abstract class RestrictedState {
 
     private GameState gameState;
 
-    public RestrictedState(GameState gameState) {
+    RestrictedState(GameState gameState) {
         this.gameState = gameState;
     }
 
-    protected GameState getGameState() {
+    GameState getGameState() {
         return gameState;
     }
 }
