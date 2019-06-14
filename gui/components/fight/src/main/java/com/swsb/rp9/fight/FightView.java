@@ -111,13 +111,11 @@ public class FightView extends GameView<FightState> {
         attackButton.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 getRestrictedState().heroDamagesEnemy();
-                System.out.println("ENEMY HITPOINTS: " + getRestrictedState().getEnemyHitpoints());
                 if(getRestrictedState().isEnemyDefeated()) {
                     resetEnemy();
                     registerTransitionSlot(TRANSITION_SLOT_ONE);
                 } else {
                     getRestrictedState().enemyDamagesHero();
-                    System.out.println("HERO HITPOINTS: " + getRestrictedState().getHeroHitpoints());
                     if (getRestrictedState().isHeroDefeated()) {
                         getRestrictedState().resetGame();
                         registerTransitionSlot(TRANSITION_SLOT_TWO);
