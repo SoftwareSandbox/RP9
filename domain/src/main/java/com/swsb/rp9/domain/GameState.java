@@ -73,4 +73,8 @@ public final class GameState {
     public boolean hasItemsChanged() {
         return overworld.hasItemsChanged();
     }
+
+    public int getExperiencePoints() {
+        return overworld.getCharacter().getExperiencePoints();
+    }
 }

@@ -39,4 +39,8 @@ public class OverworldState extends RestrictedState {
     public boolean hasItemsChanged() {
         return getGameState().hasItemsChanged();
     }
+
+    public int getExperiencePoints() {
+        return getGameState().getExperiencePoints();
+    }
 }

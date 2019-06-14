@@ -43,8 +43,10 @@ public class Overworld {
 
         ItemType itemType = items.get(moveToCoordinate);
         if (itemType == CANDLE) {
+            character.addCandlePoint();
             items.remove(moveToCoordinate);
         }
+
         if (itemType == WISP) {
             this.enemyCollision = true;
         }
