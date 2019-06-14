@@ -15,7 +15,7 @@ public enum TileType {
     MOUNTAIN(),
     MOSS(),
     SNOW(),
-    WALL(),
+    WALL(TileCharacteristics.IMPASSABLE),
 
     ICE(),
     ICE_SIDE_TOP(TileCharacteristics.IMPASSABLE),
