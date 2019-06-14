@@ -5,9 +5,13 @@ import com.swsb.rp9.shared.*;
 
 import java.util.Map;
 
+import static com.swsb.rp9.domain.api.ItemType.CANDLE;
+import static com.swsb.rp9.domain.api.ItemType.WISP;
+
 public class Overworld {
     private final Map<Coordinate, TileType> tiles;
-    private final Map<Coordinate, ItemType> items;
+    private final ItemCollection items;
+
 
     private Character character;
     private boolean enemyCollision;
@@ -28,11 +32,17 @@ public class Overworld {
     }
 
     private void moveCharacter(Direction direction) {
-        TileType destinationTile = tiles.get(character.getCoordinate().neighbourInDirection(direction));
+        Coordinate moveToCoordinate = character.getCoordinate().neighbourInDirection(direction);
+        TileType destinationTile = tiles.get(moveToCoordinate);
         if (destinationTile.canMoveThrough()) {
             character.move(direction);
         }
-        if (destinationTile.containsEnemy()) {
+
+        ItemType itemType = items.get(moveToCoordinate);
+        if (itemType == CANDLE) {
+            items.remove(moveToCoordinate);
+        }
+        if (itemType == WISP) {
             this.enemyCollision = true;
         }
     }
@@ -50,6 +60,10 @@ public class Overworld {
     }
 
     public Map<Coordinate, ItemType> getItems() {
-        return items;
+        return items.getItems();
+    }
+
+    public boolean hasItemsChanged() {
+        return items.isChanged();
     }
 }

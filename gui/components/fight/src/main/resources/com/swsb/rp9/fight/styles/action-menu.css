@@ -1,0 +1,14 @@
+.radio-button .radio {
+    visibility: hidden;
+}
+
+.radio-button:selected {
+    -fx-label-padding: 0px 0px 0px 0px;
+    -fx-graphic: url('../sprites/cursor.png');
+}
+
+.radio-button {
+    -fx-font: bold 12pt "Courier New";
+    -fx-label-padding: 0px 0px 0px 28px;
+}
+

@@ -8,7 +8,8 @@ import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.core.ImageBuilder.image;
 
 public enum ItemType {
-    CANDLE("/com/swsb/rp9/overworld/sprites/items/candle.png");
+    CANDLE("/com/swsb/rp9/overworld/sprites/items/candle.png"),
+    WISP("/com/swsb/rp9/overworld/sprites/enemy/wisp.png");
 
     private final String pathToTextureImage;
 
