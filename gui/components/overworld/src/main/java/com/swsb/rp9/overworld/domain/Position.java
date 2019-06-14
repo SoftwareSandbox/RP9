@@ -12,7 +12,7 @@ public class Position {
         this.y = y;
     }
 
-    public static Position position(double x, double y){
+    public static Position position(double x, double y) {
         return new Position(x, y);
     }
 
@@ -59,12 +59,28 @@ public class Position {
     }
 
     private double limit(double number, double max) {
-        if(number > max) {
+        if (number > max) {
             return max;
         }
-        if(number < max * -1){
+        if (number < max * -1) {
             return max * -1;
         }
         return number;
+    }
+
+    public Direction getDirection() {
+        if (x < 0) {
+            return Direction.LEFT;
+        }
+        if (x > 0) {
+            return Direction.RIGHT;
+        }
+        if (y < 0) {
+            return Direction.UP;
+        }
+        if (y > 0) {
+            return Direction.DOWN;
+        }
+        return Direction.STAND_STILL;
     }
 }
