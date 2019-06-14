@@ -10,6 +10,7 @@ import com.swsb.rp9.shared.TileType;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.Random;
 
 import static java.util.Objects.requireNonNullElseGet;
 
@@ -87,5 +88,22 @@ public final class GameState {
 
     public int getExperiencePoints() {
         return overworld.getCharacter().getExperiencePoints();
+    }
+
+    public int getHeroDamage() {
+        return character.getAttackDamage();
+    }
+
+    public void heroTakesDamage(int damage) {
+        character.takeDamage(damage);
+    }
+
+    public boolean isHeroDefeated() {
+        return character.isDefeated();
+    }
+
+    public void resetGame() {
+        character = new Character();
+        overworld = createOverworld(character);
     }
 }

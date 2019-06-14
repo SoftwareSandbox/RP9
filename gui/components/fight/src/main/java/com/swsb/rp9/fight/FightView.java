@@ -2,6 +2,7 @@ package com.swsb.rp9.fight;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
+import com.swsb.rp9.domain.api.FightState;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -11,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
@@ -22,12 +22,12 @@ import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 import static javafx.scene.paint.Color.BLACK;
 
-public class FightView extends GameView {
+public class FightView extends GameView<FightState> {
 
     private static final Dimension DIMENSIONS = rectangle(800, 640);
 
     public FightView() {
-        super(DIMENSIONS, null);
+        super(DIMENSIONS, new FightState());
     }
 
     @Override
@@ -75,29 +75,45 @@ public class FightView extends GameView {
     private VBox createActionMenu() {
         ToggleGroup menuToggleGroup = new ToggleGroup();
 
-        RadioButton newGameButton = new RadioButton("Attack");
-        newGameButton.setTextFill(BLACK);
-        newGameButton.setSelected(true);
-        newGameButton.setToggleGroup(menuToggleGroup);
-        newGameButton.setOnKeyPressed(event -> {
+        RadioButton attackButton = new RadioButton("Attack");
+        attackButton.setTextFill(BLACK);
+        attackButton.setSelected(true);
+        attackButton.setToggleGroup(menuToggleGroup);
+        attackButton.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
-//                registerTransitionSlot(TRANSITION_SLOT_ONE);
+                getRestrictedState().heroDamagesEnemy();
+                System.out.println("ENEMY HITPOINTS: " + getRestrictedState().getEnemyHitpoints());
+                if(getRestrictedState().isEnemyDefeated()) {
+                    resetEnemy();
+                    registerTransitionSlot(TRANSITION_SLOT_ONE);
+                } else {
+                    getRestrictedState().enemyDamagesHero();
+                    System.out.println("HERO HITPOINTS: " + getRestrictedState().getHeroHitpoints());
+                    if (getRestrictedState().isHeroDefeated()) {
+                        getRestrictedState().resetGame();
+                        registerTransitionSlot(TRANSITION_SLOT_TWO);
+                    }
+                }
             }
         });
 
-        RadioButton creditsButton = new RadioButton("Flee");
-        creditsButton.setTextFill(BLACK);
-        creditsButton.setOnKeyPressed(event -> {
+        RadioButton fleeButton = new RadioButton("Flee");
+        fleeButton.setTextFill(BLACK);
+        fleeButton.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 registerTransitionSlot(TRANSITION_SLOT_ONE);
             }
         });
 
-        creditsButton.setToggleGroup(menuToggleGroup);
+        fleeButton.setToggleGroup(menuToggleGroup);
 
-        VBox vBox = new VBox(newGameButton, creditsButton);
+        VBox vBox = new VBox(attackButton, fleeButton);
         vBox.setAlignment(Pos.CENTER);
         return vBox;
+    }
+
+    private void resetEnemy() {
+        getRestrictedState().resetEnemy();
     }
 
     @Override
