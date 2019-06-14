@@ -4,4 +4,5 @@ module character.selection {
     requires javafx.controls;
     requires javafx.graphics;
     requires core;
+    requires domain;
 }

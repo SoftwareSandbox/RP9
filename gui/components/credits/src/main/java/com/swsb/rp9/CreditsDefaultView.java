@@ -3,6 +3,7 @@ package com.swsb.rp9;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.credits.view.api.CreditsView;
+import com.swsb.rp9.domain.api.PlaceholderState;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -14,14 +15,14 @@ import javafx.scene.paint.Color;
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 
-public class CreditsDefaultView extends GameView implements CreditsView {
+public class CreditsDefaultView extends GameView<PlaceholderState> implements CreditsView {
 
     private static final Dimension DIMENSIONS = rectangle(640, 480);
 
     private Node backLbl, creditsLbl;
 
     public CreditsDefaultView() {
-        super(DIMENSIONS);
+        super(DIMENSIONS, new PlaceholderState());
     }
 
     @Override

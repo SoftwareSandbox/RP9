@@ -2,6 +2,7 @@ package com.swsb.rp9.overworld;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
+import com.swsb.rp9.domain.api.OverworldState;
 import com.swsb.rp9.overworld.domain.Coordinate;
 import com.swsb.rp9.overworld.domain.Direction;
 import com.swsb.rp9.overworld.domain.Position;
@@ -27,7 +28,7 @@ import static com.swsb.rp9.overworld.view.HeroView.NUMBER_OF_FRAMES_NEEDED_FOR_M
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
 
-public class OverworldDefaultView extends GameView {
+public class OverworldDefaultView extends GameView<OverworldState> {
 
     public static final int RECTANGLE_SIZE = 40;
     private static final int SCENE_WIDTH = 640;
@@ -41,7 +42,7 @@ public class OverworldDefaultView extends GameView {
     private KeyEvent keyDown = null;
 
     public OverworldDefaultView() {
-        super(DIMENSIONS);
+        super(DIMENSIONS, new OverworldState());
     }
 
     @Override

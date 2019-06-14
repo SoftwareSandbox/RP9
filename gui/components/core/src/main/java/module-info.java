@@ -6,4 +6,6 @@ module core {
     requires javafx.fxml;
     requires javafx.media;
 
+    requires domain;
+
 }

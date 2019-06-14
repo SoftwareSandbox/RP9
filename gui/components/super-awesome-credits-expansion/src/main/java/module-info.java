@@ -4,6 +4,7 @@ module superawesome.credits.expansion {
 
     requires javafx.controls;
     requires javafx.fxml;
+    requires domain;
 
     requires credits.view.api;
 

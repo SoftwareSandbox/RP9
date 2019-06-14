@@ -6,3 +6,7 @@ javafx {
 }
 
 ext.moduleName = 'core'
+
+dependencies {
+    implementation project(':domain')
+}

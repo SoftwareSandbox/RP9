@@ -1,5 +1,6 @@
 package com.swsb.rp9.core;
 
+import com.swsb.rp9.domain.api.RestrictedState;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -11,14 +12,16 @@ import java.util.concurrent.ArrayBlockingQueue;
  * Represents the visual part of a 'screen', the view.
  * It can be seen as the V(iew) in a MVC application.
  */
-public abstract class GameView {
+public abstract class GameView<T extends RestrictedState> {
 
     private final Parent guiRootNode;
     private final Queue<TransitionSlot> registeredTransitionSlots;
     private final Dimension dimensions;
+    private final T restrictedState;
 
-    public GameView(Dimension dimensions) {
+    public GameView(Dimension dimensions, T restrictedState) {
         this.dimensions = dimensions;
+        this.restrictedState = restrictedState;
         guiRootNode = createGuiRootNode();
         registeredTransitionSlots = new ArrayBlockingQueue<>(TransitionSlot.values().length);
     }
@@ -81,5 +84,9 @@ public abstract class GameView {
         if(hasRegisteredSceneTransitionSlots()) {
             registeredTransitionSlots.clear();
         }
+    }
+
+    protected T getRestrictedState() {
+        return restrictedState;
     }
 }

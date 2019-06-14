@@ -7,8 +7,7 @@ class Character {
     private String name;
     private int hitPoints;
 
-    Character(String name) {
-        this.name = name;
+    Character() {
         hitPoints = DEFAULT_HP;
     }
 

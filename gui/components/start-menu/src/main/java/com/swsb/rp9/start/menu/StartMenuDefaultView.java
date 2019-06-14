@@ -2,6 +2,7 @@ package com.swsb.rp9.start.menu;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
+import com.swsb.rp9.domain.api.PlaceholderState;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.RadioButton;
@@ -15,12 +16,12 @@ import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 import static javafx.scene.paint.Color.BLACK;
 
-public class StartMenuDefaultView extends GameView {
+public class StartMenuDefaultView extends GameView<PlaceholderState> {
 
     private static final Dimension DIMENSIONS = rectangle(640, 480);
 
     public StartMenuDefaultView() {
-        super(DIMENSIONS);
+        super(DIMENSIONS, new PlaceholderState());
     }
 
     @Override

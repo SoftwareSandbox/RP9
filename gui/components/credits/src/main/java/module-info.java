@@ -4,6 +4,7 @@ module credits {
 
     requires core;
     requires credits.view.api;
+    requires domain;
 
     requires javafx.controls;
     requires javafx.fxml;

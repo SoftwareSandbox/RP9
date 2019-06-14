@@ -3,6 +3,7 @@ package com.swsb.rp9.characterselection;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.TransitionSlot;
+import com.swsb.rp9.domain.api.CharacterSelectionState;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -17,14 +18,14 @@ import javafx.scene.paint.Color;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 
-public class CharacterSelectionView extends GameView {
+public class CharacterSelectionView extends GameView<CharacterSelectionState> {
 
     private static final Dimension DIMENSIONS = rectangle(640, 480);
 
     private TextField characterNameTextField;
 
     public CharacterSelectionView() {
-        super(DIMENSIONS);
+        super(DIMENSIONS, new CharacterSelectionState());
     }
 
     @Override

@@ -1,11 +1,19 @@
 package com.swsb.rp9.domain;
 
-public class GameState {
+import static java.util.Objects.requireNonNullElseGet;
+
+public final class GameState {
+
+    private static GameState gameStateInstance;
+
+    public static GameState getGameStateInstance() {
+        return requireNonNullElseGet(gameStateInstance, () -> gameStateInstance = new GameState());
+    }
 
     private Character character;
 
-    public GameState(Character character) {
-        this.character = character;
+    private GameState() {
+        character = new Character();
     }
 
     public String getCharacterName() {

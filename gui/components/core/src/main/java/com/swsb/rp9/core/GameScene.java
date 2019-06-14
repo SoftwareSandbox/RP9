@@ -1,13 +1,12 @@
 package com.swsb.rp9.core;
 
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import static com.swsb.rp9.core.TransitionSlot.NO_TRANSITION_SLOT;
 
@@ -33,6 +32,7 @@ public abstract class GameScene {
         setEventHandlersForScene();
         getBackgroundMusicResourceUrl().ifPresent(this::createBackgroundMusicPlayer);
     }
+
 
     protected abstract GameView createDefaultGameView();
 
