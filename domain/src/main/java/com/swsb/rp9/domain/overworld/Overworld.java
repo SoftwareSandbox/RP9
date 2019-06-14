@@ -5,8 +5,8 @@ import com.swsb.rp9.shared.*;
 
 import java.util.Map;
 
-import static com.swsb.rp9.domain.api.ItemType.CANDLE;
-import static com.swsb.rp9.domain.api.ItemType.WISP;
+import static com.swsb.rp9.shared.ItemType.CANDLE;
+import static com.swsb.rp9.shared.ItemType.WISP;
 
 public class Overworld {
     private final Map<Coordinate, TileType> tiles;

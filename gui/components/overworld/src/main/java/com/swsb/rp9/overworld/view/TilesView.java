@@ -1,7 +1,7 @@
 package com.swsb.rp9.overworld.view;
 
 import com.swsb.rp9.domain.api.OverworldState;
-import com.swsb.rp9.domain.api.TileType;
+import com.swsb.rp9.shared.TileType;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;

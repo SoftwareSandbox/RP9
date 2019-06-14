@@ -1,10 +1,7 @@
 package com.swsb.rp9.basicoverworld;
 
 import com.swsb.rp9.basicoverworld.api.OverworldFactory;
-import com.swsb.rp9.shared.Coordinate;
-import com.swsb.rp9.shared.ItemType;
-import com.swsb.rp9.shared.OverworldFactoryResult;
-import com.swsb.rp9.shared.TileType;
+import com.swsb.rp9.shared.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +9,7 @@ import java.util.stream.IntStream;
 
 import static com.swsb.rp9.shared.Coordinate.coordinate;
 import static com.swsb.rp9.shared.ItemType.CANDLE;
-import static com.swsb.rp9.domain.api.ItemType.WISP;
+import static com.swsb.rp9.shared.ItemType.WISP;
 import static com.swsb.rp9.shared.TileType.*;
 
 public class WalledOverworldFactory implements OverworldFactory {
@@ -53,7 +50,7 @@ public class WalledOverworldFactory implements OverworldFactory {
         IntStream.range(1, width - 1).forEach(i -> items.put(coordinate(i, 6), CANDLE));
 
         items.put(coordinate(10,10), WISP);
-        return new OverworldFactoryResult(tiles, items, coordinate(1, 1));
+        return new OverworldFactoryResult(tiles, new ItemCollection(items), coordinate(1, 1));
     }
 
     public static OverworldFactory provides() {

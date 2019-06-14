@@ -2,9 +2,11 @@ package com.swsb.rp9.proceduralworld;
 
 import com.swsb.rp9.basicoverworld.api.OverworldFactory;
 import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.ItemCollection;
 import com.swsb.rp9.shared.OverworldFactoryResult;
 import com.swsb.rp9.shared.TileType;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -23,7 +25,7 @@ public class RandomOverworldFactory implements OverworldFactory {
                 tiles.put(coordinate(x, y), getRandomTileType());
             }
         }
-        return new OverworldFactoryResult(tiles, new HashMap<>(), coordinate(5, 5));
+        return new OverworldFactoryResult(tiles, new ItemCollection(Collections.emptyMap()), coordinate(5, 5));
     }
 
     @Override

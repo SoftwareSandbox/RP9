@@ -1,7 +1,4 @@
-package com.swsb.rp9.domain.overworld;
-
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.ItemType;
+package com.swsb.rp9.shared;
 
 import java.util.Map;
 
