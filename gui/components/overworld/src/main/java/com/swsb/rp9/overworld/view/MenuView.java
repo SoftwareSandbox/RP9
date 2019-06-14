@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Position.position;
-import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
+import static com.swsb.rp9.overworld.RectangleBuilder.rectangle;
 import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.rgb;
 

@@ -1,4 +1,4 @@
-package com.swsb.rp9.overworld.domain;
+package com.swsb.rp9.overworld;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.Position;

@@ -21,7 +21,7 @@ import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
 import static com.swsb.rp9.domain.api.Direction.STAND_STILL;
-import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
+import static com.swsb.rp9.overworld.RectangleBuilder.rectangle;
 import static com.swsb.rp9.overworld.view.CharacterView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
@@ -128,7 +128,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     }
 
     private Paint toTexture(TileType tileType, int rectangleSize) {
-        return com.swsb.rp9.overworld.domain.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize);
+        return com.swsb.rp9.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize);
     }
 
     public static Position toPosition(Coordinate coordinate) {

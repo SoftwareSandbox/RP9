@@ -1,4 +1,4 @@
-package com.swsb.rp9.overworld.domain.overworld;
+package com.swsb.rp9.overworld;
 
 import javafx.scene.paint.Paint;
 
