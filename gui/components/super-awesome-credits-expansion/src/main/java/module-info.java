@@ -5,8 +5,8 @@ module superawesome.credits.expansion {
     requires javafx.controls;
     requires javafx.fxml;
 
-    requires credits.view.api;
+    requires credits;
 
-    provides com.swsb.rp9.credits.view.api.CreditsView
+    provides com.swsb.rp9.credits.api.CreditsView
             with com.swsb.rp9.credits.AwesomeCreditsView;
 }

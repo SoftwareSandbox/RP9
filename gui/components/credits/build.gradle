@@ -9,5 +9,4 @@ ext.moduleName = 'credits'
 
 dependencies {
     implementation project(':gui:components:core')
-    implementation project(':gui:components:credits-view-api')
 }

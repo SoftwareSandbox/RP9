@@ -2,7 +2,7 @@ package com.swsb.rp9;
 
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
-import com.swsb.rp9.credits.view.api.CreditsView;
+import com.swsb.rp9.credits.api.CreditsView;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;

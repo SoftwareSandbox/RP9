@@ -4,7 +4,7 @@ import com.swsb.rp9.characterselection.api.CharacterSelectionScene;
 import com.swsb.rp9.core.GameScene;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.credits.api.CreditsScene;
-import com.swsb.rp9.credits.view.api.CreditsView;
+import com.swsb.rp9.credits.api.CreditsView;
 import com.swsb.rp9.game.orchestrator.gamemap.IndividualGameSceneMap;
 import com.swsb.rp9.overworld.api.OverworldScene;
 import com.swsb.rp9.start.menu.api.StartMenuScene;

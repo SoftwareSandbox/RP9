@@ -1,4 +1,4 @@
-package com.swsb.rp9.credits.view.api;
+package com.swsb.rp9.credits.api;
 
 import javafx.scene.Parent;
 
