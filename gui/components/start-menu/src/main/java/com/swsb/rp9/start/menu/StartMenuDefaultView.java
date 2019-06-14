@@ -18,7 +18,7 @@ import static javafx.scene.paint.Color.BLACK;
 
 public class StartMenuDefaultView extends GameView<PlaceholderState> {
 
-    private static final Dimension DIMENSIONS = rectangle(640, 480);
+    private static final Dimension DIMENSIONS = rectangle(800, 640);
 
     public StartMenuDefaultView() {
         super(DIMENSIONS, new PlaceholderState());

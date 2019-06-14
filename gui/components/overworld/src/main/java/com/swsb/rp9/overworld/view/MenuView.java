@@ -14,6 +14,7 @@ import static javafx.scene.paint.Color.rgb;
 public class MenuView {
     private final Label characterNameLabel;
     private final Label hitPointsLabel;
+    private final Label experiencePointsLabel;
     private boolean visible;
     private Group view;
     private OverworldState restrictedState;
@@ -22,6 +23,8 @@ public class MenuView {
         this.restrictedState = restrictedState;
         this.characterNameLabel = createCharacterNameLabel();
         this.hitPointsLabel = createHitPointsLabel();
+        this.experiencePointsLabel = createExperiencePointsLabel();
+
         this.view = new Group(rectangle()
                 .dimension(rectangle(580, 420))
                 .color(rgb(192, 192, 192, 0.5))
@@ -30,6 +33,7 @@ public class MenuView {
                 .build(),
                 characterNameLabel,
                 hitPointsLabel,
+                experiencePointsLabel,
                 createMenuLabel()
 
         );
@@ -41,6 +45,15 @@ public class MenuView {
         label.setTextFill(Color.WHITE);
         label.setTranslateX(260);
         label.setTranslateY(410);
+        return label;
+    }
+
+    private Label createExperiencePointsLabel() {
+        Label label = new Label("XP: " + restrictedState.getExperiencePoints());
+        label.setTextFill(Color.WHITE);
+        label.setLayoutY(80);
+        label.setTranslateX(30);
+        label.setTranslateY(30);
         return label;
     }
 
@@ -69,6 +82,7 @@ public class MenuView {
         view.setVisible(visible);
         characterNameLabel.setText(restrictedState.getCharacterName());
         hitPointsLabel.setText("HP: " + restrictedState.getHitPoints());
+        experiencePointsLabel.setText("XP: " + restrictedState.getExperiencePoints());
     }
 
     public void onKeyPressed() {

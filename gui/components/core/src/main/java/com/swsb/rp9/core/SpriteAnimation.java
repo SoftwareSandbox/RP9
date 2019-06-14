@@ -1,4 +1,4 @@
-package com.swsb.rp9.overworld.view;
+package com.swsb.rp9.core;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;

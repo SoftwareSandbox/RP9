@@ -33,7 +33,7 @@ public final class GameState {
         OverworldFactory overworldFactory = determineOverworldFactory();
         return new Overworld(
                 overworldFactory
-                        .createOverworld(16, 12),
+                        .createOverworld(20, 16),
                 character);
     }
 
@@ -83,5 +83,9 @@ public final class GameState {
 
     public boolean hasItemsChanged() {
         return overworld.hasItemsChanged();
+    }
+
+    public int getExperiencePoints() {
+        return overworld.getCharacter().getExperiencePoints();
     }
 }
