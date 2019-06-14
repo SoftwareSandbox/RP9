@@ -17,7 +17,9 @@ public class WalledOverworldFactory implements OverworldFactory {
         Map<Coordinate, TileType> tiles = new HashMap<>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (x == 0 && y == 0) {
+                if (x == width / 2 && y == 0) {
+                    tiles.put(coordinate(x, y), WISP_ON_ICE_BORDER);
+                } else if (x == 0 && y == 0) {
                     tiles.put(coordinate(x, y), ICE_CORNER_TOP_LEFT);
                 } else if (y == 0 && x == width - 1) {
                     tiles.put(coordinate(x, y), ICE_CORNER_TOP_RIGHT);

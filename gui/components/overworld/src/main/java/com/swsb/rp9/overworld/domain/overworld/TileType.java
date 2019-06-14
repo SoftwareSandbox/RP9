@@ -2,6 +2,8 @@ package com.swsb.rp9.overworld.domain.overworld;
 
 import javafx.scene.paint.Paint;
 
+import java.net.URL;
+
 import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.overworld.domain.ImageBuilder.image;
 
@@ -26,7 +28,9 @@ public enum TileType {
     ICE_CORNER_TOP_RIGHT("/com/swsb/rp9/overworld/sprites/tiles/ice-corner.png", 90, false),
     ICE_CORNER_BOTTOM_LEFT("/com/swsb/rp9/overworld/sprites/tiles/ice-corner.png", 270, false),
     ICE_CORNER_BOTTOM_RIGHT("/com/swsb/rp9/overworld/sprites/tiles/ice-corner.png", 180, false),
-    ICE_INNER_CORNER("/com/swsb/rp9/overworld/sprites/tiles/ice-inner-corner.png");
+    ICE_INNER_CORNER("/com/swsb/rp9/overworld/sprites/tiles/ice-inner-corner.png"),
+
+    WISP_ON_ICE_BORDER("/com/swsb/rp9/overworld/sprites/tiles/wisp_on_ice_border.png", false);
 
     private final String pathToTextureImg;
     private final double rotate;
@@ -58,7 +62,11 @@ public enum TileType {
     }
 
     public Paint toTexture(double size) {
-        return image().url(getClass().getResource(pathToTextureImg).toExternalForm()).dimension(square(size)).rotate(rotate).buildPattern();
+        URL resource = getClass().getResource(pathToTextureImg);
+        if (resource == null) {
+            throw new RuntimeException("Texture not found: " + pathToTextureImg);
+        }
+        return image().url(resource.toExternalForm()).dimension(square(size)).rotate(rotate).buildPattern();
     }
 
     public boolean canMoveThrough() {
