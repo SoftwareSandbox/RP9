@@ -3,11 +3,11 @@ package com.swsb.rp9.overworld;
 import com.swsb.rp9.core.Dimension;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.Position;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
-import com.swsb.rp9.domain.api.*;
+import com.swsb.rp9.domain.api.OverworldState;
 import com.swsb.rp9.overworld.view.CharacterView;
 import com.swsb.rp9.overworld.view.MenuView;
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.Direction;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -19,9 +19,9 @@ import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
-import static com.swsb.rp9.domain.api.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.RectangleBuilder.rectangle;
 import static com.swsb.rp9.overworld.view.CharacterView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
+import static com.swsb.rp9.shared.Direction.STAND_STILL;
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
 
@@ -135,11 +135,11 @@ public class OverworldDefaultView extends GameView<OverworldState> {
                 ));
     }
 
-    private Paint toTexture(TileType tileType, int rectangleSize) {
+    private Paint toTexture(com.swsb.rp9.shared.TileType tileType, int rectangleSize) {
         return com.swsb.rp9.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize);
     }
 
-    private Paint toTexture(ItemType itemType, int rectangleSize) {
+    private Paint toTexture(com.swsb.rp9.shared.ItemType itemType, int rectangleSize) {
         return com.swsb.rp9.overworld.ItemType.valueOf(itemType.name()).toTexture(rectangleSize);
     }
 

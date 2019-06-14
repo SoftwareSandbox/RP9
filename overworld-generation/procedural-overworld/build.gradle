@@ -1,7 +1,6 @@
-ext.moduleName = 'domain'
+ext.moduleName = 'procedural-overworld'
 
 dependencies {
     implementation project(':shared')
     implementation project(':overworld-generation:basic-overworld')
-    implementation project(':overworld-generation:procedural-overworld')
 }

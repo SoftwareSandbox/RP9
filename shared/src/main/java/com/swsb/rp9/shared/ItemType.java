@@ -1,4 +1,4 @@
-package com.swsb.rp9.domain.api;
+package com.swsb.rp9.shared;
 
 public enum ItemType {
 

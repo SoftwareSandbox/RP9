@@ -5,9 +5,9 @@ import com.swsb.rp9.domain.api.OverworldState;
 import javafx.scene.image.ImageView;
 
 import static com.swsb.rp9.core.ImageBuilder.image;
-import static com.swsb.rp9.domain.api.Direction.RIGHT;
 import static com.swsb.rp9.overworld.OverworldDefaultView.RECTANGLE_SIZE;
 import static com.swsb.rp9.overworld.OverworldDefaultView.toPosition;
+import static com.swsb.rp9.shared.Direction.RIGHT;
 
 public class CharacterView {
     private static final int HERO_OFFSET = -15;

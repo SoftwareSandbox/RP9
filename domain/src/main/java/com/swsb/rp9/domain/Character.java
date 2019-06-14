@@ -1,7 +1,7 @@
 package com.swsb.rp9.domain;
 
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.Direction;
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.Direction;
 
 public class Character {
     private static final int DEFAULT_HP = 100;

@@ -2,6 +2,7 @@ module overworld {
 
     requires core;
     requires domain;
+    requires shared;
 
     requires javafx.controls;
     requires javafx.fxml;

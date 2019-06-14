@@ -1,25 +1,28 @@
-package com.swsb.rp9.domain.overworld.factory;
+package com.swsb.rp9.basicoverworld;
 
-
-import com.swsb.rp9.domain.Character;
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
-import com.swsb.rp9.domain.overworld.Overworld;
+import com.swsb.rp9.basicoverworld.api.OverworldFactory;
+import com.swsb.rp9.shared.Coordinate;
+import com.swsb.rp9.shared.ItemType;
+import com.swsb.rp9.shared.OverworldFactoryResult;
+import com.swsb.rp9.shared.TileType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static com.swsb.rp9.domain.api.Coordinate.coordinate;
-import static com.swsb.rp9.domain.api.ItemType.CANDLE;
-import static com.swsb.rp9.domain.api.TileType.*;
-
+import static com.swsb.rp9.shared.Coordinate.coordinate;
+import static com.swsb.rp9.shared.ItemType.CANDLE;
+import static com.swsb.rp9.shared.TileType.*;
 
 public class WalledOverworldFactory implements OverworldFactory {
 
     @Override
-    public Overworld createOverworld(int width, int height, Character character) {
+    public int getLoadOrder() {
+        return 1;
+    }
+
+    @Override
+    public OverworldFactoryResult createOverworld(int width, int height) {
         Map<Coordinate, TileType> tiles = new HashMap<>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -51,6 +54,11 @@ public class WalledOverworldFactory implements OverworldFactory {
         IntStream.range(4, 12).forEach(i -> items.put(coordinate(i, 6), CANDLE));
         IntStream.range(2, 10).forEach(i -> items.put(coordinate(7, i), CANDLE));
         IntStream.range(2, 10).forEach(i -> items.put(coordinate(9, i), CANDLE));
-        return new Overworld(tiles, items, coordinate(5, 5), character);
+        return new OverworldFactoryResult(tiles, items, coordinate(1, 1));
     }
+
+    public static OverworldFactory provides() {
+        return new WalledOverworldFactory();
+    }
+
 }

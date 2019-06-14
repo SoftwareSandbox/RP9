@@ -1,10 +1,7 @@
 package com.swsb.rp9.domain.overworld;
 
 import com.swsb.rp9.domain.Character;
-import com.swsb.rp9.domain.api.Coordinate;
-import com.swsb.rp9.domain.api.Direction;
-import com.swsb.rp9.domain.api.ItemType;
-import com.swsb.rp9.domain.api.TileType;
+import com.swsb.rp9.shared.*;
 
 import java.util.Map;
 
@@ -15,11 +12,11 @@ public class Overworld {
     private Character character;
     private boolean enemyCollision;
 
-    public Overworld(Map<Coordinate, TileType> tiles, Map<Coordinate, ItemType> items, Coordinate heroStartingCoordinate, Character character) {
-        this.tiles = tiles;
-        this.items = items;
+    public Overworld(OverworldFactoryResult overworldFactoryResult, Character character) {
+        this.tiles = overworldFactoryResult.getTiles();
+        this.items = overworldFactoryResult.getItems();
         this.character = character;
-        this.character.setCoordinate(heroStartingCoordinate);
+        this.character.setCoordinate(overworldFactoryResult.getCharacterStartingCoordinate());
     }
 
     public Map<Coordinate, TileType> getTiles() {
