@@ -64,6 +64,9 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
                                         .canTransitionTo(startMenuScene, TRANSITION_SLOT_ONE),
                                 characterSelectionScene.getUUID(),
                                 gameScene(characterSelectionScene)
+                                        .canTransitionTo(overworldScene, TRANSITION_SLOT_ONE),
+                                fightScene.getUUID(),
+                                gameScene(fightScene)
                                         .canTransitionTo(overworldScene, TRANSITION_SLOT_ONE)
                         ));
 
