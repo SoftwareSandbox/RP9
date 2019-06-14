@@ -7,7 +7,7 @@ public class OverworldState extends RestrictedState {
     }
 
     public int getHitPoints() {
-        return getGameState().getHitpoints();
+        return getGameState().getHitPoints();
     }
 
 

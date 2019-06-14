@@ -1,4 +1,4 @@
 .label {
-    -fx-background-color: rgb(228, 57, 88) !important;
+    -fx-background-color: rgba(0,0,0, 0.5) !important;
     -fx-label-padding: 10px;
 }

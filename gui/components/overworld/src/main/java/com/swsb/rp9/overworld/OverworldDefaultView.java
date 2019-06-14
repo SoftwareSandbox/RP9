@@ -41,6 +41,9 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     private boolean processingEvent;
     private KeyEvent keyDown = null;
 
+    private Label characterNameLabel;
+    private Label hitPointsLabel;
+
     public OverworldDefaultView() {
         super(DIMENSIONS, new OverworldState());
     }
@@ -53,6 +56,19 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     @Override
     public String getStyleSheetLocation() {
         return getClass().getResource("/com/swsb/rp9/overworld/styles/overworld.css").toExternalForm();
+    }
+
+    @Override
+    protected Parent createGuiRootNode() {
+        overworld = createOverworld();
+        heroView = createHeroView(overworld.getHero());
+
+        return new Group(
+                createOverworldGroup(),
+                heroView.getView(),
+                createCharacterNameLabel(),
+                createHitPointsLabel()
+        );
     }
 
     @Override
@@ -79,7 +95,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
             overworld.handleDirectionPressed(toDirection(event));
         }
 
-        if (event.getCode().name().equals("B")) {
+        if (ESCAPE.equals(event.getCode())) {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
             keyDown = null;
         }
@@ -91,26 +107,22 @@ public class OverworldDefaultView extends GameView<OverworldState> {
         if(processingEvent) {
             numberOfFramesProcessing++;
         }
-
         heroView.redraw();
+        characterNameLabel.setText(getRestrictedState().getCharacterName());
+        hitPointsLabel.setText("HP: " + getRestrictedState().getHitPoints());
     }
 
-    @Override
-    protected Parent createGuiRootNode() {
-        overworld = createOverworld();
-        heroView = createHeroView(overworld.getHero());
-
-        return new Group(
-                createOverworldGroup(),
-                heroView.getView(),
-                createBackLabel()
-        );
+    private Node createCharacterNameLabel() {
+        characterNameLabel = new Label(getRestrictedState().getCharacterName());
+        characterNameLabel.setTextFill(Color.WHITE);
+        return characterNameLabel;
     }
 
-    private Label createBackLabel() {
-        var label = new Label("Press B to go back!");
-        label.setTextFill(Color.WHITE);
-        return label;
+    private Node createHitPointsLabel() {
+        hitPointsLabel = new Label("HP: " + getRestrictedState().getHitPoints());
+        hitPointsLabel.setTextFill(Color.WHITE);
+        hitPointsLabel.setLayoutY(40);
+        return hitPointsLabel;
     }
 
     private HeroView createHeroView(Hero hero) {

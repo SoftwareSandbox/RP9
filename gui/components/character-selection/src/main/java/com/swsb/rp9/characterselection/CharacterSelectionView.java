@@ -68,6 +68,7 @@ public class CharacterSelectionView extends GameView<CharacterSelectionState> {
         startGameButton.setOnKeyPressed(
                 event -> {
                     if (KeyCode.ENTER.equals(event.getCode())) {
+                        getRestrictedState().setCharacterName(characterNameTextField.getText());
                         registerTransitionSlot(TransitionSlot.TRANSITION_SLOT_ONE);
                     }
                 }

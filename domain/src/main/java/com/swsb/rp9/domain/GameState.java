@@ -24,7 +24,7 @@ public final class GameState {
         this.character.setName(characterName);
     }
 
-    public int getHitpoints() {
+    public int getHitPoints() {
         return this.character.getHitPoints();
     }
 }
