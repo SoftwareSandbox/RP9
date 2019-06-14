@@ -58,6 +58,10 @@ public final class GameState {
         return this.character.getHitPoints();
     }
 
+    public int getMaxHitPoints() {
+        return character.getMaxHitPoints();
+    }
+
     public void handleDirectionPressed(Direction direction) {
         overworld.handleDirectionPressed(direction);
     }

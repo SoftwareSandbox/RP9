@@ -12,11 +12,13 @@ public class Character {
 
     private String name;
     private int hitPoints;
+    private int maxHitPoints;
     private int baseDamage;
     private Coordinate coordinate;
 
     public Character() {
         hitPoints = DEFAULT_HP;
+        maxHitPoints = hitPoints;
         baseDamage = DEFAULT_BASEDAMAGE;
         this.coordinate = new Coordinate(1,1);
         this.experiencePoints = 0;
@@ -44,6 +46,10 @@ public class Character {
 
     int getHitPoints() {
         return hitPoints;
+    }
+
+    public int getMaxHitPoints() {
+        return maxHitPoints;
     }
 
     int getAttackDamage() {

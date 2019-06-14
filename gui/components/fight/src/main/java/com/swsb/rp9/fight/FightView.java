@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -29,6 +30,8 @@ public class FightView extends GameView<FightState> {
     private static final Dimension DIMENSIONS = rectangle(800, 640);
     private Label heroHitPointsLabel;
     private Label enemyHitPointsLabel;
+    private ProgressBar heroProgressBar;
+    private ProgressBar enemyProgressBar;
 
     public FightView() {
         super(DIMENSIONS, new FightState());
@@ -47,31 +50,63 @@ public class FightView extends GameView<FightState> {
 
 
         VBox actionMenu = createActionMenu();
-        GridPane gridPane = new GridPane();
-        gridPane.add(characterGroup, 0, 0);
-        gridPane.add(actionMenu, 0, 1);
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(characterGroup);
         borderPane.setBottom(actionMenu);
         heroHitPointsLabel = createHeroHitPointsLabel();
+        heroProgressBar = createHeroProgressBar();
         enemyHitPointsLabel = createEnemyHitPointsLabel();
-        borderPane.setTop(new HBox(enemyHitPointsLabel, heroHitPointsLabel));
+        enemyProgressBar = createEnemyProgressBar();
+        BorderPane hitpointsPane = new BorderPane();
+        VBox enemyVBox = new VBox(enemyHitPointsLabel, enemyProgressBar);
+        enemyVBox.setSpacing(10);
+        enemyVBox.setAlignment(Pos.BASELINE_RIGHT);
+        hitpointsPane.setLeft(enemyVBox);
+        VBox heroVBox = new VBox(heroHitPointsLabel, heroProgressBar);
+        heroVBox.setSpacing(10);
+        heroVBox.setAlignment(Pos.BASELINE_LEFT);
+        hitpointsPane.setRight(heroVBox);
+        borderPane.setTop(hitpointsPane);
         return borderPane;
+    }
+
+    private ProgressBar createEnemyProgressBar() {
+        return new ProgressBar(getEnemyHealthPercentage());
+    }
+
+    private ProgressBar createHeroProgressBar() {
+        ProgressBar progressBar = new ProgressBar(getHeroHealthPercentage());
+        return progressBar;
+    }
+
+    public void redraw() {
+        enemyHitPointsLabel.setText("HP: " + getRestrictedState().getEnemyHitpoints());
+        heroHitPointsLabel.setText("HP: " + getRestrictedState().getHeroHitpoints());
+        heroProgressBar.setProgress(getHeroHealthPercentage());
+        enemyProgressBar.setProgress(getEnemyHealthPercentage());
+    }
+
+    private double getEnemyHealthPercentage() {
+        return (double) getRestrictedState().getEnemyHitpoints() / getRestrictedState().getEnemyMaxHitpoints();
+    }
+
+    private double getHeroHealthPercentage() {
+        return (double) getRestrictedState().getHeroHitpoints() / getRestrictedState().getHeroMaxHitpoints();
     }
 
     private ImageView createHeroView() {
         return image()
-                    .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/hero/mercinary_fight_tmp.png").toExternalForm())
-                    .startingPosition(position(DIMENSIONS.getWidth() / 4 * 3, DIMENSIONS.getHeight() / 3))
-                    .buildView();
+                .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/hero/mercinary_fight_tmp.png").toExternalForm())
+                .startingPosition(position(DIMENSIONS.getWidth() / 4 * 3, DIMENSIONS.getHeight() / 3))
+                .buildView();
     }
 
     private ImageView createEnemyView() {
         return image()
-                    .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/enemy/wisp.png").toExternalForm())
-                    .startingPosition(position(DIMENSIONS.getWidth() / 5, DIMENSIONS.getHeight() / 4))
-                    .dimension(square(120))
-                    .buildView();
+                .url(this.getClass().getResource("/com/swsb/rp9/fight/sprites/enemy/wisp.png").toExternalForm())
+                .startingPosition(position(DIMENSIONS.getWidth() / 5, DIMENSIONS.getHeight() / 4))
+                .dimension(square(120))
+                .buildView();
     }
 
     private Label createEnemyHitPointsLabel() {
@@ -79,9 +114,6 @@ public class FightView extends GameView<FightState> {
         label.setTextFill(BLACK);
         label.setScaleX(2);
         label.setScaleY(2);
-        label.setLayoutY(40);
-        label.setTranslateX(30);
-        label.setTranslateY(30);
         return label;
     }
 
@@ -90,15 +122,7 @@ public class FightView extends GameView<FightState> {
         label.setTextFill(BLACK);
         label.setScaleX(2);
         label.setScaleY(2);
-        label.setLayoutY(40);
-        label.setTranslateX(DIMENSIONS.getWidth() - 130);
-        label.setTranslateY(30);
         return label;
-    }
-
-    public void redraw() {
-        enemyHitPointsLabel.setText("HP: " + getRestrictedState().getEnemyHitpoints());
-        heroHitPointsLabel.setText("HP: " + getRestrictedState().getHeroHitpoints());
     }
 
     private VBox createActionMenu() {
@@ -111,7 +135,7 @@ public class FightView extends GameView<FightState> {
         attackButton.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 getRestrictedState().heroDamagesEnemy();
-                if(getRestrictedState().isEnemyDefeated()) {
+                if (getRestrictedState().isEnemyDefeated()) {
                     resetEnemy();
                     registerTransitionSlot(TRANSITION_SLOT_ONE);
                 } else {

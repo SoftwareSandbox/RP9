@@ -20,8 +20,16 @@ public class FightState extends RestrictedState {
         return getGameState().getHitPoints();
     }
 
+    public int getHeroMaxHitpoints() {
+        return getGameState().getMaxHitPoints();
+    }
+
     public int getEnemyHitpoints() {
         return enemy.getHitPoints();
+    }
+
+    public int getEnemyMaxHitpoints() {
+        return enemy.getMaxHitPoints();
     }
 
     public boolean isEnemyDefeated() {

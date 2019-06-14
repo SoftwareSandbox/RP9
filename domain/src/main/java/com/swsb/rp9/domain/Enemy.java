@@ -4,12 +4,18 @@ import java.util.Random;
 
 public class Enemy {
 
+    private int maxHitPoints;
     private int hitPoints;
     private int baseDamage;
 
     public Enemy(int hitPoints, int baseDamage) {
         this.hitPoints = hitPoints;
+        this.maxHitPoints = hitPoints;
         this.baseDamage = baseDamage;
+    }
+
+    public int getMaxHitPoints() {
+        return maxHitPoints;
     }
 
     public int getHitPoints() {
