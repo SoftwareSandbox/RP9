@@ -8,6 +8,9 @@ import com.swsb.rp9.domain.api.TileType;
 
 import java.util.Map;
 
+import static com.swsb.rp9.domain.api.ItemType.CANDLE;
+import static com.swsb.rp9.domain.api.ItemType.WISP;
+
 public class Overworld {
     private final Map<Coordinate, TileType> tiles;
     private final ItemCollection items;
@@ -37,12 +40,13 @@ public class Overworld {
         if (destinationTile.canMoveThrough()) {
             character.move(direction);
         }
-        if (destinationTile.containsEnemy()) {
-            this.enemyCollision = true;
-        }
+
         ItemType itemType = items.get(moveToCoordinate);
-        if(itemType != null){
+        if (itemType == CANDLE) {
             items.remove(moveToCoordinate);
+        }
+        if (itemType == WISP) {
+            this.enemyCollision = true;
         }
     }
 

@@ -13,6 +13,7 @@ import java.util.stream.IntStream;
 
 import static com.swsb.rp9.domain.api.Coordinate.coordinate;
 import static com.swsb.rp9.domain.api.ItemType.CANDLE;
+import static com.swsb.rp9.domain.api.ItemType.WISP;
 import static com.swsb.rp9.domain.api.TileType.*;
 
 
@@ -23,9 +24,7 @@ public class WalledOverworldFactory implements OverworldFactory {
         Map<Coordinate, TileType> tiles = new HashMap<>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (x == width / 2 && y == 0) {
-                    tiles.put(coordinate(x, y), WISP_ON_ICE_BORDER);
-                } else if (x == 0 && y == 0) {
+                if (x == 0 && y == 0) {
                     tiles.put(coordinate(x, y), ICE_CORNER_TOP_LEFT);
                 } else if (y == 0 && x == width - 1) {
                     tiles.put(coordinate(x, y), ICE_CORNER_TOP_RIGHT);
@@ -47,8 +46,10 @@ public class WalledOverworldFactory implements OverworldFactory {
             }
         }
         HashMap<Coordinate, ItemType> items = new HashMap<>();
-        IntStream.range(1, 15).forEach(i -> items.put(coordinate(i, 4), CANDLE));
-        IntStream.range(1, 15).forEach(i -> items.put(coordinate(i, 6), CANDLE));
+        IntStream.range(1, width - 1).forEach(i -> items.put(coordinate(i, 4), CANDLE));
+        IntStream.range(1, width - 1).forEach(i -> items.put(coordinate(i, 6), CANDLE));
+
+        items.put(coordinate(10,10), WISP);
         return new Overworld(tiles, items, coordinate(5, 5), character);
     }
 }
