@@ -34,8 +34,8 @@ public class FightView extends GameView {
 
     @Override
     protected Parent createGuiRootNode() {
-        TilePane characterScreen = new TilePane(new Label("Hallo"));
-        characterScreen.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+        TilePane characterScreen = new TilePane();
+        characterScreen.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         characterScreen.setAlignment(Pos.CENTER);
         return characterScreen;
     }
