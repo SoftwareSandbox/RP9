@@ -68,6 +68,7 @@ public class DefaultGameSceneMapping implements GameSceneMapping {
                                 fightScene.getUUID(),
                                 gameScene(fightScene)
                                         .canTransitionTo(overworldScene, TRANSITION_SLOT_ONE)
+                                        .canTransitionTo(startMenuScene, TRANSITION_SLOT_TWO)
                         ));
 
         initialGameScene = startMenuScene;

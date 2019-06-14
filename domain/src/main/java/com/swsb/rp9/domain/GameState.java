@@ -9,6 +9,7 @@ import com.swsb.rp9.domain.overworld.factory.OverworldFactory;
 import com.swsb.rp9.domain.overworld.factory.WalledOverworldFactory;
 
 import java.util.Map;
+import java.util.Random;
 
 import static java.util.Objects.requireNonNullElseGet;
 
@@ -72,5 +73,22 @@ public final class GameState {
 
     public boolean hasItemsChanged() {
         return overworld.hasItemsChanged();
+    }
+
+    public int getHeroDamage() {
+        return character.getAttackDamage();
+    }
+
+    public void heroTakesDamage(int damage) {
+        character.takeDamage(damage);
+    }
+
+    public boolean isHeroDefeated() {
+        return character.isDefeated();
+    }
+
+    public void resetGame() {
+        character = new Character();
+        overworld = createOverworld(character);
     }
 }
