@@ -12,21 +12,26 @@ import com.swsb.rp9.overworld.domain.overworld.Overworld;
 import com.swsb.rp9.overworld.domain.overworld.factory.OverworldFactory;
 import com.swsb.rp9.overworld.domain.overworld.factory.WalledOverworldFactory;
 import com.swsb.rp9.overworld.view.HeroView;
+import com.swsb.rp9.overworld.view.MenuView;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Dimension.square;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.overworld.domain.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.domain.Position.position;
+import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
 import static com.swsb.rp9.overworld.view.HeroView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
+import static javafx.scene.paint.Color.BLACK;
+import static javafx.scene.paint.Color.rgb;
 
 public class OverworldDefaultView extends GameView<OverworldState> {
 
@@ -40,9 +45,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     private int numberOfFramesProcessing = 0;
     private boolean processingEvent;
     private KeyEvent keyDown = null;
-
-    private Label characterNameLabel;
-    private Label hitPointsLabel;
+    private MenuView menuView;
 
     public OverworldDefaultView() {
         super(DIMENSIONS, new OverworldState());
@@ -62,12 +65,12 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     protected Parent createGuiRootNode() {
         overworld = createOverworld();
         heroView = createHeroView(overworld.getHero());
+        menuView = new MenuView(getRestrictedState());
 
         return new Group(
                 createOverworldGroup(),
                 heroView.getView(),
-                createCharacterNameLabel(),
-                createHitPointsLabel()
+                menuView.getView()
         );
     }
 
@@ -89,7 +92,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
             processingEvent = false;
         }
 
-        if(!processingEvent) {
+        if(!processingEvent && !menuView.isVisible()) {
             processingEvent = true;
             numberOfFramesProcessing = 0;
             overworld.handleDirectionPressed(toDirection(event));
@@ -97,6 +100,10 @@ public class OverworldDefaultView extends GameView<OverworldState> {
 
         if (ESCAPE.equals(event.getCode())) {
             registerTransitionSlot(TRANSITION_SLOT_ONE);
+            keyDown = null;
+        }
+        if(event.getCode().name().equals("M")){
+            menuView.onKeyPressed();
             keyDown = null;
         }
     }
@@ -108,21 +115,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
             numberOfFramesProcessing++;
         }
         heroView.redraw();
-        characterNameLabel.setText(getRestrictedState().getCharacterName());
-        hitPointsLabel.setText("HP: " + getRestrictedState().getHitPoints());
-    }
-
-    private Node createCharacterNameLabel() {
-        characterNameLabel = new Label(getRestrictedState().getCharacterName());
-        characterNameLabel.setTextFill(Color.WHITE);
-        return characterNameLabel;
-    }
-
-    private Node createHitPointsLabel() {
-        hitPointsLabel = new Label("HP: " + getRestrictedState().getHitPoints());
-        hitPointsLabel.setTextFill(Color.WHITE);
-        hitPointsLabel.setLayoutY(40);
-        return hitPointsLabel;
+        menuView.redraw();
     }
 
     private HeroView createHeroView(Hero hero) {
@@ -137,7 +130,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
 
     private Node createOverworldGroup() {
         return new Group(overworld.getTiles().entrySet().stream()
-                .map(entry -> RectangleBuilder.rectangle()
+                .map(entry -> rectangle()
                         .color(entry.getValue().toTexture(RECTANGLE_SIZE))
                         .dimension(square(RECTANGLE_SIZE))
                         .position(toPosition(entry.getKey()))

@@ -8,6 +8,7 @@ public class RectangleBuilder {
     private Dimension dimension;
     private Position position;
     private Paint paint;
+    private Paint strokeColor;
 
     public static RectangleBuilder rectangle() {
         return new RectangleBuilder();
@@ -16,8 +17,14 @@ public class RectangleBuilder {
     public Rectangle build(){
         Rectangle rectangle = new Rectangle();
         rectangle.setFill(paint);
-        rectangle.setX(position.getX());
-        rectangle.setY(position.getY());
+        if(position != null){
+            rectangle.setX(position.getX());
+            rectangle.setY(position.getY());
+        }
+        if(strokeColor != null){
+            rectangle.setStroke(strokeColor);
+            rectangle.setStrokeWidth(3);
+        }
         rectangle.setHeight(dimension.getHeight());
         rectangle.setWidth(dimension.getWidth());
         return rectangle;
@@ -35,6 +42,11 @@ public class RectangleBuilder {
 
     public RectangleBuilder color(Paint paint) {
         this.paint = paint;
+        return this;
+    }
+
+    public RectangleBuilder strokeColor(Paint strokeColor) {
+        this.strokeColor = strokeColor;
         return this;
     }
 }
