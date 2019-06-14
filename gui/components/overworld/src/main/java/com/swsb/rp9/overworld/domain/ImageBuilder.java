@@ -1,6 +1,7 @@
 package com.swsb.rp9.overworld.domain;
 
 import com.swsb.rp9.core.Dimension;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
@@ -12,12 +13,16 @@ public class ImageBuilder {
     private boolean preserveRatio = true;
     private boolean smooth = true;
     private Position startingPosition;
+    private double rotate;
 
-    public static ImageBuilder image(){
+    public static ImageBuilder image() {
         return new ImageBuilder();
     }
 
-    public ImagePattern buildPattern(){
+    public ImagePattern buildPattern() {
+        if (rotate != 0) {
+            return new ImagePattern(buildView().snapshot(new SnapshotParameters(), null));
+        }
         return new ImagePattern(build());
     }
 
@@ -26,6 +31,9 @@ public class ImageBuilder {
         if(startingPosition != null){
             imageView.setX(startingPosition.getX());
             imageView.setY(startingPosition.getY());
+        }
+        if (rotate != 0) {
+            imageView.setRotate(rotate);
         }
         return imageView;
     }
@@ -56,6 +64,11 @@ public class ImageBuilder {
 
     public ImageBuilder startingPosition(Position startingPosition) {
         this.startingPosition = startingPosition;
+        return this;
+    }
+
+    public ImageBuilder rotate(double rotate) {
+        this.rotate = rotate;
         return this;
     }
 }

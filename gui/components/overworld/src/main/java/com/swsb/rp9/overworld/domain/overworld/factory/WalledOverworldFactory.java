@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.swsb.rp9.overworld.domain.Coordinate.coordinate;
-import static com.swsb.rp9.overworld.domain.overworld.TileType.WALL;
+import static com.swsb.rp9.overworld.domain.overworld.TileType.*;
 
 public class WalledOverworldFactory implements OverworldFactory {
 
@@ -16,14 +16,28 @@ public class WalledOverworldFactory implements OverworldFactory {
     public Overworld createOverworld(int width, int height) {
         Map<Coordinate, TileType> tiles = new HashMap<>();
         for (int x = 0; x < width; x++) {
-            for(int y = 0; y < height; y ++){
-                if(x == 0 || x == width - 1 || y == 0 || y == height -1){
-                    tiles.put(coordinate(x, y), WALL);
+            for (int y = 0; y < height; y++) {
+                if (x == 0 && y == 0) {
+                    tiles.put(coordinate(x, y), ICE_CORNER_TOP_LEFT);
+                } else if (y == 0 && x == width - 1) {
+                    tiles.put(coordinate(x, y), ICE_CORNER_TOP_RIGHT);
+                } else if (x == 0 && y == height - 1) {
+                    tiles.put(coordinate(x, y), ICE_CORNER_BOTTOM_LEFT);
+                } else if (x == width - 1 && y == height - 1) {
+                    tiles.put(coordinate(x, y), ICE_CORNER_BOTTOM_RIGHT);
+                } else if (x == 0) {
+                    tiles.put(coordinate(x, y), ICE_SIDE_LEFT);
+                } else if (x == width - 1) {
+                    tiles.put(coordinate(x, y), ICE_SIDE_RIGHT);
+                } else if (y == 0) {
+                    tiles.put(coordinate(x, y), ICE_SIDE_TOP);
+                } else if (y == height - 1) {
+                    tiles.put(coordinate(x, y), ICE_SIDE_BOTTOM);
                 } else {
-                    tiles.put(coordinate(x, y), TileType.DESERT);
+                    tiles.put(coordinate(x, y), ICE);
                 }
             }
         }
-        return new Overworld(tiles, coordinate(5,5));
+        return new Overworld(tiles, coordinate(5, 5));
     }
 }

@@ -31,12 +31,12 @@ public abstract class GameScene {
                 createScene(this.gameView));
         this.gameSceneTransitionState = new GameSceneTransitionState();
         setEventHandlersForScene();
-        getBackgroundMusicResourceUrl().ifPresent(this::createBackGroundPlayer);
+        getBackgroundMusicResourceUrl().ifPresent(this::createBackgroundMusicPlayer);
     }
 
     protected abstract GameView createDefaultGameView();
 
-    private void createBackGroundPlayer(String url) {
+    private void createBackgroundMusicPlayer(String url) {
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(url).toExternalForm()));
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         this.backgroundMusicPlayer = mediaPlayer;
