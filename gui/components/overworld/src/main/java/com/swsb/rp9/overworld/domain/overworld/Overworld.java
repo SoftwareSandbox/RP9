@@ -24,7 +24,7 @@ public class Overworld {
     }
 
     private void moveHero(Direction direction) {
-        if(tiles.get(hero.getCoordinate().neighbourInDirection(direction)).canMoveThrough()){
+        if (tiles.get(hero.getCoordinate().neighbourInDirection(direction)).canMoveThrough()) {
             hero.move(direction);
         }
     }
