@@ -1,5 +1,7 @@
 package com.swsb.rp9.domain.api;
 
+import java.util.Map;
+
 public class OverworldState extends RestrictedState {
 
     public String getCharacterName() {
@@ -10,5 +12,23 @@ public class OverworldState extends RestrictedState {
         return getGameState().getHitPoints();
     }
 
+    public void handleDirectionPressed(Direction direction) {
+        getGameState().handleDirectionPressed(direction);
+    }
 
+    public boolean collidedWithEnemy() {
+        return getGameState().isCollidedWithEnemy();
+    }
+
+    public void collisionHandled() {
+        getGameState().collisionHandled();
+    }
+
+    public Map<Coordinate, TileType> getTiles() {
+        return getGameState().getTiles();
+    }
+
+    public Coordinate getHeroCoordinate() {
+        return getGameState().getCharacterCoordinate();
+    }
 }

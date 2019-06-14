@@ -1,19 +1,22 @@
-package com.swsb.rp9.overworld.domain.overworld.factory;
+package com.swsb.rp9.domain.overworld.factory;
 
-import com.swsb.rp9.overworld.domain.Coordinate;
-import com.swsb.rp9.overworld.domain.overworld.Overworld;
-import com.swsb.rp9.overworld.domain.overworld.TileType;
+
+import com.swsb.rp9.domain.Character;
+import com.swsb.rp9.domain.api.Coordinate;
+import com.swsb.rp9.domain.api.TileType;
+import com.swsb.rp9.domain.overworld.Overworld;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.swsb.rp9.overworld.domain.Coordinate.coordinate;
-import static com.swsb.rp9.overworld.domain.overworld.TileType.*;
+import static com.swsb.rp9.domain.api.Coordinate.coordinate;
+import static com.swsb.rp9.domain.api.TileType.*;
+
 
 public class WalledOverworldFactory implements OverworldFactory {
 
     @Override
-    public Overworld createOverworld(int width, int height) {
+    public Overworld createOverworld(int width, int height, Character character) {
         Map<Coordinate, TileType> tiles = new HashMap<>();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -40,6 +43,6 @@ public class WalledOverworldFactory implements OverworldFactory {
                 }
             }
         }
-        return new Overworld(tiles, coordinate(5, 5));
+        return new Overworld(tiles, coordinate(5, 5), character);
     }
 }

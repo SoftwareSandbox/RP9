@@ -1,30 +1,28 @@
 package com.swsb.rp9.overworld;
 
 import com.swsb.rp9.core.Dimension;
-import com.swsb.rp9.core.Direction;
 import com.swsb.rp9.core.GameView;
 import com.swsb.rp9.core.Position;
+import com.swsb.rp9.domain.api.Coordinate;
+import com.swsb.rp9.domain.api.Direction;
 import com.swsb.rp9.domain.api.OverworldState;
-import com.swsb.rp9.overworld.domain.Coordinate;
-import com.swsb.rp9.overworld.domain.hero.Hero;
-import com.swsb.rp9.overworld.domain.overworld.Overworld;
-import com.swsb.rp9.overworld.domain.overworld.factory.OverworldFactory;
-import com.swsb.rp9.overworld.domain.overworld.factory.WalledOverworldFactory;
-import com.swsb.rp9.overworld.view.HeroView;
+import com.swsb.rp9.domain.api.TileType;
+import com.swsb.rp9.overworld.view.CharacterView;
 import com.swsb.rp9.overworld.view.MenuView;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Paint;
 
 import static com.swsb.rp9.core.Dimension.rectangle;
 import static com.swsb.rp9.core.Dimension.square;
-import static com.swsb.rp9.core.Direction.STAND_STILL;
 import static com.swsb.rp9.core.Position.position;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_ONE;
 import static com.swsb.rp9.core.TransitionSlot.TRANSITION_SLOT_TWO;
+import static com.swsb.rp9.domain.api.Direction.STAND_STILL;
 import static com.swsb.rp9.overworld.domain.RectangleBuilder.rectangle;
-import static com.swsb.rp9.overworld.view.HeroView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
+import static com.swsb.rp9.overworld.view.CharacterView.NUMBER_OF_FRAMES_NEEDED_FOR_MOVE;
 import static java.util.stream.Collectors.toList;
 import static javafx.scene.input.KeyCode.*;
 
@@ -35,8 +33,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     private static final int SCENE_HEIGHT = 480;
     private static final Dimension DIMENSIONS = rectangle(SCENE_WIDTH, SCENE_HEIGHT);
 
-    private Overworld overworld;
-    private HeroView heroView;
+    private CharacterView characterView;
     private int numberOfFramesProcessing = 0;
     private boolean processingEvent;
     private KeyEvent keyDown = null;
@@ -58,13 +55,12 @@ public class OverworldDefaultView extends GameView<OverworldState> {
 
     @Override
     protected Parent createGuiRootNode() {
-        overworld = createOverworld();
-        heroView = createHeroView(overworld.getHero());
+        characterView = createCharacterView(getRestrictedState());
         menuView = new MenuView(getRestrictedState());
 
         return new Group(
                 createOverworldGroup(),
-                heroView.getView(),
+                characterView.getView(),
                 menuView.getView()
         );
     }
@@ -90,10 +86,10 @@ public class OverworldDefaultView extends GameView<OverworldState> {
         if(!processingEvent && !menuView.isVisible()) {
             processingEvent = true;
             numberOfFramesProcessing = 0;
-            overworld.handleDirectionPressed(toDirection(event));
-            if (overworld.collidedWithEnemy()) {
+            getRestrictedState().handleDirectionPressed(toDirection(event));
+            if (getRestrictedState().collidedWithEnemy()) {
                 registerTransitionSlot(TRANSITION_SLOT_TWO);
-                overworld.collisionHandled();
+                getRestrictedState().collisionHandled();
             }
         }
 
@@ -113,28 +109,26 @@ public class OverworldDefaultView extends GameView<OverworldState> {
         if(processingEvent) {
             numberOfFramesProcessing++;
         }
-        heroView.redraw();
+        characterView.redraw();
         menuView.redraw();
     }
 
-    private HeroView createHeroView(Hero hero) {
-        return new HeroView(hero);
-    }
-
-    private Overworld createOverworld() {
-        OverworldFactory overworldFactory = new WalledOverworldFactory();
-        return overworldFactory
-                .createOverworld(SCENE_WIDTH / RECTANGLE_SIZE, SCENE_HEIGHT / RECTANGLE_SIZE);
+    private CharacterView createCharacterView(OverworldState restrictedState) {
+        return new CharacterView(restrictedState);
     }
 
     private Node createOverworldGroup() {
-        return new Group(overworld.getTiles().entrySet().stream()
+        return new Group(getRestrictedState().getTiles().entrySet().stream()
                 .map(entry -> rectangle()
-                        .color(entry.getValue().toTexture(RECTANGLE_SIZE))
+                        .color(toTexture(entry.getValue(), RECTANGLE_SIZE))
                         .dimension(square(RECTANGLE_SIZE))
                         .position(toPosition(entry.getKey()))
                         .build())
                 .collect(toList()));
+    }
+
+    private Paint toTexture(TileType tileType, int rectangleSize) {
+        return com.swsb.rp9.overworld.domain.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize); //TODO mapping to the right texture
     }
 
     public static Position toPosition(Coordinate coordinate) {

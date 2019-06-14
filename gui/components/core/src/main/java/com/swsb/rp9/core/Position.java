@@ -1,5 +1,7 @@
 package com.swsb.rp9.core;
 
+import com.swsb.rp9.domain.api.Direction;
+
 import java.util.Objects;
 
 public class Position {
