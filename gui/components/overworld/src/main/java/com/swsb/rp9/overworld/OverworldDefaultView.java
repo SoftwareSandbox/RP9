@@ -128,7 +128,7 @@ public class OverworldDefaultView extends GameView<OverworldState> {
     }
 
     private Paint toTexture(TileType tileType, int rectangleSize) {
-        return com.swsb.rp9.overworld.domain.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize); //TODO mapping to the right texture
+        return com.swsb.rp9.overworld.domain.overworld.TileType.valueOf(tileType.name()).toTexture(rectangleSize);
     }
 
     public static Position toPosition(Coordinate coordinate) {
