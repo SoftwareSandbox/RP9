@@ -5,4 +5,6 @@ module fight {
     requires javafx.graphics;
     requires core;
     requires domain;
+
+    opens com.swsb.rp9.fight.sound;
 }
